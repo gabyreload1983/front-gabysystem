@@ -1,0 +1,72 @@
+@import "../node_modules/bootstrap/scss/bootstrap.scss";
+
+.site-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+footer {
+  background-color: #161616;
+  color: #aaaaaa;
+  height: 74px;
+  display: flex;
+  flex-shrink: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+  font-weight: 500;
+}
+.table {
+  --bs-table-bg: unset;
+}
+
+td > a {
+  text-decoration: none;
+  color: #161616;
+}
+
+.link-order {
+  text-decoration: none;
+}
+
+/* tier */
+.tier10 {
+  background: #ff0000;
+}
+
+.tier9 {
+  background: #fd7e14;
+}
+
+.tier8 {
+  background: #f02727;
+}
+
+.tier7 {
+  background: #a83e73;
+}
+
+.tier6 {
+  background: #1fe66b;
+}
+
+.tier5 {
+  background: #ffc107;
+}
+
+.tier4 {
+  background: #54c0db;
+}
+
+.tier3 {
+  background: #d3e910;
+}
+
+.tier2 {
+  background: #e4f58d;
+}
+
+.tier1 {
+  background: #727950;
+}
