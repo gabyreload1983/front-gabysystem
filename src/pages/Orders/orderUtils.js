@@ -45,4 +45,4 @@ export const getOrderTierBackground = (tier) => {
 
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
-export const getOrdersFilter = (filter) => {};
+export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
