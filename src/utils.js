@@ -98,3 +98,5 @@ export const SwalWaiting = async (message) => {
     },
   });
 };
+
+export const authorization = (user, ...roles) => roles.includes(user.role);

@@ -1,13 +1,7 @@
 import React from "react";
 import { formatPrice } from "../../../utils";
 
-export default function ProductsInOrder({
-  products,
-  price,
-  total,
-  onDeletingProduct,
-  state,
-}) {
+export default function ProductsInOrder({ user, order, onDeletingProduct }) {
   return (
     <table className="table">
       <thead>
@@ -24,11 +18,11 @@ export default function ProductsInOrder({
           <td>.ST</td>
           <td>Mano de Obra</td>
           <td></td>
-          <td className="custom-td text-end">${formatPrice(price)}</td>
+          <td className="custom-td text-end">${formatPrice(order.costo)}</td>
           <td></td>
         </tr>
-        {products.length > 0 &&
-          products.map((product, index) => {
+        {order.products.length > 0 &&
+          order.products.map((product, index) => {
             return (
               <tr key={`${product.nrocompro}-${index}`}>
                 <td>{product.codigo}</td>
@@ -37,7 +31,7 @@ export default function ProductsInOrder({
                 <td className="custom-td text-end">
                   ${formatPrice(product.priceList1WithTax)}
                 </td>
-                {state === 22 ? (
+                {order.estado === 22 && user.role === "saler" ? (
                   <td className="d-flex justify-content-center align-items-center">
                     <button
                       className="btn btn-sm btn-outline-danger"
@@ -56,7 +50,7 @@ export default function ProductsInOrder({
       <tfoot>
         <tr>
           <td colSpan={3}>Total</td>
-          <td className="custom-td text-end">${formatPrice(total)}</td>
+          <td className="custom-td text-end">${formatPrice(order.total)}</td>
           <td></td>
         </tr>
       </tfoot>

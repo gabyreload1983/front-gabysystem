@@ -13,16 +13,9 @@ import {
   putToApi,
 } from "../../../utils";
 import Swal from "sweetalert2";
-import {
-  formatSerialNumber,
-  getOrderDiagnosis,
-  getOrderState,
-  getOrderTier,
-  getOrderTierBackground,
-  getOrderUbication,
-} from "../orderUtils";
-import moment from "moment/moment";
+import { formatSerialNumber } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
+import OrderDetailHeader from "./OrderDetailHeader";
 
 export default function OrderDetail() {
   const { user, logoutUserContext } = useContext(UserContext);
@@ -103,7 +96,6 @@ export default function OrderDetail() {
   };
 
   const handleDeletingProduct = (product) => {
-    // check serie
     const index = order.products.findIndex(
       (p) => p.codigo === product.codigo && p.serie === product.serie
     );
@@ -241,77 +233,13 @@ export default function OrderDetail() {
           </button>
 
           <h2>
-            {order.nombre} - {order.nrocompro}
+            {order.codigo} - {order.nombre}
           </h2>
+          <h3>{order.nrocompro}</h3>
+
+          <OrderDetailHeader order={order} />
 
           <div className="row">
-            <div className="col-12 col-md-6">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td>ESTADO</td>
-                    <td>{getOrderState(order.estado)}</td>
-                  </tr>
-                  <tr>
-                    <td>DIAGNOSTICO</td>
-                    <td>{getOrderDiagnosis(order.diag)}</td>
-                  </tr>
-                  <tr>
-                    <td>UBICACION</td>
-                    <td>{getOrderUbication(order.ubicacion)}</td>
-                  </tr>
-                  <tr>
-                    <td>FECHA INGRESO</td>
-                    <td>
-                      {moment(order.ingresado).format("DD/MM/YYYY hh:mm a")}
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>PRIORIDAD</td>
-                    <td className={getOrderTierBackground(order.prioridad)}>
-                      {getOrderTier(order.prioridad)}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="col-12 col-md-6">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td>TELEFONO</td>
-                    <td>{order.telefono}</td>
-                  </tr>
-                  <tr>
-                    <td>ARTICULO</td>
-                    <td>{order.descart}</td>
-                  </tr>
-                  <tr>
-                    <td>ACCESORIOS</td>
-                    <td>{order.accesorios}</td>
-                  </tr>
-                  <tr>
-                    <td>VENDEDOR</td>
-                    <td>{order.operador}</td>
-                  </tr>
-                  <tr>
-                    <td>TECNICO</td>
-                    <td>{order.tecnico}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div className="col-12">
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td>
-                      FALLA: <span>{order.falla}</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
             <div className="col-12">
               <table className="table">
                 <tbody>
@@ -323,8 +251,8 @@ export default function OrderDetail() {
                           value={order.diagnostico}
                           readOnly
                           className="form-control"
-                          rows="3"
-                          disabled
+                          rows="5"
+                          disabled={user.role !== "technical"}
                         ></textarea>
                       </div>
                     </td>
@@ -337,15 +265,13 @@ export default function OrderDetail() {
             <div className="col-12">
               <h3>DETALLE</h3>
               <ProductsInOrder
-                products={order.products}
-                price={order.costo}
-                total={order.total}
+                user={user}
+                order={order}
                 onDeletingProduct={handleDeletingProduct}
-                state={order.estado}
               />
             </div>
-            {order.estado === 22 && (
-              <div className="col-12 d-flex justify-content-between mb-3">
+            <div className="col-12 d-flex justify-content-between mb-3">
+              {order.estado === 22 && user.role === "saler" && (
                 <div className="btn-group">
                   <button
                     className="btn btn-sm btn-outline-success"
@@ -363,24 +289,26 @@ export default function OrderDetail() {
                     Cancelar
                   </button>
                 </div>
-              </div>
-            )}
-          </div>
-          <div className="row">
-            <div className="col text-end">
-              {order.estado === 23 && order.ubicacion === 21 && (
-                <button
-                  className="btn btn-danger"
-                  onClick={() => outOrder(order.nrocompro)}
-                >
-                  Salida
-                </button>
               )}
             </div>
           </div>
           <div className="row">
+            <div className="col text-end">
+              {order.estado === 23 &&
+                order.ubicacion === 21 &&
+                user.role === "saler" && (
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => outOrder(order.nrocompro)}
+                  >
+                    Salida
+                  </button>
+                )}
+            </div>
+          </div>
+          <div className="row">
             <div className="col">
-              {order.estado === 22 && (
+              {order.estado === 22 && user.role === "saler" && (
                 <AddingProduct onAddingProduct={handleAddingProduct} />
               )}
             </div>
