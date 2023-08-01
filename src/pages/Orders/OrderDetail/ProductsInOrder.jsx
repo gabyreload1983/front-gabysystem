@@ -1,12 +1,13 @@
 import React from "react";
-import { formatPrice } from "../../../utils";
+import { formatPrice, renderByRole } from "../../../utils";
 
 export default function ProductsInOrder({
-  products,
-  price,
+  user,
+  order,
   total,
+  price,
   onDeletingProduct,
-  state,
+  onHandlePrice,
 }) {
   return (
     <table className="table">
@@ -24,11 +25,35 @@ export default function ProductsInOrder({
           <td>.ST</td>
           <td>Mano de Obra</td>
           <td></td>
-          <td className="custom-td text-end">${formatPrice(price)}</td>
+          <td className="custom-td text-end input-price">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                $
+              </span>
+
+              {renderByRole(user, "technical") &&
+              user.code_technical === order.tecnico &&
+              order.estado === 22 ? (
+                <input
+                  className="form-control"
+                  type="text"
+                  value={formatPrice(price)}
+                  onChange={onHandlePrice}
+                />
+              ) : (
+                <input
+                  className="form-control"
+                  type="number"
+                  value={formatPrice(price)}
+                  disabled
+                />
+              )}
+            </div>
+          </td>
           <td></td>
         </tr>
-        {products.length > 0 &&
-          products.map((product, index) => {
+        {order.products.length > 0 &&
+          order.products.map((product, index) => {
             return (
               <tr key={`${product.nrocompro}-${index}`}>
                 <td>{product.codigo}</td>
@@ -37,7 +62,7 @@ export default function ProductsInOrder({
                 <td className="custom-td text-end">
                   ${formatPrice(product.priceList1WithTax)}
                 </td>
-                {state === 22 ? (
+                {renderByRole(user, "saler") && order.estado === 22 ? (
                   <td className="d-flex justify-content-center align-items-center">
                     <button
                       className="btn btn-sm btn-outline-danger"

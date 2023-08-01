@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import SearchOrder from "./SearchOrder";
+import { renderByRole } from "../utils";
 
 export default function OrdersLayout() {
   const { user } = useContext(UserContext);
@@ -60,28 +61,47 @@ export default function OrdersLayout() {
                   En Proceso
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/orders/search/to-deliver"
-                  style={({ isActive }) =>
-                    isActive ? activeStylesOrders : null
-                  }
-                >
-                  Para Entregar
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/orders/search/final-disposition"
-                  style={({ isActive }) =>
-                    isActive ? activeStylesOrders : null
-                  }
-                >
-                  Disposicion Final
-                </NavLink>
-              </li>
+              {renderByRole(user, "saler") && (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/orders/search/to-deliver"
+                      style={({ isActive }) =>
+                        isActive ? activeStylesOrders : null
+                      }
+                    >
+                      Para Entregar
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="/orders/search/final-disposition"
+                      style={({ isActive }) =>
+                        isActive ? activeStylesOrders : null
+                      }
+                    >
+                      Disposicion Final
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {renderByRole(user, "technical") && (
+                <>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to={`/orders/search/technical-${user.code_technical}`}
+                      style={({ isActive }) =>
+                        isActive ? activeStylesOrders : null
+                      }
+                    >
+                      Mis Ordenes
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
             <SearchOrder />
           </div>
