@@ -69,13 +69,13 @@ export const SwalSuccess = async (message) => {
   });
 };
 
-export const SwalToast = async (message) => {
+export const SwalToast = async (message, timer = 3000) => {
   return Swal.fire({
     toast: true,
     icon: "success",
     text: `${message}`,
     position: "top-end",
-    timer: 3000,
+    timer,
     showConfirmButton: false,
     timerProgressBar: true,
     didOpen: (toast) => {
@@ -99,4 +99,4 @@ export const SwalWaiting = async (message) => {
   });
 };
 
-export const authorization = (user, ...roles) => roles.includes(user.role);
+export const renderByRole = (user, ...roles) => roles.includes(user.role);

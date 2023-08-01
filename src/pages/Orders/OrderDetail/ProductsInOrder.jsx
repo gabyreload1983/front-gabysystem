@@ -1,7 +1,14 @@
 import React from "react";
-import { formatPrice } from "../../../utils";
+import { formatPrice, renderByRole } from "../../../utils";
 
-export default function ProductsInOrder({ user, order, onDeletingProduct }) {
+export default function ProductsInOrder({
+  user,
+  order,
+  total,
+  price,
+  onDeletingProduct,
+  onHandlePrice,
+}) {
   return (
     <table className="table">
       <thead>
@@ -18,7 +25,31 @@ export default function ProductsInOrder({ user, order, onDeletingProduct }) {
           <td>.ST</td>
           <td>Mano de Obra</td>
           <td></td>
-          <td className="custom-td text-end">${formatPrice(order.costo)}</td>
+          <td className="custom-td text-end input-price">
+            <div className="input-group mb-3">
+              <span className="input-group-text" id="basic-addon1">
+                $
+              </span>
+
+              {renderByRole(user, "technical") &&
+              user.code_technical === order.tecnico &&
+              order.estado === 22 ? (
+                <input
+                  className="form-control"
+                  type="text"
+                  value={formatPrice(price)}
+                  onChange={onHandlePrice}
+                />
+              ) : (
+                <input
+                  className="form-control"
+                  type="number"
+                  value={formatPrice(price)}
+                  disabled
+                />
+              )}
+            </div>
+          </td>
           <td></td>
         </tr>
         {order.products.length > 0 &&
@@ -31,7 +62,7 @@ export default function ProductsInOrder({ user, order, onDeletingProduct }) {
                 <td className="custom-td text-end">
                   ${formatPrice(product.priceList1WithTax)}
                 </td>
-                {order.estado === 22 && user.role === "saler" ? (
+                {renderByRole(user, "saler") && order.estado === 22 ? (
                   <td className="d-flex justify-content-center align-items-center">
                     <button
                       className="btn btn-sm btn-outline-danger"
@@ -50,7 +81,7 @@ export default function ProductsInOrder({ user, order, onDeletingProduct }) {
       <tfoot>
         <tr>
           <td colSpan={3}>Total</td>
-          <td className="custom-td text-end">${formatPrice(order.total)}</td>
+          <td className="custom-td text-end">${formatPrice(total)}</td>
           <td></td>
         </tr>
       </tfoot>
