@@ -48,7 +48,7 @@ export default function Login() {
         icon: "success",
         text: "Login success",
         position: "top-end",
-        timer: 1500,
+        timer: 1000,
         showConfirmButton: false,
         timerProgressBar: true,
         didOpen: (toast) => {

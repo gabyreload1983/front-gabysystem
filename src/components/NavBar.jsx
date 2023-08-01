@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
+import { renderByRole } from "../utils";
 
 function NavBar() {
   const { user, logoutUserContext } = useContext(UserContext);
@@ -35,7 +36,7 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           {user && (
             <ul className="navbar-nav">
-              {user.role === "admin" && (
+              {renderByRole(user, "admin") && (
                 <>
                   <li className="nav-item">
                     <NavLink

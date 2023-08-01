@@ -7,7 +7,7 @@ import OrderList from "./OrderList";
 export default function Orders() {
   let { filter } = useParams();
 
-  if (filter === "pending-pc" || filter === "pending-imp") {
+  if (filter.includes("pending") || filter.includes("technical")) {
     filter = filter.split("-").join("/");
   }
 
