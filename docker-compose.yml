@@ -1,8 +1,9 @@
 version: "3.9"
 services:
-  gabysystem-technical:
-    image: gabyreload1983/gabysystem-technical:vx.x.x
-    container_name: gabysystem-technical-vx.x.x
+  gabysystem-front:
+    build: .
+    image: gabyreload1983/gabysystem-front-dev:v5.0.0
+    container_name: gabysystem-front
     ports:
       - "8080:80"
     restart: always
