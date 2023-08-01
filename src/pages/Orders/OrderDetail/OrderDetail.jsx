@@ -210,8 +210,9 @@ export default function OrderDetail() {
   //Saler
 
   const handleAddingProduct = async (product) => {
+    const copyProduct = { ...product };
     let serie = "";
-    if (product.trabaserie === "S") {
+    if (copyProduct.trabaserie === "S") {
       let { value } = await Swal.fire({
         input: "text",
         inputLabel: "Ingrese Nº Serie",
@@ -234,7 +235,7 @@ export default function OrderDetail() {
       if (response.status === "success") {
         if (response.payload.length) {
           const productFind = response.payload[0];
-          if (product.codigo !== productFind.codigo)
+          if (copyProduct.codigo !== productFind.codigo)
             return await SwalError({
               message: `El serie pertenece al producto ${productFind.codigo}`,
             });
@@ -242,8 +243,9 @@ export default function OrderDetail() {
       }
       serie = value;
     }
-    product.serie = serie;
-    order.products.push(product);
+
+    copyProduct.serie = serie;
+    order.products.push(copyProduct);
     order.total = getTotalOrder(order);
 
     setOrder((prev) => ({
