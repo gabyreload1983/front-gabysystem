@@ -99,4 +99,4 @@ export const SwalWaiting = async (message) => {
   });
 };
 
-export const renderByRole = (user, ...roles) => roles.includes(user.role);
+export const renderByRole = (user, ...roles) => roles.includes(user?.role);
