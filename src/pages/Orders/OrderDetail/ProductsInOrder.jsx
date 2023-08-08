@@ -37,7 +37,7 @@ export default function ProductsInOrder({
                 <input
                   className="form-control"
                   type="text"
-                  value={formatPrice(price)}
+                  value={price}
                   onChange={onHandlePrice}
                 />
               ) : (
