@@ -23,5 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
 package-lock.json
+.env
+.env.development
+.env.production
