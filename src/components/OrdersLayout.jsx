@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import SearchOrder from "./SearchOrder";
-import { renderByRole } from "../utils";
+import { validateUserRole } from "../utils";
 
 export default function OrdersLayout() {
   const { user } = useContext(UserContext);
@@ -61,7 +61,7 @@ export default function OrdersLayout() {
                   En Proceso
                 </NavLink>
               </li>
-              {renderByRole(user, "saler") && (
+              {validateUserRole(user, "saler", "premium") && (
                 <>
                   <li className="nav-item">
                     <NavLink
@@ -87,7 +87,7 @@ export default function OrdersLayout() {
                   </li>
                 </>
               )}
-              {renderByRole(user, "technical") && (
+              {validateUserRole(user, "technical") && (
                 <>
                   <li className="nav-item">
                     <NavLink
