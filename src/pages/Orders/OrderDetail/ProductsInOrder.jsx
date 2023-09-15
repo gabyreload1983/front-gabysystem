@@ -1,5 +1,5 @@
 import React from "react";
-import { formatPrice, renderByRole } from "../../../utils";
+import { formatPrice, validateUserRole } from "../../../utils";
 
 export default function ProductsInOrder({
   user,
@@ -31,7 +31,7 @@ export default function ProductsInOrder({
                 $
               </span>
 
-              {renderByRole(user, "technical") &&
+              {validateUserRole(user, "technical") &&
               user.code_technical === order.tecnico &&
               order.estado === 22 ? (
                 <input
@@ -62,7 +62,8 @@ export default function ProductsInOrder({
                 <td className="custom-td text-end">
                   ${formatPrice(product.priceList1WithTax)}
                 </td>
-                {renderByRole(user, "saler") && order.estado === 22 ? (
+                {validateUserRole(user, "saler", "premium") &&
+                order.estado === 22 ? (
                   <td className="d-flex justify-content-center align-items-center">
                     <button
                       className="btn btn-sm btn-outline-danger"

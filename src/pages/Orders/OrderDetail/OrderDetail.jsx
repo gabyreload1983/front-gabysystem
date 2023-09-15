@@ -8,7 +8,7 @@ import {
   SwalSuccess,
   SwalToast,
   SwalWaiting,
-  renderByRole,
+  validateUserRole,
   getFromApi,
   getTotalOrder,
   putToApi,
@@ -399,10 +399,10 @@ export default function OrderDetail() {
                         <label className="form-label">Diagnostico</label>
                         <textarea
                           value={diagnosis}
-                          readOnly={!renderByRole(user, "technical")}
+                          readOnly={!validateUserRole(user, "technical")}
                           className="form-control"
                           rows="5"
-                          disabled={!renderByRole(user, "technical")}
+                          disabled={!validateUserRole(user, "technical")}
                           onChange={handleDiagnosis}
                         ></textarea>
                       </div>
@@ -426,31 +426,32 @@ export default function OrderDetail() {
               />
             </div>
             <div className="col-12 d-flex justify-content-between mb-3">
-              {renderByRole(user, "saler") && order.estado === 22 && (
-                <div className="btn-group">
-                  <button
-                    className="btn btn-sm btn-outline-success"
-                    onClick={handleConfirm}
-                    disabled={confirmButton}
-                  >
-                    Confirmar
-                  </button>
+              {validateUserRole(user, "saler", "premium") &&
+                order.estado === 22 && (
+                  <div className="btn-group">
+                    <button
+                      className="btn btn-sm btn-outline-success"
+                      onClick={handleConfirm}
+                      disabled={confirmButton}
+                    >
+                      Confirmar
+                    </button>
 
-                  <button
-                    className="btn btn-sm btn-outline-danger"
-                    onClick={handleCancel}
-                    disabled={cancelButton}
-                  >
-                    Cancelar
-                  </button>
-                </div>
-              )}
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={handleCancel}
+                      disabled={cancelButton}
+                    >
+                      Cancelar
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
 
           <div className="row">
             <div className="col text-end">
-              {renderByRole(user, "saler") &&
+              {validateUserRole(user, "saler") &&
                 order.ubicacion === 21 &&
                 order.estado === 23 && (
                   <button
@@ -465,15 +466,16 @@ export default function OrderDetail() {
 
           <div className="row">
             <div className="col">
-              {renderByRole(user, "saler") && order.estado === 22 && (
-                <AddingProduct onAddingProduct={handleAddingProduct} />
-              )}
+              {validateUserRole(user, "saler", "premium") &&
+                order.estado === 22 && (
+                  <AddingProduct onAddingProduct={handleAddingProduct} />
+                )}
             </div>
           </div>
 
           <div className="row">
             <div className="col-12 d-flex justify-content-between mb-3">
-              {renderByRole(user, "technical") &&
+              {validateUserRole(user, "technical") &&
                 order.estado === 22 &&
                 order.tecnico === user?.code_technical && (
                   <div className="btn-group">
@@ -506,7 +508,7 @@ export default function OrderDetail() {
                     Liberar
                   </button>
                 )}
-                {renderByRole(user, "technical") && order.estado === 21 && (
+                {validateUserRole(user, "technical") && order.estado === 21 && (
                   <button className="btn btn-success" onClick={takeOrder}>
                     Tomar
                   </button>
