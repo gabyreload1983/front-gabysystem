@@ -85,6 +85,17 @@ function NavBar() {
                   Orders
                 </NavLink>
               </li>
+              {validateUserRole(user, "premium") && (
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="statistics"
+                    style={({ isActive }) => (isActive ? activeStyles : null)}
+                  >
+                    Estadisticas
+                  </NavLink>
+                </li>
+              )}
             </ul>
           )}
 
