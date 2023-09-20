@@ -14,7 +14,7 @@ import {
   putToApi,
 } from "../../../utils";
 import Swal from "sweetalert2";
-import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
+import { formatSerialNumber } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
 
@@ -399,10 +399,12 @@ export default function OrderDetail() {
                         <label className="form-label">Diagnostico</label>
                         <textarea
                           value={diagnosis}
-                          readOnly={!validateUserRole(user, "technical")}
                           className="form-control"
                           rows="5"
-                          disabled={!validateUserRole(user, "technical")}
+                          disabled={
+                            user.code_technical !== order.tecnico ||
+                            order.estado !== 22
+                          }
                           onChange={handleDiagnosis}
                         ></textarea>
                       </div>
@@ -410,6 +412,66 @@ export default function OrderDetail() {
                   </tr>
                 </tbody>
               </table>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12 d-flex justify-content-between mb-3">
+              {validateUserRole(user, "technical", "premium") &&
+                order.estado === 22 &&
+                order.tecnico === user?.code_technical && (
+                  <div className="btn-group">
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={() => closeOrder(22)}
+                    >
+                      Reparado
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-outline-danger"
+                      onClick={() => closeOrder(23)}
+                    >
+                      Sin Reparacion
+                    </button>
+
+                    <button
+                      className="btn btn-sm btn-outline-info"
+                      onClick={updateOrder}
+                    >
+                      Guardar
+                    </button>
+                  </div>
+                )}
+
+              <div className="col text-end">
+                {validateUserRole(user, "premium") &&
+                  order.estado !== 21 &&
+                  order.ubicacion !== 22 && (
+                    <button className="btn btn-warning" onClick={freeOrder}>
+                      Liberar
+                    </button>
+                  )}
+                {validateUserRole(user, "technical", "premium") &&
+                  order.estado === 21 && (
+                    <button className="btn btn-success" onClick={takeOrder}>
+                      Tomar
+                    </button>
+                  )}
+              </div>
+              <div className="row ms-3">
+                <div className="col text-end">
+                  {validateUserRole(user, "saler", "premium") &&
+                    order.ubicacion === 21 &&
+                    order.estado === 23 && (
+                      <button
+                        className="btn btn-danger"
+                        onClick={() => outOrder(order.nrocompro)}
+                      >
+                        Salida
+                      </button>
+                    )}
+                </div>
+              </div>
             </div>
           </div>
 
@@ -450,70 +512,11 @@ export default function OrderDetail() {
           </div>
 
           <div className="row">
-            <div className="col text-end">
-              {validateUserRole(user, "saler") &&
-                order.ubicacion === 21 &&
-                order.estado === 23 && (
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => outOrder(order.nrocompro)}
-                  >
-                    Salida
-                  </button>
-                )}
-            </div>
-          </div>
-
-          <div className="row">
             <div className="col">
               {validateUserRole(user, "saler", "premium") &&
                 order.estado === 22 && (
                   <AddingProduct onAddingProduct={handleAddingProduct} />
                 )}
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-12 d-flex justify-content-between mb-3">
-              {validateUserRole(user, "technical") &&
-                order.estado === 22 &&
-                order.tecnico === user?.code_technical && (
-                  <div className="btn-group">
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={() => closeOrder(22)}
-                    >
-                      Reparado
-                    </button>
-
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => closeOrder(23)}
-                    >
-                      Sin Reparacion
-                    </button>
-
-                    <button
-                      className="btn btn-sm btn-outline-info"
-                      onClick={updateOrder}
-                    >
-                      Guardar
-                    </button>
-                  </div>
-                )}
-
-              <div className="col text-end">
-                {validateFreeOrder(user, order) && (
-                  <button className="btn btn-warning" onClick={freeOrder}>
-                    Liberar
-                  </button>
-                )}
-                {validateUserRole(user, "technical") && order.estado === 21 && (
-                  <button className="btn btn-success" onClick={takeOrder}>
-                    Tomar
-                  </button>
-                )}
-              </div>
             </div>
           </div>
         </div>
