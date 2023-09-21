@@ -1,9 +1,108 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { SwalError, SwalToast, getFromApi } from "../../utils";
+import CustomersList from "./CustomersList";
+import CustomerOrdersList from "./CustomerOrdersList";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../context/userContext";
 
 export default function Customers() {
+  const [orders, setOrders] = useState([]);
+  const [customers, setCustomers] = useState([]);
+  const [search, setSearch] = useState("");
+
+  const navigate = useNavigate();
+  const { logoutUserContext } = useContext(UserContext);
+
+  const getCustomers = async (search) => {
+    const response = await getFromApi(
+      `http://${import.meta.env.VITE_URL_HOST}/api/customers/${search}`
+    );
+
+    if (response.status === "error" && response.message === "jwt-expired") {
+      await SwalError(response);
+      logoutUserContext();
+      return navigate("/login");
+    }
+    if (response.status === "error") return await SwalError(response);
+
+    if (response.status === "success") {
+      setCustomers(response.payload);
+    }
+  };
+
+  const getCustomerOrders = async (code) => {
+    const response = await getFromApi(
+      `http://${import.meta.env.VITE_URL_HOST}/api/orders/customer/${code}`
+    );
+
+    if (response.status === "error" && response.message === "jwt-expired") {
+      await SwalError(response);
+      logoutUserContext();
+      return navigate("/login");
+    }
+    if (response.status === "error") return await SwalError(response);
+
+    if (response.status === "success") {
+      setOrders(response.payload);
+      response.payload.length === 0 &&
+        SwalToast("Cliente sin ordenes de reparacion!");
+    }
+  };
+
+  const handleChange = (event) => {
+    const { value } = event.target;
+    setSearch(value);
+  };
+
+  const handleSearchCustomers = async (event) => {
+    const keyCode = event.keyCode;
+    if (keyCode === 13 && search.length >= 3) {
+      setOrders([]);
+      getCustomers(search);
+    }
+  };
+
+  const handleSearchOrderDetail = async (nrocompro) => {
+    navigate(`/orders/detail/${nrocompro}`);
+  };
+
+  const handleSearchCustomerOrders = async (code) => {
+    setCustomers((prev) => prev.filter((c) => c.codigo === code));
+    getCustomerOrders(code);
+  };
+
   return (
     <div className="container">
-      <h1>Customers</h1>
+      <div className="row">
+        <div className="col-12 col-md-8 col-lg-4 mt-5">
+          <div className="form-floating mb-3">
+            <input
+              type="text"
+              className="form-control"
+              id="floatingInput"
+              placeholder="Buscar cliente"
+              onChange={handleChange}
+              value={search}
+              onKeyDown={handleSearchCustomers}
+            />
+            <label htmlFor="floatingInput">Buscar cliente</label>
+          </div>
+        </div>
+        <div className="col-12">
+          <CustomersList
+            customers={customers}
+            onSearchCustomerOrders={handleSearchCustomerOrders}
+          />
+        </div>
+        <div className="col-12">
+          {orders.length > 0 && (
+            <CustomerOrdersList
+              orders={orders}
+              onSearchOrderDetail={handleSearchOrderDetail}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }
