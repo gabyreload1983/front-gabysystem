@@ -64,7 +64,7 @@ function NavBar() {
                   to="customers"
                   style={({ isActive }) => (isActive ? activeStyles : null)}
                 >
-                  Customers
+                  Clientes
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -73,7 +73,7 @@ function NavBar() {
                   to="products"
                   style={({ isActive }) => (isActive ? activeStyles : null)}
                 >
-                  Products
+                  Productos
                 </NavLink>
               </li>
               <li className="nav-item">
@@ -82,7 +82,7 @@ function NavBar() {
                   to="orders"
                   style={({ isActive }) => (isActive ? activeStyles : null)}
                 >
-                  Orders
+                  Ordenes
                 </NavLink>
               </li>
               {validateUserRole(user, "premium") && (
