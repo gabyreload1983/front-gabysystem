@@ -31,7 +31,7 @@ export default function ProductsInOrder({
                 $
               </span>
 
-              {validateUserRole(user, "technical") &&
+              {validateUserRole(user, "technical", "premium") &&
               user.code_technical === order.tecnico &&
               order.estado === 22 ? (
                 <input
