@@ -14,6 +14,8 @@ import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
 import Orders from "./pages/Orders/Orders";
 import Statistics from "./pages/Statistics/Statistics";
+import * as bootstrap from "bootstrap";
+import { Tooltip } from "react-tooltip";
 
 function App() {
   return (
