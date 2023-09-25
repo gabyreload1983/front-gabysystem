@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useContext, useState } from "react";
 import { SwalError, getFromApi } from "../../utils";
-import StatisticsDetail from "./StatisticsDetail";
+import StatisticsTable from "./StatisticsTable";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 
@@ -79,7 +79,7 @@ export default function Statistics() {
           </div>
         </div>
         <div className="col-12 mt-3">
-          <StatisticsDetail statistics={statistics} />
+          <StatisticsTable statistics={statistics} />
         </div>
       </div>
     </div>

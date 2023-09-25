@@ -23,10 +23,10 @@ export const getOrderTier = (tier) => {
   if (tier === 4) return "TURNOS/PRIORIDADES";
   if (tier === 5) return "GARANTIA REPARACION";
   if (tier === 6) return "";
-  if (tier === 7) return "GARANTIA COMPRA";
+  if (tier === 7) return "";
   if (tier === 8) return "BOXES";
   if (tier === 9) return "ABONADOS";
-  if (tier === 10) return "";
+  if (tier === 10) return "GARANTIA COMPRA";
 };
 
 export const getOrderTierBackground = (tier) => {
