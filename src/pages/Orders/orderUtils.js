@@ -1,7 +1,7 @@
 export const getOrderState = (state) => {
   if (state === 21) return "PENDIENTE";
   if (state === 22) return "EN PROCESO";
-  if (state === 23) return "TERMINADA";
+  if (state === 23) return "FINALIZADA";
 };
 
 export const getOrderDiagnosis = (diagnosis) => {

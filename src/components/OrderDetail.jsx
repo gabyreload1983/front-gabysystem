@@ -6,9 +6,15 @@ import {
   getOrderTierBackground,
   getOrderUbication,
 } from "../pages/Orders/orderUtils";
+import { formatPrice } from "../utils";
 import moment from "moment";
 
 export default function OrderDetail({ order }) {
+  const total = order.products.reduce(
+    (acc, current) => acc + current,
+    order.costo
+  );
+
   return (
     <div className="row border border-5 border-success">
       <div className="col-12 col-md-6">
@@ -83,12 +89,12 @@ export default function OrderDetail({ order }) {
         <table className="table">
           <tbody>
             <tr>
-              <td>
+              <td className="table-warning">
                 FALLA: <span>{order.falla}</span>
               </td>
             </tr>
             <tr>
-              <td>
+              <td className="table-success">
                 DIAGNOSTICO: <span>{order.diagnostico}</span>
               </td>
             </tr>
@@ -97,6 +103,45 @@ export default function OrderDetail({ order }) {
       </div>
       <div className="col-12">
         <h4>ARTICULOS</h4>
+
+        <table className="table">
+          <thead>
+            <tr>
+              <th>Codigo</th>
+              <th>Descripcion</th>
+              <th>Serie</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>.ST</td>
+              <td>Mano de Obra</td>
+              <td></td>
+              <td>${formatPrice(order.costo)}</td>
+            </tr>
+            {order.products.length > 0 &&
+              order.products.map((product, index) => {
+                return (
+                  <tr key={`${product.nrocompro}-${index}`}>
+                    <td>{product.codigo}</td>
+                    <td>{product.descrip}</td>
+                    <td>{product.serie}</td>
+                    <td>${formatPrice(product.priceList1WithTax)}</td>
+                  </tr>
+                );
+              })}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td></td>
+              <td></td>
+              <td className="table-secondary">TOTAL</td>
+              <td className="table-secondary">${formatPrice(total)}</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   );
