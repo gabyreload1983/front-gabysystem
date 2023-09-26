@@ -1,17 +1,23 @@
 import moment from "moment";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SwalError, getFromApi } from "../../utils";
-import StatisticsDetail from "./StatisticsDetail";
-import { useNavigate } from "react-router-dom";
+import StatisticsTable from "./StatisticsTable";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { BarLoader } from "react-spinners";
 
 export default function Statistics() {
-  const [from, setFrom] = useState(moment().format("YYYY-MM-DD"));
-  const [to, setTo] = useState(moment().format("YYYY-MM-DD"));
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [from, setFrom] = useState(
+    searchParams.get("from") || moment().format("YYYY-MM-DD")
+  );
+  const [to, setTo] = useState(
+    searchParams.get("to") || moment().format("YYYY-MM-DD")
+  );
   const [statistics, setStatistics] = useState([]);
-
   const navigate = useNavigate();
   const { logoutUserContext } = useContext(UserContext);
+  const [loader, setLoader] = useState(false);
 
   const handleFrom = (event) => {
     const { value } = event.target;
@@ -23,6 +29,8 @@ export default function Statistics() {
   };
 
   const getStaticts = async () => {
+    setLoader(true);
+
     const response = await getFromApi(
       `http://${
         import.meta.env.VITE_URL_HOST
@@ -30,24 +38,33 @@ export default function Statistics() {
     );
 
     if (response.status === "error" && response.message === "jwt-expired") {
+      setLoader(false);
       await SwalError(response);
       logoutUserContext();
       return navigate("/login");
     }
-    if (response.status === "error") return await SwalError(response);
+    if (response.status === "error") {
+      setLoader(false);
+      return await SwalError(response);
+    }
 
     if (response.status === "success") {
+      setLoader(false);
       setStatistics(response.payload);
     }
   };
+
+  useEffect(() => {
+    getStaticts();
+  }, []);
 
   return (
     <div className="container">
       <h2 className="text-center">Estadisticas</h2>
       <div className="row">
         <div className="col-12">
-          <div className="row mb-3">
-            <div className="col">
+          <div className="row mb-3 text-center">
+            <div className="col-12 col-md-4">
               <label htmlFor="from">Desde</label>
               <input
                 className="ms-3"
@@ -59,7 +76,7 @@ export default function Statistics() {
                 onChange={handleFrom}
               />
             </div>
-            <div className="col">
+            <div className="col-12 col-md-4">
               <label htmlFor="to">Hasta</label>
               <input
                 className="ms-3"
@@ -71,15 +88,20 @@ export default function Statistics() {
                 onChange={handleTo}
               />
             </div>
-            <div className="col">
+            <div className="col-12 col-md-4">
               <button onClick={getStaticts} className="btn btn-info">
                 Aceptar
               </button>
             </div>
+            <div className="col-12 my-3">
+              {loader && (
+                <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />
+              )}
+            </div>
           </div>
         </div>
         <div className="col-12 mt-3">
-          <StatisticsDetail statistics={statistics} />
+          <StatisticsTable statistics={statistics} />
         </div>
       </div>
     </div>
