@@ -46,3 +46,14 @@ export const getOrderTierBackground = (tier) => {
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
+
+export const validateFreeOrder = (user, order) => {
+  return (
+    (user.role === "premium" &&
+      order.estado !== 21 &&
+      order.ubicacion !== 22) ||
+    (user.role === "technical" &&
+      order.estado === 22 &&
+      order.tecnico === user?.code_technical)
+  );
+};
