@@ -14,7 +14,7 @@ import {
   putToApi,
 } from "../../../utils";
 import Swal from "sweetalert2";
-import { formatSerialNumber } from "../orderUtils";
+import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
 
@@ -444,13 +444,11 @@ export default function OrderDetail() {
                 )}
 
               <div className="col text-end">
-                {validateUserRole(user, "premium") &&
-                  order.estado !== 21 &&
-                  order.ubicacion !== 22 && (
-                    <button className="btn btn-warning" onClick={freeOrder}>
-                      Liberar
-                    </button>
-                  )}
+                {validateFreeOrder(user, order) && (
+                  <button className="btn btn-warning" onClick={freeOrder}>
+                    Liberar
+                  </button>
+                )}
                 {validateUserRole(user, "technical", "premium") &&
                   order.estado === 21 && (
                     <button className="btn btn-success" onClick={takeOrder}>
