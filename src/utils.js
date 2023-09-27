@@ -35,6 +35,18 @@ export const postToApi = async (path, body) => {
   return await response.json();
 };
 
+export const deleteToApi = async (path, body) => {
+  const response = await fetch(path, {
+    method: "DELETE",
+    body: JSON.stringify(body),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+    },
+  });
+  return await response.json();
+};
+
 export const formatPrice = (price) => {
   let p = price.toLocaleString("en-US");
   let index = p.indexOf(".");

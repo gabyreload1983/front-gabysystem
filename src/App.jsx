@@ -15,6 +15,7 @@ import UserDetail from "./pages/Users/UserDetail";
 import Orders from "./pages/Orders/Orders";
 import Statistics from "./pages/Statistics/Statistics";
 import * as bootstrap from "bootstrap";
+import OrderList from "./pages/OrderList/OrderList";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route path="users/:id" element={<UserDetail />} />
             <Route path="customers" element={<Customers />} />
             <Route path="products" element={<Products />} />
+            <Route path="orderList" element={<OrderList />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
 
