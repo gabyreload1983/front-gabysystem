@@ -1,6 +1,7 @@
 import React from "react";
 import {
   getOrderDiagnosis,
+  getOrderDiagnosisBackground,
   getOrderState,
   getOrderTier,
   getOrderTierBackground,
@@ -16,7 +17,11 @@ export default function OrderDetail({ order }) {
   );
 
   return (
-    <div className="row border border-5 border-success">
+    <div
+      className={`row border border-5 border-${getOrderDiagnosisBackground(
+        order.diag
+      )}`}
+    >
       <div className="col-12 col-md-6">
         <table className="table">
           <tbody>

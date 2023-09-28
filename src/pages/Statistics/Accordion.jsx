@@ -1,7 +1,11 @@
 import React from "react";
 import OrderDetail from "../../components/OrderDetail";
 import moment from "moment";
-import { getOrderTier } from "../Orders/orderUtils";
+import {
+  getOrderDiagnosis,
+  getOrderDiagnosisBackground,
+  getOrderTier,
+} from "../Orders/orderUtils";
 
 export default function Accordion({ orders }) {
   return (
@@ -12,7 +16,9 @@ export default function Accordion({ orders }) {
             <div key={order.nrocompro} className="accordion-item">
               <h2 className="accordion-header">
                 <button
-                  className="accordion-button collapsed"
+                  className={`accordion-button collapsed bg-${getOrderDiagnosisBackground(
+                    order.diag
+                  )}`}
                   type="button"
                   data-bs-toggle="collapse"
                   data-bs-target={`#${order.nrocompro}`}
@@ -32,6 +38,7 @@ export default function Accordion({ orders }) {
                       <div className="col">
                         TIER: {getOrderTier(order.prioridad)}
                       </div>
+                      <div className="col">{getOrderDiagnosis(order.diag)}</div>
                     </div>
                   </div>
                 </button>
