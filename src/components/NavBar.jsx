@@ -105,6 +105,15 @@ function NavBar() {
                       Pedidos
                     </NavLink>
                   </li>
+                  <li className="nav-item">
+                    <NavLink
+                      className="nav-link"
+                      to="summaries"
+                      style={({ isActive }) => (isActive ? activeStyles : null)}
+                    >
+                      Resumenes
+                    </NavLink>
+                  </li>
                 </>
               )}
             </ul>
