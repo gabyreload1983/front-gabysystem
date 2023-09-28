@@ -35,14 +35,15 @@ export default function Summaries() {
       if (response.status === "success") {
         setLoader(false);
         setCustomers(response.payload);
+        console.log(response.message);
       }
     } catch (error) {
       SwalError(error);
     }
   };
 
-  const handleSendSummary = async (customer) => {
-    console.log(customer.codigo, customer.mail);
+  const handleEmailSummary = async (customer) => {
+    console.log(customer.codigo, customer.mail, customer.balance);
   };
 
   const handleChangeEmail = async (e) => {
@@ -55,10 +56,21 @@ export default function Summaries() {
     );
   };
 
+  const handleChangePhone = async (e) => {
+    const { name, value } = e.target;
+    setCustomers((prevCustomers) =>
+      prevCustomers.map((customer) => {
+        if (customer.codigo === name) return { ...customer, telefono: value };
+        return customer;
+      })
+    );
+  };
+
   return (
     <div className="container">
       <div className="row my-3">
-        <div className="col">
+        <div className="col d-flex justify-content-between">
+          <span className="fs-3">CANTIDAD: {customers.length}</span>
           <button onClick={getCustomers} className="btn btn-outline-info">
             Listar Deudores
           </button>
@@ -68,7 +80,8 @@ export default function Summaries() {
       <SummariesList
         customers={customers}
         onHandleChangeEmail={handleChangeEmail}
-        onHandleSendSummary={handleSendSummary}
+        onHandleEmailSummary={handleEmailSummary}
+        onHandleChangePhone={handleChangePhone}
       />
     </div>
   );

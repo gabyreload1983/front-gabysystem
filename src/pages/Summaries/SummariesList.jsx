@@ -4,7 +4,8 @@ import SummaryItem from "./SummaryItem";
 export default function SummariesList({
   customers,
   onHandleChangeEmail,
-  onHandleSendSummary,
+  onHandleEmailSummary,
+  onHandleChangePhone,
 }) {
   return (
     <>
@@ -17,6 +18,7 @@ export default function SummariesList({
               <th scope="col">SALDO</th>
               <th scope="col">EMAIL</th>
               <th scope="col"></th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
@@ -26,7 +28,8 @@ export default function SummariesList({
                   <SummaryItem
                     customer={customer}
                     onHandleChangeEmail={onHandleChangeEmail}
-                    onHandleSendSummary={onHandleSendSummary}
+                    onHandleEmailSummary={onHandleEmailSummary}
+                    onHandleChangePhone={onHandleChangePhone}
                   />
                 </tr>
               ))}
