@@ -43,6 +43,18 @@ export const getOrderTierBackground = (tier) => {
   if (tier === 10) return "tier10";
 };
 
+export const getOrderDiagnosisBackground = (diagnosis) => {
+  if (diagnosis === 21) return "";
+  if (diagnosis === 22) return "success";
+  if (diagnosis === 23) return "danger";
+};
+
+export const getOrderStateBackground = (state) => {
+  if (diagnosis === 21) return "danger";
+  if (diagnosis === 22) return "warning";
+  if (diagnosis === 23) return "success";
+};
+
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
