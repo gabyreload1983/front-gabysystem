@@ -111,3 +111,6 @@ export const SwalWaiting = async (message) => {
 };
 
 export const validateUserRole = (user, ...roles) => roles.includes(user?.role);
+
+export const capitalize = (word) =>
+  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();

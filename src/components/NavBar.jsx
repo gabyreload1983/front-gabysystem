@@ -20,7 +20,7 @@ function NavBar() {
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="/">
-          GabySystem
+          GabySystem - V{import.meta.env.VITE_VERSION}
         </a>
         <button
           className="navbar-toggler"
@@ -33,123 +33,6 @@ function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarNav">
-          {user && (
-            <ul className="navbar-nav">
-              {validateUserRole(user, "admin") && (
-                <>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="register"
-                      style={({ isActive }) => (isActive ? activeStyles : null)}
-                    >
-                      Register
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="users"
-                      style={({ isActive }) => (isActive ? activeStyles : null)}
-                    >
-                      Users
-                    </NavLink>
-                  </li>
-                </>
-              )}
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="customers"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                >
-                  Clientes
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="products"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                >
-                  Productos
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="orders"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                >
-                  Ordenes
-                </NavLink>
-              </li>
-              {validateUserRole(user, "premium") && (
-                <>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="statistics"
-                      style={({ isActive }) => (isActive ? activeStyles : null)}
-                    >
-                      Estadisticas
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="orderList"
-                      style={({ isActive }) => (isActive ? activeStyles : null)}
-                    >
-                      Pedidos
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link"
-                      to="summaries"
-                      style={({ isActive }) => (isActive ? activeStyles : null)}
-                    >
-                      Resumenes
-                    </NavLink>
-                  </li>
-                </>
-              )}
-            </ul>
-          )}
-
-          <ul className="navbar-nav ms-auto">
-            {user ? (
-              <>
-                <li className="nav-item">
-                  <NavLink
-                    className="nav-link"
-                    to="profile"
-                    style={({ isActive }) => (isActive ? activeStyles : null)}
-                  >
-                    {user.first_name} {user.last_name}
-                  </NavLink>
-                </li>
-                <li className="nav-item">
-                  <NavLink className="nav-link" onClick={logout}>
-                    Logout
-                  </NavLink>
-                </li>
-              </>
-            ) : (
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="login"
-                  style={({ isActive }) => (isActive ? activeStyles : null)}
-                >
-                  Login
-                </NavLink>
-              </li>
-            )}
-          </ul>
-        </div>
       </div>
     </nav>
   );
