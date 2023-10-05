@@ -29,8 +29,12 @@ export default function PieOrdersPending({
         borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
         borderWidth: 2,
         link: [
-          `/orders/search/pending-${sector === ".PC" ? "pc" : "imp"}`,
-          "/orders/search/in-process",
+          `/orders/search?sector=${
+            sector === ".PC" ? "pc" : "imp"
+          }&state=pending`,
+          `/orders/search?sector=${
+            sector === ".PC" ? "pc" : "imp"
+          }&state=process`,
         ],
       },
     ],

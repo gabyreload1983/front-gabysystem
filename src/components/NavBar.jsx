@@ -1,7 +1,7 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { useContext } from "react";
-import { validateUserRole } from "../utils";
+import SearchOrder from "./SearchOrder";
 
 function NavBar() {
   const { user, logoutUserContext } = useContext(UserContext);
@@ -33,6 +33,7 @@ function NavBar() {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+        {user && <SearchOrder />}
       </div>
     </nav>
   );

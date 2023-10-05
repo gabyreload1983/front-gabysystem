@@ -3,6 +3,7 @@ import { NavLink, Outlet } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import SearchOrder from "./SearchOrder";
 import { validateUserRole } from "../utils";
+import OrdersGraphics from "../pages/Orders/OrdersGraphics";
 
 export default function OrdersLayout() {
   const { user } = useContext(UserContext);
@@ -28,45 +29,12 @@ export default function OrdersLayout() {
           </button>
           <div className="collapse navbar-collapse" id="navbarNavOrders">
             <ul className="navbar-nav">
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/orders/search/pending-pc"
-                  style={({ isActive }) =>
-                    isActive ? activeStylesOrders : null
-                  }
-                >
-                  Pc Pendientes
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/orders/search/pending-imp"
-                  style={({ isActive }) =>
-                    isActive ? activeStylesOrders : null
-                  }
-                >
-                  Impresoras Pendientes
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  className="nav-link"
-                  to="/orders/search/in-process"
-                  style={({ isActive }) =>
-                    isActive ? activeStylesOrders : null
-                  }
-                >
-                  En Proceso
-                </NavLink>
-              </li>
               {validateUserRole(user, "saler", "premium") && (
                 <>
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      to="/orders/search/to-deliver"
+                      to="/orders/search?state=to-deliver"
                       style={({ isActive }) =>
                         isActive ? activeStylesOrders : null
                       }
@@ -77,7 +45,7 @@ export default function OrdersLayout() {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      to="/orders/search/final-disposition"
+                      to="/orders/search?state=final-disposition"
                       style={({ isActive }) =>
                         isActive ? activeStylesOrders : null
                       }
@@ -92,7 +60,7 @@ export default function OrdersLayout() {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link"
-                      to={`/orders/search/technical-${user.code_technical}`}
+                      to={`/orders/search?technical=${user.code_technical}`}
                       style={({ isActive }) =>
                         isActive ? activeStylesOrders : null
                       }
@@ -103,10 +71,10 @@ export default function OrdersLayout() {
                 </>
               )}
             </ul>
-            <SearchOrder />
           </div>
         </div>
       </nav>
+      <OrdersGraphics />
 
       <Outlet />
     </div>

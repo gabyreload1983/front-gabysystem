@@ -14,7 +14,7 @@ export default function SideBarCommon() {
   return (
     <div className="list-group mt-3 mx-2">
       <h6 className="text-light ms-3">{capitalize(user.role)}</h6>
-      <NavLink className="nav-link" to="ordersGraphics">
+      <NavLink className="nav-link" to="orders">
         <button
           type="button"
           className="list-group-item list-group-item-action list-group-item-dark d-flex align-items-center gap-2"
