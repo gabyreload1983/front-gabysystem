@@ -17,6 +17,7 @@ import Statistics from "./pages/Statistics/Statistics";
 import * as bootstrap from "bootstrap";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
+import OrdersGraphics from "./pages/Orders/OrdersGraphics";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
+            <Route path="/ordersGraphics" element={<OrdersGraphics />} />
 
             <Route path="orders" element={<OrdersLayout />}>
               <Route path="search/:filter" element={<Orders />} />
