@@ -45,7 +45,10 @@ export default function OrdersGraphics() {
     <>
       {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
       <div className="row mt-3">
-        <div className="col-12 col-md-9 col-lg-4" style={{ height: "300px" }}>
+        <div
+          className="col-12 col-md-6 d-flex justify-content-center"
+          style={{ height: "300px" }}
+        >
           <PieOrdersPending
             onHandleClick={handleClick}
             orders={orders}
@@ -53,7 +56,10 @@ export default function OrdersGraphics() {
             sector={".PC"}
           />
         </div>
-        <div className="col-12 col-md-9 col-lg-4" style={{ height: "300px" }}>
+        <div
+          className="col-12 col-md-6 d-flex justify-content-center"
+          style={{ height: "300px" }}
+        >
           <PieOrdersPending
             onHandleClick={handleClick}
             orders={orders}
