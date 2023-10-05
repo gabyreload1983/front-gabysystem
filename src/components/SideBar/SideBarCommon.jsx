@@ -14,7 +14,7 @@ export default function SideBarCommon() {
   return (
     <div className="list-group mt-3 mx-2">
       <h6 className="text-light ms-3">{capitalize(user.role)}</h6>
-      <NavLink className="nav-link" to="orders">
+      <NavLink className="nav-link" to="ordersGraphics">
         <button
           type="button"
           className="list-group-item list-group-item-action list-group-item-dark d-flex align-items-center gap-2"
@@ -30,7 +30,7 @@ export default function SideBarCommon() {
           >
             <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z" />
           </svg>
-          <span>Ordernes</span>
+          <span>Ordenes</span>
         </button>
       </NavLink>
       <NavLink className="nav-link" to="products">

@@ -4,7 +4,13 @@ import { Pie, getElementAtEvent } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export default function PieOrdersPending({ orders, labels, sector }) {
+export default function PieOrdersPending({
+  orders,
+  labels,
+  sector,
+  onHandleClick,
+}) {
+  const chartRef = useRef();
   let pendings = 0;
   let process = 0;
 
@@ -21,22 +27,29 @@ export default function PieOrdersPending({ orders, labels, sector }) {
         data: [pendings, process],
         backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
-        borderWidth: 1,
+        borderWidth: 2,
+        link: [
+          `/orders/search/pending-${sector === ".PC" ? "pc" : "imp"}`,
+          "/orders/search/in-process",
+        ],
       },
     ],
   };
-  const chartRef = useRef();
+
+  const options = {};
+
   const onClick = (event) => {
-    const elemet = getElementAtEvent(chartRef.current, event);
-    console.log(data.labels[elemet[0].index]);
+    const clickDatasetIndex = getElementAtEvent(chartRef.current, event)[0]
+      .datasetIndex;
+    const index = getElementAtEvent(chartRef.current, event)[0].index;
+
+    const link = data.datasets[0].link[index];
+    onHandleClick(link);
   };
 
   return (
     <>
-      <h3 className="text-center">
-        {labels[0]}: {pendings + process}
-      </h3>
-      <Pie data={data} ref={chartRef} onClick={onClick} />;
+      <Pie data={data} ref={chartRef} onClick={onClick} options={options} />
     </>
   );
 }

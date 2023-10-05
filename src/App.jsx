@@ -36,13 +36,13 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
-            <Route path="/orders" element={<OrdersGraphics />} />
+            <Route path="/ordersGraphics" element={<OrdersGraphics />} />
 
-            {/* <Route path="orders" element={<OrdersLayout />}>
+            <Route path="orders" element={<OrdersLayout />}>
               <Route path="search/:filter" element={<Orders />} />
 
               <Route path="detail/:id" element={<OrderDetail />} />
-            </Route> */}
+            </Route>
 
             <Route path="*" element={<PageNotFount />} />
           </Route>
