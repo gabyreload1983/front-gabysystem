@@ -7,6 +7,7 @@ import {
   getOrderUbication,
 } from "../orderUtils";
 import moment from "moment";
+import SendWhatsapp from "../../../components/SendWhatsapp";
 
 export default function OrderDetailHeader({ order }) {
   return (
@@ -44,7 +45,9 @@ export default function OrderDetailHeader({ order }) {
           <tbody>
             <tr>
               <td>TELEFONO</td>
-              <td>{order.telefono}</td>
+              <td>
+                <SendWhatsapp celphone={order.telefono} />
+              </td>
             </tr>
             <tr>
               <td>ARTICULO</td>
