@@ -9,7 +9,7 @@ export default function SendWhatsapp({ celphone }) {
   };
 
   return (
-    <div class="input-group input-group-sm custom-input">
+    <div className="input-group input-group-sm custom-input">
       <input
         type="text"
         className="form-control"
