@@ -17,6 +17,7 @@ import Statistics from "./pages/Statistics/Statistics";
 import * as bootstrap from "bootstrap";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
+import UpdateCustomer from "./pages/Orders/UpdateCustomer";
 
 function App() {
   return (
@@ -36,6 +37,10 @@ function App() {
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
             <Route path="/orders/detail/:id" element={<OrderDetail />} />
+            <Route
+              path="/orders/update-customer"
+              element={<UpdateCustomer />}
+            />
 
             <Route path="orders" element={<OrdersLayout />}>
               <Route path="search" element={<Orders />} />
