@@ -8,6 +8,7 @@ export default function CustomersList({ customers, onSearchCustomerOrders }) {
           <tr className="table-success">
             <th scope="col">CODIGO</th>
             <th scope="col">DESCRIPCION</th>
+            <th scope="col">EMAIL</th>
             <th scope="col">DIRECCION</th>
             <th scope="col">TELEFONO</th>
           </tr>
@@ -22,6 +23,7 @@ export default function CustomersList({ customers, onSearchCustomerOrders }) {
               >
                 <td>{customer.codigo}</td>
                 <td>{customer.nombre}</td>
+                <td>{customer.mail}</td>
                 <td>{customer.direccion}</td>
                 <td>{customer.telefono}</td>
               </tr>
