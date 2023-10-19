@@ -114,3 +114,12 @@ export const validateUserRole = (user, ...roles) => roles.includes(user?.role);
 
 export const capitalize = (word) =>
   word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+
+export const question = async (questionMessage = "Confirmar accion??") => {
+  const response = await Swal.fire({
+    text: `${questionMessage}?`,
+    showCancelButton: true,
+    confirmButtonText: "Aceptar",
+  });
+  return response.isConfirmed;
+};
