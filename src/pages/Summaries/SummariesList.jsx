@@ -16,6 +16,7 @@ export default function SummariesList({
               <th scope="col">CODIGO</th>
               <th scope="col">CLIENTE</th>
               <th scope="col">SALDO</th>
+              <th scope="col">TIPO</th>
               <th scope="col">EMAIL</th>
               <th scope="col"></th>
               <th scope="col"></th>

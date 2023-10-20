@@ -35,7 +35,6 @@ export default function Summaries() {
       if (response.status === "success") {
         setLoader(false);
         setCustomers(response.payload);
-        console.log(response.message);
       }
     } catch (error) {
       SwalError(error);

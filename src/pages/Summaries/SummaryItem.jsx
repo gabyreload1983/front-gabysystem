@@ -12,6 +12,7 @@ export default function SummaryItem({
       <td>{customer.codigo}</td>
       <td>{customer.nombre}</td>
       <td>${formatPrice(customer.balance)}</td>
+      <td>{customer.condicion}</td>
       <td>
         <div className="mb-3">
           <input
