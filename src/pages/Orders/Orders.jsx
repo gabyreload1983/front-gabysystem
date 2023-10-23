@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { SwalError, getFromApi } from "../../utils";
+import { SwalError, getFromApi, validateStatus } from "../../utils";
 import OrderList from "./OrderList";
 import { BarLoader } from "react-spinners";
 
@@ -18,18 +18,17 @@ export default function Orders() {
   let title = "";
 
   const getOrders = async (query) => {
-    setLoader(true);
-    const response = await getFromApi(query);
-    setLoader(false);
+    try {
+      setLoader(true);
+      const response = await getFromApi(query);
+      setLoader(false);
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success") return setOrders(response.payload);
+    } catch (error) {
+      SwalError(error);
     }
-    if (response.status === "error") return await SwalError(response);
-
-    if (response.status === "success") return setOrders(response.payload);
   };
 
   if (

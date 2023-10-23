@@ -8,7 +8,7 @@ export const getFromApi = async (path) => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
-  return await response.json();
+  if (validateResponse(response)) return await response.json();
 };
 
 export const putToApi = async (path, body) => {
@@ -20,7 +20,7 @@ export const putToApi = async (path, body) => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
-  return await response.json();
+  if (validateResponse(response)) return await response.json();
 };
 
 export const postToApi = async (path, body) => {
@@ -32,7 +32,7 @@ export const postToApi = async (path, body) => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
-  return await response.json();
+  if (validateResponse(response)) return await response.json();
 };
 
 export const deleteToApi = async (path, body) => {
@@ -43,7 +43,25 @@ export const deleteToApi = async (path, body) => {
       Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
     },
   });
-  return await response.json();
+  if (validateResponse(response)) return await response.json();
+};
+
+const validateResponse = (response) => {
+  if (response.status === 500) {
+    return SwalError({
+      message:
+        "Error en el Servidor. Ponerse en contacto con el administrador.",
+    });
+  }
+  return true;
+};
+
+export const validateStatus = async (response) => {
+  if (response.status === "error" && response.message === "jwt-expired") {
+    return "jwt-expired";
+  }
+  if (response.status === "error") return await SwalError(response);
+  return response;
 };
 
 export const formatPrice = (price) => {

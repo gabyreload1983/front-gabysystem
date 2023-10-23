@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SwalError, SwalToast, getFromApi } from "../../utils";
+import { SwalError, SwalToast, getFromApi, validateStatus } from "../../utils";
 import CustomersList from "./CustomersList";
 import CustomerOrdersList from "./CustomerOrdersList";
 import { useNavigate } from "react-router-dom";
@@ -14,38 +14,34 @@ export default function Customers() {
   const { logoutUserContext } = useContext(UserContext);
 
   const getCustomers = async (search) => {
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/customers/${search}`
-    );
+    try {
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/customers/${search}`
+      );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
-    if (response.status === "success") {
-      setCustomers(response.payload);
+      if (response.status === "success") setCustomers(response.payload);
+    } catch (error) {
+      SwalError(error);
     }
   };
 
   const getCustomerOrders = async (code) => {
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/orders/customer/${code}`
-    );
+    try {
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/customer/${code}`
+      );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
-    if (response.status === "success") {
-      setOrders(response.payload);
-      response.payload.length === 0 &&
-        SwalToast("Cliente sin ordenes de reparacion!");
+      if (response.status === "success") {
+        setOrders(response.payload);
+        response.payload.length === 0 &&
+          SwalToast("Cliente sin ordenes de reparacion!");
+      }
+    } catch (error) {
+      SwalError(error);
     }
   };
 

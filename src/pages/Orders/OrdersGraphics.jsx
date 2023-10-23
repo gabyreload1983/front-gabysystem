@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { SwalError, filterOrders, getFromApi } from "../../utils";
+import {
+  SwalError,
+  filterOrders,
+  getFromApi,
+  validateStatus,
+} from "../../utils";
 import PieOrdersPending from "../../components/PieOrdersPending";
 import { BarLoader } from "react-spinners";
 
@@ -17,27 +22,27 @@ export default function OrdersGraphics() {
   const { logoutUserContext } = useContext(UserContext);
 
   const getOrders = async () => {
-    setLoader(true);
+    try {
+      setLoader(true);
 
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/orders/pendings-all`
-    );
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/pendings-all`
+      );
 
-    setLoader(false);
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
+      setLoader(false);
 
-    if (response.status === "success") {
-      const orders = response.payload;
-      setPcPending(filterOrders(orders, 21, ".PC"));
-      setPcProcess(filterOrders(orders, 22, ".PC"));
-      setImpPending(filterOrders(orders, 21, ".IMP"));
-      setImpProcess(filterOrders(orders, 22, ".IMP"));
-      setOrders(response.payload);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success") {
+        const orders = response.payload;
+        setPcPending(filterOrders(orders, 21, ".PC"));
+        setPcProcess(filterOrders(orders, 22, ".PC"));
+        setImpPending(filterOrders(orders, 21, ".IMP"));
+        setImpProcess(filterOrders(orders, 22, ".IMP"));
+        setOrders(response.payload);
+      }
+    } catch (error) {
+      SwalError(error);
     }
   };
 

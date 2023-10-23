@@ -7,18 +7,17 @@ export default function Users() {
   const navigate = useNavigate();
 
   const getUsers = async () => {
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/users`
-    );
+    try {
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/users`
+      );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success") return setusers(response.users);
+    } catch (error) {
+      SwalError(error);
     }
-    if (response.status === "error") return await SwalError(response);
-
-    if (response.status === "success") return setusers(response.users);
   };
 
   useEffect(() => {

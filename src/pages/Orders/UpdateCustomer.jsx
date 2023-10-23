@@ -9,6 +9,7 @@ import {
   getFromApi,
   putToApi,
   question,
+  validateStatus,
 } from "../../utils";
 import OrderDetailHeader from "./OrderDetail/OrderDetailHeader";
 import { BarLoader } from "react-spinners";
@@ -24,16 +25,6 @@ export default function UpdateCustomer() {
   const [customer, setCustomer] = useState(false);
   const [disableUpdate, setDisableUpdate] = useState(true);
 
-  const validateResponse = async (response) => {
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
-    return response;
-  };
-
   const getOrder = async () => {
     try {
       setLoader(true);
@@ -41,11 +32,10 @@ export default function UpdateCustomer() {
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/${orderId}`
       );
       setLoader(false);
-      validateResponse(response);
 
-      if (response.status === "success") {
-        setOrder(response.payload);
-      }
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success") setOrder(response.payload);
     } catch (error) {
       SwalError(error);
     }
@@ -60,11 +50,9 @@ export default function UpdateCustomer() {
         );
         setLoader(false);
 
-        validateResponse(response);
+        if (validateStatus(response) === "jwt-expired") navigate("login");
 
-        if (response.status === "success") {
-          setCustomers(response.payload);
-        }
+        if (response.status === "success") setCustomers(response.payload);
       }
     } catch (error) {
       SwalError(error);
@@ -90,7 +78,8 @@ export default function UpdateCustomer() {
         { nrocompro: order.nrocompro, customerId: customer.codigo }
       );
       setLoader(false);
-      validateResponse(response);
+
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         setDisableUpdate(true);
