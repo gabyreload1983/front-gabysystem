@@ -1,13 +1,17 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { SwalError, getFromApi } from "../../utils";
+import { SwalError, filterOrders, getFromApi } from "../../utils";
 import PieOrdersPending from "../../components/PieOrdersPending";
 import { BarLoader } from "react-spinners";
 
 export default function OrdersGraphics() {
   const [loader, setLoader] = useState(false);
   const [orders, setOrders] = useState([]);
+  const [pcPending, setPcPending] = useState([]);
+  const [pcProcess, setPcProcess] = useState([]);
+  const [impPending, setImpPending] = useState([]);
+  const [impProcess, setImpProcess] = useState([]);
 
   const navigate = useNavigate();
   const { logoutUserContext } = useContext(UserContext);
@@ -28,12 +32,16 @@ export default function OrdersGraphics() {
     if (response.status === "error") return await SwalError(response);
 
     if (response.status === "success") {
-      return setOrders(response.payload);
+      const orders = response.payload;
+      setPcPending(filterOrders(orders, 21, ".PC"));
+      setPcProcess(filterOrders(orders, 22, ".PC"));
+      setImpPending(filterOrders(orders, 21, ".IMP"));
+      setImpProcess(filterOrders(orders, 22, ".IMP"));
+      setOrders(response.payload);
     }
   };
 
   const handleClick = async (link) => {
-    console.log(link);
     navigate(link);
   };
 
@@ -51,7 +59,8 @@ export default function OrdersGraphics() {
         >
           <PieOrdersPending
             onHandleClick={handleClick}
-            orders={orders}
+            pending={pcPending}
+            process={pcProcess}
             labels={["PC Pendientes", "PC En Proceso"]}
             sector={".PC"}
           />
@@ -62,7 +71,8 @@ export default function OrdersGraphics() {
         >
           <PieOrdersPending
             onHandleClick={handleClick}
-            orders={orders}
+            pending={impPending}
+            process={impProcess}
             labels={["Impresoras Pendientes", "Impresoras En Proceso"]}
             sector={".IMP"}
           />

@@ -54,7 +54,6 @@ export default function Orders() {
     title = `Ordenes ${state}`;
   }
 
-  console.log(query);
   useEffect(() => {
     getOrders(query);
   }, [query]);
