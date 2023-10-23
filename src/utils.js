@@ -123,3 +123,9 @@ export const question = async (questionMessage = "Confirmar accion??") => {
   });
   return response.isConfirmed;
 };
+
+export const filterOrders = (orders, estado, sector) => {
+  return orders.filter(
+    (order) => order.estado === estado && order.codiart === sector
+  );
+};

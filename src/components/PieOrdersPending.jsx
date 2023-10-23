@@ -5,26 +5,20 @@ import { Pie, getElementAtEvent } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function PieOrdersPending({
-  orders,
+  pending,
+  process,
   labels,
   sector,
   onHandleClick,
 }) {
   const chartRef = useRef();
-  let pendings = 0;
-  let process = 0;
-
-  orders.forEach((order) => {
-    if (order.estado === 21 && order.codiart === sector) pendings += 1;
-    if (order.estado === 22 && order.codiart === sector) process += 1;
-  });
 
   const data = {
     labels: labels,
     datasets: [
       {
         label: "Cantidad",
-        data: [pendings, process],
+        data: [pending?.length, process?.length],
         backgroundColor: ["rgba(255, 99, 132, 0.2)", "rgba(54, 162, 235, 0.2)"],
         borderColor: ["rgba(255, 99, 132, 1)", "rgba(54, 162, 235, 1)"],
         borderWidth: 2,
@@ -44,8 +38,8 @@ export default function PieOrdersPending({
 
   const onClick = (event) => {
     const clickDatasetIndex = getElementAtEvent(chartRef.current, event)[0]
-      .datasetIndex;
-    const index = getElementAtEvent(chartRef.current, event)[0].index;
+      ?.datasetIndex;
+    const index = getElementAtEvent(chartRef.current, event)[0]?.index;
 
     const link = data.datasets[0].link[index];
     onHandleClick(link);
