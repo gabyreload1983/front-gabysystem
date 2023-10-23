@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { SwalError, SwalToast, deleteToApi, getFromApi } from "../../utils";
+import {
+  SwalError,
+  SwalToast,
+  deleteToApi,
+  getFromApi,
+  validateStatus,
+} from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
@@ -12,16 +18,6 @@ export default function OrderList() {
   const [loader, setLoader] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const validateResponse = async (response) => {
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
-    return response;
-  };
-
   const getOrderList = async () => {
     try {
       setLoader(true);
@@ -30,12 +26,10 @@ export default function OrderList() {
         `http://${import.meta.env.VITE_URL_HOST}/api/products/order-list`
       );
 
-      validateResponse(response);
+      setLoader(false);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
-      if (response.status === "success") {
-        setLoader(false);
-        setProducts(response.payload);
-      }
+      if (response.status === "success") setProducts(response.payload);
     } catch (error) {
       SwalError(error);
     }
@@ -53,7 +47,8 @@ export default function OrderList() {
       const response = await deleteToApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/products/clear-order-list`
       );
-      validateResponse(response);
+
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         getOrderList();
@@ -71,7 +66,8 @@ export default function OrderList() {
           import.meta.env.VITE_URL_HOST
         }/api/products/order-list/${code}`
       );
-      validateResponse(response);
+
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         getOrderList();

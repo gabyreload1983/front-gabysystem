@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useContext, useEffect, useState } from "react";
-import { SwalError, getFromApi } from "../../utils";
+import { SwalError, getFromApi, validateStatus } from "../../utils";
 import StatisticsTable from "./StatisticsTable";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
@@ -29,28 +29,23 @@ export default function Statistics() {
   };
 
   const getStaticts = async () => {
-    setLoader(true);
+    try {
+      setLoader(true);
 
-    const response = await getFromApi(
-      `http://${
-        import.meta.env.VITE_URL_HOST
-      }/api/orders/statitstics/${from}/${to}`
-    );
+      const response = await getFromApi(
+        `http://${
+          import.meta.env.VITE_URL_HOST
+        }/api/orders/statitstics/${from}/${to}`
+      );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      setLoader(false);
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") {
-      setLoader(false);
-      return await SwalError(response);
-    }
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
-    if (response.status === "success") {
-      setLoader(false);
-      setStatistics(response.payload);
+      if (response.status === "success") {
+        setLoader(false);
+        setStatistics(response.payload);
+      }
+    } catch (error) {
+      SwalError(error);
     }
   };
 

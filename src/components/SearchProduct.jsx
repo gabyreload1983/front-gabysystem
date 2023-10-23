@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SwalError, getFromApi } from "./../utils";
+import { SwalError, SwalSuccess, getFromApi, validateStatus } from "./../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
@@ -11,31 +11,31 @@ export default function SearchProduct({ onChangeProducts }) {
   const { logoutUserContext } = useContext(UserContext);
 
   const searchProduct = async () => {
-    if (!input)
-      return Swal.fire({
-        text: `Ingrese al menos 3 caracteres`,
-        icon: "error",
-      });
-    if (searchBy === "ean" && input.split("").length !== 13)
-      return Swal.fire({
-        text: `Ingrese un codigo de 13 numeros`,
-        icon: "error",
-      });
-    const response = await getFromApi(
-      `http://${
-        import.meta.env.VITE_URL_HOST
-      }/api/products/search-by?${searchBy}=${input}`
-    );
+    try {
+      if (!input)
+        return Swal.fire({
+          text: `Ingrese al menos 3 caracteres`,
+          icon: "error",
+        });
+      if (searchBy === "ean" && input.split("").length !== 13)
+        return Swal.fire({
+          text: `Ingrese un codigo de 13 numeros`,
+          icon: "error",
+        });
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
+      const response = await getFromApi(
+        `http://${
+          import.meta.env.VITE_URL_HOST
+        }/api/products/search-by?${searchBy}=${input}`
+      );
+
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success")
+        return onChangeProducts(response.products);
+    } catch (error) {
+      SwalError(error);
     }
-    if (response.status === "error") return await SwalError(response);
-
-    if (response.status === "success")
-      return onChangeProducts(response.products);
   };
 
   const handleSearchChange = (event) => {

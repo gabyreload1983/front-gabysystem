@@ -11,18 +11,17 @@ export default function UserDetail() {
   const { logoutUserContext } = useContext(UserContext);
 
   const getUser = async () => {
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`
-    );
+    try {
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`
+      );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
+      if (validateStatus(response) === "jwt-expired") navigate("login");
+
+      if (response.status === "success") return setUpdateUser(response.user);
+    } catch (error) {
+      SwalError(error);
     }
-    if (response.status === "error") return await SwalError(response);
-
-    if (response.status === "success") return setUpdateUser(response.user);
   };
   useEffect(() => {
     getUser();
@@ -42,12 +41,7 @@ export default function UserDetail() {
       updateUser
     );
 
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
+    if (validateStatus(response) === "jwt-expired") navigate("login");
 
     if (response.status === "success") {
       await Swal.fire({

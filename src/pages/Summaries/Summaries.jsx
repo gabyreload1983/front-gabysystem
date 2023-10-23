@@ -3,7 +3,7 @@ import SummariesList from "./SummariesList";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { SwalError, getFromApi } from "../../utils";
+import { SwalError, getFromApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 
 export default function Summaries() {
@@ -12,16 +12,6 @@ export default function Summaries() {
   const [loader, setLoader] = useState(false);
   const [customers, setCustomers] = useState([]);
 
-  const validateResponse = async (response) => {
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
-    return response;
-  };
-
   const getCustomers = async () => {
     try {
       setLoader(true);
@@ -29,11 +19,11 @@ export default function Summaries() {
       const response = await getFromApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/customers/summaries`
       );
+      setLoader(false);
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
-        setLoader(false);
         setCustomers(response.payload);
       }
     } catch (error) {

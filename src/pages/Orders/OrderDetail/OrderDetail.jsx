@@ -12,6 +12,7 @@ import {
   getFromApi,
   getTotalOrder,
   putToApi,
+  validateStatus,
 } from "../../../utils";
 import Swal from "sweetalert2";
 import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
@@ -35,28 +36,22 @@ export default function OrderDetail() {
     navigate(-1);
   };
 
-  const validateResponse = async (response) => {
-    if (response.status === "error" && response.message === "jwt-expired") {
-      await SwalError(response);
-      logoutUserContext();
-      return navigate("/login");
-    }
-    if (response.status === "error") return await SwalError(response);
-    return response;
-  };
-
   const getOrder = async () => {
-    const response = await getFromApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
-    );
-    validateResponse(response);
+    try {
+      const response = await getFromApi(
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
+      );
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
-    if (response.status === "success") {
-      const orderResponse = response.payload;
-      setOrder(orderResponse);
-      setDiagnosis(orderResponse.diagnostico);
-      setPrice(Number(orderResponse.costo));
-      setTotal(Number(orderResponse.total));
+      if (response.status === "success") {
+        const orderResponse = response.payload;
+        setOrder(orderResponse);
+        setDiagnosis(orderResponse.diagnostico);
+        setPrice(Number(orderResponse.costo));
+        setTotal(Number(orderResponse.total));
+      }
+    } catch (error) {
+      SwalError(error);
     }
   };
 
@@ -94,7 +89,7 @@ export default function OrderDetail() {
         }
       );
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         await getOrder();
@@ -138,7 +133,7 @@ export default function OrderDetail() {
 
       SwalWaiting("Cerrando Orden...");
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         await getOrder();
@@ -168,7 +163,7 @@ export default function OrderDetail() {
         orderToFree
       );
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         await getOrder();
@@ -196,7 +191,7 @@ export default function OrderDetail() {
         }
       );
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         await getOrder();
@@ -210,52 +205,56 @@ export default function OrderDetail() {
   //Saler
 
   const handleAddingProduct = async (product) => {
-    const copyProduct = { ...product };
-    let serie = "";
-    if (copyProduct.trabaserie === "S") {
-      let { value } = await Swal.fire({
-        input: "text",
-        inputLabel: "Ingrese Nº Serie",
-        inputPlaceholder: "Numero de Serie",
-        showCancelButton: true,
-      });
+    try {
+      const copyProduct = { ...product };
+      let serie = "";
+      if (copyProduct.trabaserie === "S") {
+        let { value } = await Swal.fire({
+          input: "text",
+          inputLabel: "Ingrese Nº Serie",
+          inputPlaceholder: "Numero de Serie",
+          showCancelButton: true,
+        });
 
-      if (!value) {
-        return;
-      }
-
-      value = formatSerialNumber(value);
-
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${value}`
-      );
-
-      validateResponse(response);
-
-      if (response.status === "success") {
-        if (response.payload.length) {
-          const productFind = response.payload[0];
-          if (copyProduct.codigo !== productFind.codigo)
-            return await SwalError({
-              message: `El serie pertenece al producto ${productFind.codigo}`,
-            });
+        if (!value) {
+          return;
         }
+
+        value = formatSerialNumber(value);
+
+        const response = await getFromApi(
+          `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${value}`
+        );
+
+        if (validateStatus(response) === "jwt-expired") navigate("login");
+
+        if (response.status === "success") {
+          if (response.payload.length) {
+            const productFind = response.payload[0];
+            if (copyProduct.codigo !== productFind.codigo)
+              return await SwalError({
+                message: `El serie pertenece al producto ${productFind.codigo}`,
+              });
+          }
+        }
+        serie = value;
       }
-      serie = value;
+
+      copyProduct.serie = serie;
+      order.products.push(copyProduct);
+      order.total = getTotalOrder(order);
+
+      setOrder((prev) => ({
+        ...prev,
+        products: order.products,
+        total: order.total,
+      }));
+
+      setCancelButton(false);
+      setConfirmButton(false);
+    } catch (error) {
+      SwalError(error);
     }
-
-    copyProduct.serie = serie;
-    order.products.push(copyProduct);
-    order.total = getTotalOrder(order);
-
-    setOrder((prev) => ({
-      ...prev,
-      products: order.products,
-      total: order.total,
-    }));
-
-    setCancelButton(false);
-    setConfirmButton(false);
   };
 
   const handleDeletingProduct = (product) => {
@@ -291,7 +290,7 @@ export default function OrderDetail() {
         order
       );
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         setCancelButton(true);
@@ -359,7 +358,7 @@ export default function OrderDetail() {
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${id}`
       );
 
-      validateResponse(response);
+      if (validateStatus(response) === "jwt-expired") navigate("login");
 
       if (response.status === "success") {
         getOrder();
