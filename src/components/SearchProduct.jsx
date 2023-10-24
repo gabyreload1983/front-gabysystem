@@ -28,8 +28,10 @@ export default function SearchProduct({ onChangeProducts }) {
           import.meta.env.VITE_URL_HOST
         }/api/products/search-by?${searchBy}=${input}`
       );
-
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success")
         return onChangeProducts(response.products);

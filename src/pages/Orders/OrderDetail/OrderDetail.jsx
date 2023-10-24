@@ -41,7 +41,10 @@ export default function OrderDetail() {
       const response = await getFromApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
       );
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         const orderResponse = response.payload;
@@ -89,7 +92,10 @@ export default function OrderDetail() {
         }
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         await getOrder();
@@ -133,7 +139,10 @@ export default function OrderDetail() {
 
       SwalWaiting("Cerrando Orden...");
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         await getOrder();
@@ -163,7 +172,10 @@ export default function OrderDetail() {
         orderToFree
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         await getOrder();
@@ -191,7 +203,10 @@ export default function OrderDetail() {
         }
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         await getOrder();
@@ -226,7 +241,10 @@ export default function OrderDetail() {
           `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${value}`
         );
 
-        if (validateStatus(response) === "jwt-expired") navigate("login");
+        if (validateStatus(response) === "jwt-expired") {
+          logoutUserContext();
+          return navigate("/login");
+        }
 
         if (response.status === "success") {
           if (response.payload.length) {
@@ -290,7 +308,10 @@ export default function OrderDetail() {
         order
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         setCancelButton(true);
@@ -358,7 +379,10 @@ export default function OrderDetail() {
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${id}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         getOrder();

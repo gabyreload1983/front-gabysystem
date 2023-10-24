@@ -27,7 +27,10 @@ export default function OrderList() {
       );
 
       setLoader(false);
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") setProducts(response.payload);
     } catch (error) {
@@ -48,7 +51,10 @@ export default function OrderList() {
         `http://${import.meta.env.VITE_URL_HOST}/api/products/clear-order-list`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         getOrderList();
@@ -67,7 +73,10 @@ export default function OrderList() {
         }/api/products/order-list/${code}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         getOrderList();

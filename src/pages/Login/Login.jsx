@@ -3,10 +3,11 @@ import { UserContext } from "../../context/userContext";
 import { SwalError, postToApi } from "../../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { BarLoader } from "react-spinners";
 
 export default function Login() {
   const navigate = useNavigate();
-  const [isLogin, setIsLogin] = useState(false);
+  const [loader, setLoader] = useState(false);
   const [loginForm, setLoginForm] = useState({
     email: "",
     password: "",
@@ -28,41 +29,40 @@ export default function Login() {
   };
 
   const login = async () => {
-    setIsLogin(true);
+    setLoader(true);
     const response = await postToApi(
       `http://${import.meta.env.VITE_URL_HOST}/api/users/login`,
       loginForm
     );
+    setLoader(false);
 
     if (response.status === "error") {
-      setIsLogin(false);
       return await SwalError(response);
     }
     if (response.status === "success") {
-      const { user, accessToken } = response;
+      const { user, accessToken } = response.payload;
 
       loginUserContext(user, accessToken);
+      navigate("/");
 
       await Swal.fire({
         toast: true,
         icon: "success",
         text: "Login success",
         position: "top-end",
-        timer: 1000,
+        timer: 700,
         showConfirmButton: false,
         timerProgressBar: true,
         didOpen: (toast) => {
           toast.addEventListener("mouseenter", Swal.stopTimer);
           toast.addEventListener("mouseleave", Swal.resumeTimer);
         },
-        didClose: () => {
-          navigate("/");
-        },
       });
     }
   };
   return (
     <div className="container">
+      {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
       <div className="row justify-content-center mt-3">
         <div className="col-12 col-md-6 col-lg-4">
           <h1 className="text-center">LOGIN</h1>
@@ -93,10 +93,10 @@ export default function Login() {
 
             <button
               onClick={login}
-              disabled={isLogin}
+              disabled={loader}
               className="btn btn-primary"
             >
-              {isLogin ? "Wait..." : "Login"}
+              Login
             </button>
           </form>
         </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SwalError, getFromApi } from "../../utils";
+import { SwalError, getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 
 export default function Users() {
@@ -12,9 +12,12 @@ export default function Users() {
         `http://${import.meta.env.VITE_URL_HOST}/api/users`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
-      if (response.status === "success") return setusers(response.users);
+      if (response.status === "success") return setusers(response.payload);
     } catch (error) {
       SwalError(error);
     }
@@ -44,7 +47,7 @@ export default function Users() {
               </tr>
             </thead>
             <tbody>
-              {users.length > 0 &&
+              {users?.length > 0 &&
                 users.map((user) => {
                   return (
                     <tr key={user._id}>

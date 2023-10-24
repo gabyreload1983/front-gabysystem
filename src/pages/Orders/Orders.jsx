@@ -23,7 +23,10 @@ export default function Orders() {
       const response = await getFromApi(query);
       setLoader(false);
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") return setOrders(response.payload);
     } catch (error) {

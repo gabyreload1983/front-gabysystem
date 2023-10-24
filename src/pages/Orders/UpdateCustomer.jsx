@@ -33,7 +33,10 @@ export default function UpdateCustomer() {
       );
       setLoader(false);
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") setOrder(response.payload);
     } catch (error) {
@@ -50,7 +53,10 @@ export default function UpdateCustomer() {
         );
         setLoader(false);
 
-        if (validateStatus(response) === "jwt-expired") navigate("login");
+        if (validateStatus(response) === "jwt-expired") {
+          logoutUserContext();
+          return navigate("/login");
+        }
 
         if (response.status === "success") setCustomers(response.payload);
       }
@@ -79,7 +85,10 @@ export default function UpdateCustomer() {
       );
       setLoader(false);
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         setDisableUpdate(true);
