@@ -72,11 +72,11 @@ const validateResponse = (response) => {
   return true;
 };
 
-export const validateStatus = async (response) => {
+export const validateStatus = (response) => {
   if (response.status === "error" && response.message === "jwt-expired") {
     return "jwt-expired";
   }
-  if (response.status === "error") return await SwalError(response);
+  if (response.status === "error") return SwalError(response);
   return response;
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { SwalError, getFromApi, putToApi } from "../../utils";
+import { SwalError, getFromApi, putToApi, validateStatus } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 
@@ -16,9 +16,12 @@ export default function UserDetail() {
         `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
-      if (response.status === "success") return setUpdateUser(response.user);
+      if (response.status === "success") return setUpdateUser(response.payload);
     } catch (error) {
       SwalError(error);
     }
@@ -41,7 +44,10 @@ export default function UserDetail() {
       updateUser
     );
 
-    if (validateStatus(response) === "jwt-expired") navigate("login");
+    if (validateStatus(response) === "jwt-expired") {
+      logoutUserContext();
+      return navigate("/login");
+    }
 
     if (response.status === "success") {
       await Swal.fire({

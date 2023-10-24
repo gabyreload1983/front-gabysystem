@@ -21,7 +21,10 @@ export default function Summaries() {
       );
       setLoader(false);
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         setCustomers(response.payload);

@@ -31,7 +31,10 @@ export default function OrdersGraphics() {
 
       setLoader(false);
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         const orders = response.payload;

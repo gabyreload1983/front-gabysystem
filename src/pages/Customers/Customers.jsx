@@ -19,7 +19,10 @@ export default function Customers() {
         `http://${import.meta.env.VITE_URL_HOST}/api/customers/${search}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") setCustomers(response.payload);
     } catch (error) {
@@ -33,7 +36,10 @@ export default function Customers() {
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/customer/${code}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         setOrders(response.payload);

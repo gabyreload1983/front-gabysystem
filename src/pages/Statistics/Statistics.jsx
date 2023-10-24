@@ -38,7 +38,10 @@ export default function Statistics() {
         }/api/orders/statitstics/${from}/${to}`
       );
 
-      if (validateStatus(response) === "jwt-expired") navigate("login");
+      if (validateStatus(response) === "jwt-expired") {
+        logoutUserContext();
+        return navigate("/login");
+      }
 
       if (response.status === "success") {
         setLoader(false);
