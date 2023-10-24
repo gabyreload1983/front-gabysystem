@@ -1,49 +1,65 @@
 import Swal from "sweetalert2";
 
 export const getFromApi = async (path) => {
-  const response = await fetch(path, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-    },
-  });
-  if (validateResponse(response)) return await response.json();
+  try {
+    const response = await fetch(path, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    });
+    if (validateResponse(response)) return await response.json();
+  } catch (error) {
+    return SwalError(error);
+  }
 };
 
 export const putToApi = async (path, body) => {
-  const response = await fetch(path, {
-    method: "PUT",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-    },
-  });
-  if (validateResponse(response)) return await response.json();
+  try {
+    const response = await fetch(path, {
+      method: "PUT",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    });
+    if (validateResponse(response)) return await response.json();
+  } catch (error) {
+    return SwalError(error);
+  }
 };
 
 export const postToApi = async (path, body) => {
-  const response = await fetch(path, {
-    method: "POST",
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-    },
-  });
-  if (validateResponse(response)) return await response.json();
+  try {
+    const response = await fetch(path, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    });
+    if (validateResponse(response)) return await response.json();
+  } catch (error) {
+    return SwalError(error);
+  }
 };
 
-export const deleteToApi = async (path, body) => {
-  const response = await fetch(path, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-    },
-  });
-  if (validateResponse(response)) return await response.json();
+export const deleteToApi = async (path) => {
+  try {
+    const response = await fetch(path, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+      },
+    });
+    if (validateResponse(response)) return await response.json();
+  } catch (error) {
+    return SwalError(error);
+  }
 };
 
 const validateResponse = (response) => {

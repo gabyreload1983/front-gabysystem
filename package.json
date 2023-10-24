@@ -1,7 +1,7 @@
 {
   "name": "gabysystem-front",
   "private": true,
-  "version": "5.14.7",
+  "version": "6.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
