@@ -1,40 +1,49 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { SwalSuccess, SwalWaiting } from "../../utils";
+import { SwalError, SwalSuccess, SwalWaiting } from "../../utils";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 export default function Profile() {
-  const { user } = useContext(UserContext);
+  const { user, updateUserContext } = useContext(UserContext);
 
   const handleUpdateImageUrl = async () => {
-    const { value: imageUrl } = await Swal.fire({
-      title: "Ingrese URL de imagen de perfil",
-      input: "text",
-      inputLabel: "URL",
-      showCancelButton: true,
-      inputValidator: (value) => {
-        if (!value) {
-          return "Ingrese URL de imagen de perfil";
-        }
-      },
-    });
-    if (imageUrl) {
-      SwalWaiting("Actualizando perfil...");
+    try {
+      const { value: imageUrl } = await Swal.fire({
+        title: "Ingrese URL de imagen de perfil",
+        input: "text",
+        inputLabel: "URL",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "Ingrese URL de imagen de perfil";
+          }
+        },
+      });
+      if (imageUrl) {
+        SwalWaiting("Actualizando perfil...");
 
-      const res = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/users/image-url`,
-        { imageUrl },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        }
-      );
+        const userUpdate = { imageUrl };
+        const res = await axios.put(
+          `http://${import.meta.env.VITE_URL_HOST}/api/users/${user._id}`,
+          { userUpdate },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            },
+          }
+        );
 
-      return SwalSuccess(res.data.message);
+        if (res?.data.status === "success") {
+          updateUserContext(res.data.payload);
+          return SwalSuccess(res.data.message);
+        }
+      }
+    } catch (error) {
+      SwalError(error.message);
     }
   };
+
   return (
     <div className="container">
       {user && (
@@ -44,11 +53,7 @@ export default function Profile() {
         >
           <div className="col d-flex flex-column justify-content-center align-items-center">
             {user?.imageUrl ? (
-              <img
-                className="img-profile"
-                src="https://avatars.githubusercontent.com/u/66527583?v=4"
-                alt=""
-              />
+              <img className="img-profile" src={user.imageUrl} alt="" />
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
