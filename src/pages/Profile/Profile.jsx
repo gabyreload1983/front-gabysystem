@@ -1,6 +1,12 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { SwalError, SwalSuccess, SwalWaiting, capitalize } from "../../utils";
+import {
+  SwalError,
+  SwalSuccess,
+  SwalWaiting,
+  capitalize,
+  isValidUrl,
+} from "../../utils";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -22,6 +28,9 @@ export default function Profile() {
       });
       if (imageUrl) {
         SwalWaiting("Actualizando perfil...");
+
+        if (!isValidUrl(imageUrl))
+          return SwalError({ message: "URL invalida!" });
 
         const userUpdate = { imageUrl };
         const res = await axios.put(

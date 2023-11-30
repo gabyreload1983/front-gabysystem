@@ -163,3 +163,12 @@ export const filterOrders = (orders, estado, sector) => {
     (order) => order.estado === estado && order.codiart === sector
   );
 };
+
+export const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
