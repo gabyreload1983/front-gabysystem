@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { SwalError, SwalSuccess, SwalWaiting } from "../../utils";
+import { SwalError, SwalSuccess, SwalWaiting, capitalize } from "../../utils";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -48,7 +48,7 @@ export default function Profile() {
     <div className="container">
       {user && (
         <div
-          className="row border border-3 border-success p-4 rounded-5 mt-3"
+          className="row border border-3 border-success p-4 rounded-5 mt-3 justify-content-center align-items-center"
           style={{ maxWidth: 600 }}
         >
           <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -83,13 +83,19 @@ export default function Profile() {
             </svg>
           </div>
           <div className="col d-flex flex-column">
-            <p className="border-bottom border-2">NOMBRE: {user.first_name}</p>
-            <p className="border-bottom border-2">APELLIDO: {user.last_name}</p>
+            <p className="border-bottom border-2">
+              NOMBRE: {capitalize(user.first_name)}
+            </p>
+            <p className="border-bottom border-2">
+              APELLIDO: {capitalize(user.last_name)}
+            </p>
             <p className="border-bottom border-2">EMAIL: {user.email}</p>
             <p className="border-bottom border-2">
               CODIGO URBANO: {user.code_technical}
             </p>
-            <p className="border-bottom border-2">ROL: {user.role}</p>
+            <p className="border-bottom border-2">
+              ROL: {capitalize(user.role)}
+            </p>
           </div>
         </div>
       )}
