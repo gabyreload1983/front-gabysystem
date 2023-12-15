@@ -19,8 +19,15 @@ const UserContextProvider = ({ children }) => {
     setUser(user);
   };
 
+  const updateUserContext = (user) => {
+    localStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+  };
+
   return (
-    <UserContext.Provider value={{ user, loginUserContext, logoutUserContext }}>
+    <UserContext.Provider
+      value={{ user, loginUserContext, logoutUserContext, updateUserContext }}
+    >
       {children}
     </UserContext.Provider>
   );

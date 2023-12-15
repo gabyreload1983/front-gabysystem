@@ -6,7 +6,7 @@ import { UserContext } from "../../context/userContext";
 
 export default function UserDetail() {
   const { id } = useParams();
-  const [updateUser, setUpdateUser] = useState(null);
+  const [userUpdate, setUserUpdate] = useState(null);
   const navigate = useNavigate();
   const { logoutUserContext } = useContext(UserContext);
 
@@ -21,7 +21,7 @@ export default function UserDetail() {
         return navigate("/login");
       }
 
-      if (response.status === "success") return setUpdateUser(response.payload);
+      if (response.status === "success") return setUserUpdate(response.payload);
     } catch (error) {
       SwalError(error);
     }
@@ -32,7 +32,7 @@ export default function UserDetail() {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUpdateUser((prevUser) => ({
+    setUserUpdate((prevUser) => ({
       ...prevUser,
       [name]: value,
     }));
@@ -41,7 +41,7 @@ export default function UserDetail() {
   const update = async () => {
     const response = await putToApi(
       `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`,
-      updateUser
+      { userUpdate }
     );
 
     if (validateStatus(response) === "jwt-expired") {
@@ -70,7 +70,7 @@ export default function UserDetail() {
     <div className="container">
       <div className="row my-3 justify-content-center">
         <div className="col-12 col-md-6 col-lg-4">
-          {updateUser && (
+          {userUpdate && (
             <form id="formRegister">
               <div className="form-floating mb-3">
                 <input
@@ -80,7 +80,7 @@ export default function UserDetail() {
                   placeholder="Nombre"
                   name="first_name"
                   required
-                  value={updateUser.first_name}
+                  value={userUpdate.first_name}
                 />
                 <label htmlFor="first_name">Nombre</label>
               </div>
@@ -93,7 +93,7 @@ export default function UserDetail() {
                   placeholder="Apellido"
                   name="last_name"
                   required
-                  value={updateUser.last_name}
+                  value={userUpdate.last_name}
                 />
                 <label htmlFor="first_name">Apellido</label>
               </div>
@@ -106,7 +106,7 @@ export default function UserDetail() {
                   placeholder="Email"
                   name="email"
                   required
-                  value={updateUser.email}
+                  value={userUpdate.email}
                 />
                 <label htmlFor="first_name">Email</label>
               </div>
@@ -119,7 +119,7 @@ export default function UserDetail() {
                   placeholder="Usuario Urbano"
                   name="code_technical"
                   required
-                  value={updateUser.code_technical}
+                  value={userUpdate.code_technical}
                 />
                 <label htmlFor="first_name">Usuario Urbano</label>
               </div>
@@ -128,7 +128,6 @@ export default function UserDetail() {
                 name="role"
                 className="form-select form-select-sm mb-3"
                 onChange={handleChange}
-                required
               >
                 <option value="">Actualizar Rol</option>
                 <option value="technical">Tecnico</option>

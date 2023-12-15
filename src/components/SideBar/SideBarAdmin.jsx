@@ -14,7 +14,36 @@ export default function SideBarAdmin() {
   return (
     <>
       <div className="list-group mt-3 mx-2">
-        <h6 className="text-light ms-3">{capitalize(user.role)}</h6>
+        <div className="col d-flex justify-content-even align-items-center mb-2">
+          <NavLink className="nav-link" to="profile">
+            {user?.imageUrl ? (
+              <img
+                className="img-profile-thumb"
+                src={user.imageUrl}
+                alt="image profile"
+              />
+            ) : (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                fill="currentColor"
+                color="white"
+                className="bi bi-person-circle"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                <path
+                  fillRule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                />
+              </svg>
+            )}
+          </NavLink>
+          <p className="text-white m-0 ms-2">
+            {capitalize(user.first_name)} {capitalize(user.last_name)}
+          </p>
+        </div>
         <NavLink className="nav-link" to="users">
           <button
             type="button"
