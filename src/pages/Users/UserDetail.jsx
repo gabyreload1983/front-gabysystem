@@ -197,7 +197,7 @@ export default function UserDetail() {
               <label htmlFor="code_technical">URL imagen Perfil</label>
             </div>
 
-            <div class="form-floating">
+            <div className="form-floating">
               <select
                 name="role"
                 className="form-select form-select-sm mb-3"
