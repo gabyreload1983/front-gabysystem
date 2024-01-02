@@ -66,7 +66,7 @@ export default function Users() {
                             width="50"
                             height="50"
                             fill="currentColor"
-                            color="white"
+                            color="black"
                             className="bi bi-person-circle"
                             viewBox="0 0 16 16"
                           >
