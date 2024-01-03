@@ -18,8 +18,10 @@ import Swal from "sweetalert2";
 import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
+import { BarLoader } from "react-spinners";
 
 export default function OrderDetail() {
+  const [loader, setLoader] = useState(false);
   const { user, logoutUserContext } = useContext(UserContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
@@ -38,6 +40,8 @@ export default function OrderDetail() {
 
   const getOrder = async () => {
     try {
+      setLoader(true);
+
       const response = await getFromApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
       );
@@ -55,6 +59,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -82,6 +88,9 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!question.isConfirmed) return;
+
+      setLoader(true);
+
       const response = await putToApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/update`,
         {
@@ -103,6 +112,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -121,6 +132,8 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!question.isConfirmed) return;
+
+      setLoader(true);
 
       const notification = await Swal.fire({
         text: `Enviar notificacion por email?`,
@@ -151,6 +164,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -166,6 +181,8 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!question.isConfirmed) return;
+
+      setLoader(true);
 
       const response = await putToApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/free`,
@@ -183,6 +200,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -194,6 +213,8 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!question.isConfirmed) return;
+
+      setLoader(true);
 
       const response = await putToApi(
         `http://${import.meta.env.VITE_URL_HOST}/api/orders/take`,
@@ -214,6 +235,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -221,6 +244,8 @@ export default function OrderDetail() {
 
   const handleAddingProduct = async (product) => {
     try {
+      setLoader(true);
+
       const copyProduct = { ...product };
       let serie = "";
       if (copyProduct.trabaserie === "S") {
@@ -272,6 +297,8 @@ export default function OrderDetail() {
       setConfirmButton(false);
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -300,6 +327,8 @@ export default function OrderDetail() {
         confirmButtonText: "Aceptar",
       });
       if (!question.isConfirmed) return;
+
+      setLoader(true);
 
       SwalWaiting("Actualizando orden y enviando email");
 
@@ -346,6 +375,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -375,8 +406,17 @@ export default function OrderDetail() {
       });
       if (!question.isConfirmed) return;
 
+      const notification = await Swal.fire({
+        text: `Notificar al cliente???`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+
+      setLoader(true);
+
       const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${id}`
+        `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${id}`,
+        { notification: notification.isConfirmed }
       );
 
       if (validateStatus(response) === "jwt-expired") {
@@ -390,6 +430,8 @@ export default function OrderDetail() {
       }
     } catch (error) {
       SwalError(error);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -405,6 +447,9 @@ export default function OrderDetail() {
     <>
       {order && (
         <div className="container my-3">
+          {loader && (
+            <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />
+          )}
           <button className="btn btn-outline-secondary" onClick={goBack}>
             volver
           </button>
