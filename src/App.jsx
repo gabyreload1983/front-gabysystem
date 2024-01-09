@@ -18,6 +18,7 @@ import * as bootstrap from "bootstrap";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
+import Alexis from "./pages/Alexis/Alexis";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
+            <Route path="/alexis" element={<Alexis />} />
             <Route path="/orders/detail/:id" element={<OrderDetail />} />
             <Route
               path="/orders/update-customer"
