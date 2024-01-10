@@ -83,3 +83,8 @@ td > a {
   height: 50px;
   border-radius: 25px;
 }
+
+.rowHover:hover {
+  background-color: rgb(130, 182, 182);
+  cursor: pointer;
+}

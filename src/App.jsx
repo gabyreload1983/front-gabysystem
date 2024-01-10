@@ -19,6 +19,8 @@ import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
 import Alexis from "./pages/Alexis/Alexis";
+import Sales from "./pages/Alexis/Sales";
+import Balance from "./pages/Alexis/Balance";
 
 function App() {
   return (
@@ -37,7 +39,12 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
-            <Route path="/alexis" element={<Alexis />} />
+
+            <Route path="alexis" element={<Alexis />}>
+              <Route path="sales" element={<Sales />} />
+              <Route path="balance" element={<Balance />} />
+            </Route>
+
             <Route path="/orders/detail/:id" element={<OrderDetail />} />
             <Route
               path="/orders/update-customer"
