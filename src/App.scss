@@ -84,7 +84,22 @@ td > a {
   border-radius: 25px;
 }
 
-.rowHover:hover {
+.rowSales {
+  text-decoration: none;
+  color: #000;
+}
+
+.rowSales:hover {
   background-color: rgb(130, 182, 182);
   cursor: pointer;
+}
+
+.navLink {
+  text-decoration: none;
+  color: #000;
+}
+
+.navLink:hover {
+  background-color: rgb(130, 182, 182);
+  border-radius: 15px;
 }

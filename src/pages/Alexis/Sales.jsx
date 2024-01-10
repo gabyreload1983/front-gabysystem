@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
 import SalesList from "./SalesList";
+import { SwalError } from "../../utils";
 
 export default function Sales() {
   const { logoutUserContext } = useContext(UserContext);
@@ -24,11 +25,15 @@ export default function Sales() {
         console.log(sales);
         setSales(sales);
         setSalesPartial(
-          sales.filter((sale) => sale.type === "FV").slice(0, 30)
+          sales
+            .filter((sale) => sale.type === "FV")
+            .toReversed()
+            .slice(0, 30)
         );
       }
     } catch (error) {
       console.log(error);
+      SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }
