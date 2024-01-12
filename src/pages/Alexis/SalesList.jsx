@@ -1,4 +1,6 @@
+import moment from "moment";
 import { Link } from "react-router-dom";
+import { formatPrice } from "../../utils";
 
 export default function SalesList({ sales }) {
   return (
@@ -10,14 +12,22 @@ export default function SalesList({ sales }) {
             key={sale.invoiceId}
             className="row rowSales"
           >
-            <div className="col-1">{sale.date.slice(0, 10)}</div>
+            <div className="col-1">
+              {moment(sale.date).format("DD-MM-YYYY")}
+            </div>
             <div className="col-3">{sale.customer}</div>
             <div className="col-2">{sale.invoiceId}</div>
             <div className="col-1">{sale.purchaseOrder || "-"}</div>
-            <div className="col-1">${sale.profit}</div>
+            <div className="col-1 d-flex justify-content-between">
+              <span>$</span>
+              <span>{formatPrice(sale.profit)}</span>
+            </div>
             <div className="col-1">{sale.stateInvoice}</div>
             <div className="col-1">{sale.delivery || "-"}</div>
-            <div className="col-1">${sale.deliveryCost}</div>
+            <div className="col-1 d-flex justify-content-between">
+              <span>$</span>
+              <span>{formatPrice(sale.deliveryCost)}</span>
+            </div>
             <div className="col-1">{sale.deliveryState}</div>
           </Link>
         ))}
