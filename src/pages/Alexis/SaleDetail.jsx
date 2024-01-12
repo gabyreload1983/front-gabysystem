@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalError } from "../../utils";
+import { SwalError, SwalToast, SwalWaiting } from "../../utils";
+import Swal from "sweetalert2";
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -27,6 +28,40 @@ export default function SaleDetail() {
       }
     } catch (error) {
       console.log(error);
+      SwalError(error);
+      if (error?.response?.status === 403) {
+        logoutUserContext();
+      }
+    }
+  };
+
+  const updateSale = async () => {
+    try {
+      const answer = await Swal.fire({
+        text: `Guardar cambios?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+
+      if (!answer.isConfirmed) return;
+
+      const response = await axios.patch(
+        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions`,
+        { sale },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        }
+      );
+
+      SwalWaiting("Actualizando Datos...");
+
+      if (response?.data?.status === "success") {
+        SwalToast("Se actualizaron datos correctamente");
+        getSaleDetail();
+      }
+    } catch (error) {
       SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();
@@ -180,7 +215,9 @@ export default function SaleDetail() {
           </div>
           <div className="row justify-content-center">
             <div className="col-2 text-center">
-              <button className="btn btn-info">GUARDAR</button>
+              <button onClick={updateSale} className="btn btn-info">
+                GUARDAR
+              </button>
             </div>
           </div>
         </div>
