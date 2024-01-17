@@ -68,6 +68,43 @@ export default function SaleDetail() {
       }
     }
   };
+  const applySale = async () => {
+    try {
+      const answer = await Swal.fire({
+        text: `Applicar factura ${sale.invoiceId} a la cuenta?`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+
+      if (!answer.isConfirmed) return;
+
+      const response = await axios.post(
+        `http://${import.meta.env.VITE_URL_HOST}/api/commissions-balance`,
+        { sale },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        }
+      );
+
+      SwalWaiting("Actualizando Datos...");
+
+      if (response?.data?.status === "success") {
+        SwalToast(`Se factura ${sale.invoiceId} a la cuenta correctamente`);
+        getSaleDetail();
+      }
+    } catch (error) {
+      if (error?.response?.status === 403) {
+        logoutUserContext();
+      }
+      if (error?.response?.data?.message) {
+        return SwalError(error?.response?.data);
+      }
+
+      SwalError(error);
+    }
+  };
 
   useEffect(() => {
     getSaleDetail();
@@ -163,6 +200,13 @@ export default function SaleDetail() {
                 onChange={handleChange}
               />
             </div>
+            <button
+              disabled={sale.stateInvoice === "pago" ? false : true}
+              onClick={applySale}
+              className="btn btn-outline-info"
+            >
+              APLICAR
+            </button>
           </div>
           <div className="col-5 p-3 border rounded-3 bg-light">
             <div className="p-3 d-flex justify-content-between">
@@ -212,13 +256,9 @@ export default function SaleDetail() {
                 onChange={handleChange}
               />
             </div>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-2 text-center">
-              <button onClick={updateSale} className="btn btn-info">
-                GUARDAR
-              </button>
-            </div>
+            <button onClick={updateSale} className="btn btn-info">
+              GUARDAR
+            </button>
           </div>
         </div>
       )}

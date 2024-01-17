@@ -8,10 +8,15 @@ export default function Balance() {
   const [balance, setBalance] = useState([]);
   const [balanceTotal, setBalanceTotal] = useState(0);
 
-  const getBalance = async () => {
+  const getCurrentBalance = async () => {
     try {
+      const from = moment().format("YYYY-01-01");
+      const to = moment().format("YYYY-MM-DD");
+
       const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/commissions-balance`,
+        `http://${
+          import.meta.env.VITE_URL_HOST
+        }/api/commissions-balance?from=${from}&to=${to}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -21,12 +26,14 @@ export default function Balance() {
 
       if (response?.data?.payload) {
         const data = response.data.payload;
-        setBalance(data);
+        setBalance(
+          data.toSorted((a, b) => new Date(b.date) - new Date(a.date))
+        );
 
         setBalanceTotal(
           data.reduce((acc, val) => {
-            if (val.type === "FV") acc += Number(val.value);
-            if (val.type === "PAY") acc -= Number(val.value);
+            if (val.type === "FV") acc += Number(val.rent);
+            if (val.type === "PAY") acc -= Number(val.rent);
             return acc;
           }, 0)
         );
@@ -40,7 +47,7 @@ export default function Balance() {
   };
 
   useEffect(() => {
-    getBalance();
+    getCurrentBalance();
   }, []);
 
   return (
@@ -48,7 +55,13 @@ export default function Balance() {
       <div className="col">
         <div className="col d-flex justify-content-between align-items-center">
           <h2>BALANCE {moment().format("YYYY")}</h2>
-          <h3 className={balanceTotal >= 0 ? "bg-success" : "bbg-danger"}>
+          <h3
+            className={
+              balanceTotal >= 0
+                ? "bg-success rounded p-2"
+                : "bg-danger rounded p-2"
+            }
+          >
             ${formatPrice(balanceTotal)}
           </h3>
         </div>
