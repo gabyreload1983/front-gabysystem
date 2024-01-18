@@ -40,7 +40,7 @@ export default function Sales() {
     }
   };
 
-  const updateSales = async () => {
+  const updateSalesCurrentYear = async () => {
     try {
       const body = {
         from: moment().format("YYYY-01-01 00:00:00"),
@@ -48,9 +48,7 @@ export default function Sales() {
       };
 
       const response = await axios.post(
-        `http://${
-          import.meta.env.VITE_URL_HOST
-        }/api/sales-commissions/apply-invoices`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions/apply`,
         body,
         {
           headers: {
@@ -82,7 +80,10 @@ export default function Sales() {
       <div className="col">
         <div className="col d-flex justify-content-between align-items-center">
           <h2>VENTAS {moment().format("YYYY")}</h2>
-          <button onClick={updateSales} className="btn btn-outline-success">
+          <button
+            onClick={updateSalesCurrentYear}
+            className="btn btn-outline-success"
+          >
             ACTUALIZAR
           </button>
         </div>
