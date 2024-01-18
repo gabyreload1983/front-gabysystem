@@ -79,7 +79,7 @@ export default function SaleDetail() {
       if (!answer.isConfirmed) return;
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/commissions-balance`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/commissions`,
         { sale },
         {
           headers: {

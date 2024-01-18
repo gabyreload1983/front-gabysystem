@@ -16,7 +16,7 @@ export default function Balance() {
       const response = await axios.get(
         `http://${
           import.meta.env.VITE_URL_HOST
-        }/api/commissions-balance?from=${from}&to=${to}`,
+        }/api/commissions?from=${from}&to=${to}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
