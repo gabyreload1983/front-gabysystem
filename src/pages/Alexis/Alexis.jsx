@@ -8,8 +8,8 @@ export default function Alexis() {
           <Link className="p-3 navLink" to="sales">
             VENTAS
           </Link>
-          <Link className="p-3 navLink" to="balance">
-            BALANCE
+          <Link className="p-3 navLink" to="account">
+            CUENTA
           </Link>
         </div>
       </div>

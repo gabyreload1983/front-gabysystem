@@ -20,7 +20,7 @@ import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
 import Alexis from "./pages/Alexis/Alexis";
 import Sales from "./pages/Alexis/Sales";
-import Balance from "./pages/Alexis/Balance";
+import Account from "./pages/Alexis/Account";
 import SaleDetail from "./pages/Alexis/SaleDetail";
 
 function App() {
@@ -44,7 +44,7 @@ function App() {
             <Route path="alexis" element={<Alexis />}>
               <Route path="sales" element={<Sales />} />
               <Route path="sales/:id" element={<SaleDetail />} />
-              <Route path="balance" element={<Balance />} />
+              <Route path="account" element={<Account />} />
             </Route>
 
             <Route path="/orders/detail/:id" element={<OrderDetail />} />

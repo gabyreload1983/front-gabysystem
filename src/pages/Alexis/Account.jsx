@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import BalanceList from "./BalanceList";
+import AccountList from "./AccountList";
 import moment from "moment";
 import { SwalError, formatPrice } from "../../utils";
 import axios from "axios";
 
-export default function Balance() {
-  const [balance, setBalance] = useState([]);
-  const [balanceTotal, setBalanceTotal] = useState(0);
+export default function Account() {
+  const [account, setAccount] = useState([]);
+  const [accountTotal, setAccountTotal] = useState(0);
 
-  const getCurrentBalance = async () => {
+  const getCurrentAccount = async () => {
     try {
       const from = moment().format("YYYY-01-01");
       const to = moment().format("YYYY-MM-DD");
@@ -16,7 +16,7 @@ export default function Balance() {
       const response = await axios.get(
         `http://${
           import.meta.env.VITE_URL_HOST
-        }/api/commissions?from=${from}&to=${to}`,
+        }/api/alexis/account?from=${from}&to=${to}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -26,14 +26,14 @@ export default function Balance() {
 
       if (response?.data?.payload) {
         const data = response.data.payload;
-        setBalance(
+        setAccount(
           data.toSorted((a, b) => new Date(b.date) - new Date(a.date))
         );
 
-        setBalanceTotal(
+        setAccountTotal(
           data.reduce((acc, val) => {
-            if (val.type === "FV") acc += Number(val.rent);
-            if (val.type === "PAY") acc -= Number(val.rent);
+            if (val.type === "FV") acc += Number(val.value);
+            if (val.type === "PAY") acc -= Number(val.value);
             return acc;
           }, 0)
         );
@@ -47,22 +47,22 @@ export default function Balance() {
   };
 
   useEffect(() => {
-    getCurrentBalance();
+    getCurrentAccount();
   }, []);
 
   return (
     <div className="row">
       <div className="col">
         <div className="col d-flex justify-content-between align-items-center">
-          <h2>BALANCE {moment().format("YYYY")}</h2>
+          <h2>SALDO {moment().format("YYYY")}</h2>
           <h3
             className={
-              balanceTotal >= 0
+              accountTotal >= 0
                 ? "bg-success rounded p-2"
                 : "bg-danger rounded p-2"
             }
           >
-            ${formatPrice(balanceTotal)}
+            ${formatPrice(accountTotal)}
           </h3>
         </div>
         <div className="row bg-success">
@@ -74,7 +74,7 @@ export default function Balance() {
           <div className="col">HABER</div>
         </div>
 
-        {balance?.length && <BalanceList balance={balance} />}
+        {account?.length && <AccountList account={account} />}
       </div>
     </div>
   );

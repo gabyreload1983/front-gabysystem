@@ -58,7 +58,7 @@ export default function SaleDetail() {
       SwalWaiting("Actualizando Datos...");
 
       if (response?.data?.status === "success") {
-        SwalToast("Se actualizaron datos correctamente");
+        SwalToast("Se actualizaron datos correctamente", 1000);
         getSaleDetail();
       }
     } catch (error) {
@@ -79,8 +79,8 @@ export default function SaleDetail() {
       if (!answer.isConfirmed) return;
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/commissions`,
-        { sale },
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/account`,
+        { item: sale },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -91,7 +91,10 @@ export default function SaleDetail() {
       SwalWaiting("Actualizando Datos...");
 
       if (response?.data?.status === "success") {
-        SwalToast(`Se factura ${sale.invoiceId} a la cuenta correctamente`);
+        SwalToast(
+          `Se factura ${sale.invoiceId} a la cuenta correctamente`,
+          1000
+        );
         getSaleDetail();
       }
     } catch (error) {
