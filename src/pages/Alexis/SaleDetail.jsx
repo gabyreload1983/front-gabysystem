@@ -13,7 +13,7 @@ export default function SaleDetail() {
   const getSaleDetail = async () => {
     try {
       const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions/${id}`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -24,7 +24,6 @@ export default function SaleDetail() {
       if (response?.data?.payload) {
         const sale = response.data.payload;
         setSale(sale);
-        console.log(sale);
       }
     } catch (error) {
       console.log(error);
@@ -46,7 +45,7 @@ export default function SaleDetail() {
       if (!answer.isConfirmed) return;
 
       const response = await axios.patch(
-        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
         { sale },
         {
           headers: {

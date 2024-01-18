@@ -13,7 +13,7 @@ export default function Sales() {
   const getSales = async () => {
     try {
       const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -48,7 +48,7 @@ export default function Sales() {
       };
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions/refresh`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales/refresh`,
         body,
         {
           headers: {
