@@ -48,7 +48,7 @@ export default function Sales() {
       };
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions/apply`,
+        `http://${import.meta.env.VITE_URL_HOST}/api/sales-commissions/refresh`,
         body,
         {
           headers: {
