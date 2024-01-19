@@ -11,6 +11,9 @@ export default function Alexis() {
           <Link className="p-3 navLink" to="account">
             CUENTA
           </Link>
+          <Link className="p-3 navLink" to="payment">
+            PAGOS
+          </Link>
         </div>
       </div>
       <div className="row">

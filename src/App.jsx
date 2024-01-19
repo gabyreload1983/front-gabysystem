@@ -22,6 +22,7 @@ import Alexis from "./pages/Alexis/Alexis";
 import Sales from "./pages/Alexis/Sales";
 import Account from "./pages/Alexis/Account";
 import SaleDetail from "./pages/Alexis/SaleDetail";
+import Payment from "./pages/Alexis/Payment";
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
               <Route path="sales" element={<Sales />} />
               <Route path="sales/:id" element={<SaleDetail />} />
               <Route path="account" element={<Account />} />
+              <Route path="payment" element={<Payment />} />
             </Route>
 
             <Route path="/orders/detail/:id" element={<OrderDetail />} />
