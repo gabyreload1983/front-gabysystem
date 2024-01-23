@@ -92,8 +92,8 @@ export default function Sales() {
           <div className="col-1">FECHA</div>
           <div className="col-4">CLIENTE</div>
           <div className="col-2">COMPROBANTE</div>
-          <div className="col-1">OC</div>
           <div className="col-1">PAGO</div>
+          <div className="col-1">OC</div>
           <div className="col-1">FLETE</div>
           <div className="col-1">FLETERO</div>
           <div className="col-1">ENTRAGADO</div>

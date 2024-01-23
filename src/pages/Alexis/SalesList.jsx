@@ -17,8 +17,8 @@ export default function SalesList({ sales }) {
             </div>
             <div className="col-4">{sale.customer}</div>
             <div className="col-2">{sale.invoiceId}</div>
-            <div className="col-1">{sale.purchaseOrder || "-"}</div>
             <div className="col-1">{sale.stateInvoice}</div>
+            <div className="col-1">{sale.purchaseOrder || "-"}</div>
             <div className="col-1">{sale.delivery || "-"}</div>
             <div className="col-1 d-flex justify-content-between">
               <span>$</span>
