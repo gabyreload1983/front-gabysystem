@@ -23,6 +23,7 @@ import Sales from "./pages/Alexis/Sales";
 import Account from "./pages/Alexis/Account";
 import SaleDetail from "./pages/Alexis/SaleDetail";
 import Payment from "./pages/Alexis/Payment";
+import AccountDetail from "./pages/Alexis/AccountDetail";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               <Route path="sales" element={<Sales />} />
               <Route path="sales/:id" element={<SaleDetail />} />
               <Route path="account" element={<Account />} />
+              <Route path="account/:id" element={<AccountDetail />} />
               <Route path="payment" element={<Payment />} />
             </Route>
 
