@@ -3,6 +3,7 @@ import React, { useContext, useState } from "react";
 import { SwalError, SwalToast } from "../../utils";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function Payment() {
   const { logoutUserContext } = useContext(UserContext);
@@ -24,12 +25,20 @@ export default function Payment() {
   };
 
   const savePayment = async () => {
-    payment.date = moment().format("YYYY-MM-DD");
-
-    if (!payment.observation || !payment.value)
-      return SwalError({ message: "Completa los dos campos" });
-
     try {
+      if (!payment.observation || !payment.value)
+        return SwalError({ message: "Completa los dos campos" });
+
+      const answer = await Swal.fire({
+        text: `Ingresar pago???`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+
+      if (!answer.isConfirmed) return;
+
+      payment.date = moment().format("YYYY-MM-DD");
+
       const response = await axios.post(
         `http://${import.meta.env.VITE_URL_HOST}/api/alexis/payment`,
         { item: payment },
