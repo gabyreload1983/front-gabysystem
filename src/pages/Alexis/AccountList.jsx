@@ -9,7 +9,7 @@ export default function AccountList({ account }) {
         account.map((item) => (
           <Link to={item.internalId} key={item._id} className="row rowSales">
             <div className="col border-end">
-              {moment(item.date).format("DD-MM-YYYY")}
+              {moment(item.createdAt).format("DD-MM-YYYY")}
             </div>
             <div className="col border-end">{item.type}</div>
             <div className="col border-end">{item.internalId}</div>

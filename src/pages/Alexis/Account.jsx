@@ -27,7 +27,7 @@ export default function Account() {
       if (response?.data?.payload) {
         const data = response.data.payload;
         setAccount(
-          data.toSorted((a, b) => new Date(b.date) - new Date(a.date))
+          data.toSorted((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
         );
 
         setAccountTotal(
