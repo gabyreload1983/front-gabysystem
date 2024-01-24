@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalError, SwalToast, SwalWaiting } from "../../utils";
+import { SwalError, SwalToast, SwalWaiting, formatPrice } from "../../utils";
 import Swal from "sweetalert2";
 
 export default function SaleDetail() {
@@ -65,46 +65,6 @@ export default function SaleDetail() {
       if (error?.response?.status === 403) {
         logoutUserContext();
       }
-    }
-  };
-  const applySale = async () => {
-    try {
-      const answer = await Swal.fire({
-        text: `Applicar factura ${sale.invoiceId} a la cuenta?`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-
-      if (!answer.isConfirmed) return;
-
-      const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/account`,
-        { item: sale },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        }
-      );
-
-      SwalWaiting("Actualizando Datos...");
-
-      if (response?.data?.status === "success") {
-        SwalToast(
-          `Se factura ${sale.invoiceId} a la cuenta correctamente`,
-          1000
-        );
-        getSaleDetail();
-      }
-    } catch (error) {
-      if (error?.response?.status === 403) {
-        logoutUserContext();
-      }
-      if (error?.response?.data?.message) {
-        return SwalError(error?.response?.data);
-      }
-
-      SwalError(error);
     }
   };
 
@@ -173,7 +133,7 @@ export default function SaleDetail() {
               <div>
                 <span className="border border-2 p-1">$</span>
                 <input
-                  value={sale.profit}
+                  value={formatPrice(sale.profit)}
                   name="profit"
                   id="profit"
                   onChange={handleChange}
@@ -202,13 +162,6 @@ export default function SaleDetail() {
                 onChange={handleChange}
               />
             </div>
-            <button
-              disabled={sale.stateInvoice === "pago" ? false : true}
-              onClick={applySale}
-              className="btn btn-outline-info"
-            >
-              APLICAR
-            </button>
           </div>
           <div className="col-5 p-3 border rounded-3 bg-light">
             <div className="p-3 d-flex justify-content-between">
@@ -258,9 +211,11 @@ export default function SaleDetail() {
                 onChange={handleChange}
               />
             </div>
-            <button onClick={updateSale} className="btn btn-info">
-              GUARDAR
-            </button>
+            <div className="col d-flex justify-content-end mt-3">
+              <button onClick={updateSale} className="btn btn-info">
+                GUARDAR
+              </button>
+            </div>
           </div>
         </div>
       )}
