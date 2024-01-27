@@ -97,9 +97,15 @@ td > a {
 .navLink {
   text-decoration: none;
   color: #000;
+  margin-left: 10px;
 }
 
 .navLink:hover {
   background-color: rgb(130, 182, 182);
+  border-radius: 15px;
+}
+
+.navLinkActive {
+  background-color: #82b6b6;
   border-radius: 15px;
 }
