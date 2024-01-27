@@ -80,6 +80,35 @@ export default function SaleDetail() {
     }));
   };
 
+  const getSelectDeliveryState = (deliveryState) => {
+    return deliveryState ? (
+      <>
+        <option value={true}>Entregado</option>
+        <option value={false}>Pendiente</option>
+      </>
+    ) : (
+      <>
+        <option value={false}>Pendiente</option>
+        <option value={true}>Entregado</option>
+      </>
+    );
+  };
+
+  const getSelectStateinvoice = (stateinvoice) => {
+    const states = ["pay", "pending", "toFree"];
+    const translate = { pay: "Pago", pending: "Pendinte", toFree: "A liberar" };
+
+    const mySet = new Set([stateinvoice]);
+    for (const state of states) mySet.add(state);
+    const myArraySet = Array.from(mySet);
+
+    return myArraySet.map((state) => (
+      <option key={state} value={state}>
+        {translate[state]}
+      </option>
+    ));
+  };
+
   return (
     <>
       <h2 className="text-center">DETALLE VENTA</h2>
@@ -144,12 +173,17 @@ export default function SaleDetail() {
               <label htmlFor="stateInvoice" className="me-3">
                 PAGO:
               </label>
-              <input
-                value={sale.stateInvoice}
-                name="stateInvoice"
-                id="stateInvoice"
-                onChange={handleChange}
-              />
+              <div>
+                <select
+                  value={sale.stateInvoice}
+                  name="stateInvoice"
+                  id="stateInvoice"
+                  onChange={handleChange}
+                  className="form-select"
+                >
+                  {getSelectStateinvoice(sale.stateInvoice)}
+                </select>
+              </div>
             </div>
             <div className="p-3 d-flex justify-content-between">
               <label htmlFor="paymentDate" className="me-3">
@@ -204,12 +238,17 @@ export default function SaleDetail() {
               <label htmlFor="deliveryState" className="me-3">
                 ENTREGADO:
               </label>
-              <input
-                value={sale.deliveryState}
-                name="deliveryState"
-                id="deliveryState"
-                onChange={handleChange}
-              />
+              <div>
+                <select
+                  onChange={handleChange}
+                  className="form-select"
+                  id="deliveryState"
+                  name="deliveryState"
+                  value={sale.deliveryState}
+                >
+                  {getSelectDeliveryState(sale.deliveryState)}
+                </select>
+              </div>
             </div>
             <div className="col d-flex justify-content-end mt-3">
               <button onClick={updateSale} className="btn btn-info">
