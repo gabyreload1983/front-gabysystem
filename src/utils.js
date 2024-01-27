@@ -190,3 +190,6 @@ export const bgInvoiceState = (invoiceState) => {
   if (invoiceState === "pending") return "bg-danger";
   if (invoiceState === "toFree") return "bg-warning";
 };
+
+export const formatPaymentDate = (paymentDate) =>
+  paymentDate ? paymentDate.slice(0, 10) : "";

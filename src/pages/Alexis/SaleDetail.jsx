@@ -9,6 +9,7 @@ import {
   formatPrice,
   translateInvoiceState,
   translateDeliveryState,
+  formatPaymentDate,
 } from "../../utils";
 import Swal from "sweetalert2";
 
@@ -196,10 +197,11 @@ export default function SaleDetail() {
                 FECHA PAGO:
               </label>
               <input
-                value={sale.paymentDate || ""}
+                value={formatPaymentDate(sale.paymentDate)}
                 name="paymentDate"
                 id="paymentDate"
                 onChange={handleChange}
+                type="date"
               />
             </div>
           </div>
