@@ -50,6 +50,13 @@ export default function Payment() {
       );
 
       if (response?.data?.payload) {
+        setPayment({
+          internalId: "",
+          date: "",
+          type: "PAY",
+          value: "",
+          observation: "",
+        });
         SwalToast("Se ingreso el pago correctamente", 1000);
       }
     } catch (error) {
@@ -73,6 +80,7 @@ export default function Payment() {
             type="text"
             placeholder="Observacion"
             name="observation"
+            value={payment.observation}
             required
           />
           <label htmlFor="observation">Observacion</label>
@@ -86,6 +94,7 @@ export default function Payment() {
             placeholder="Nombre"
             name="value"
             required
+            value={payment.value}
           />
           <label htmlFor="value">Importe</label>
         </div>
