@@ -1,6 +1,12 @@
 import moment from "moment";
 import { Link } from "react-router-dom";
-import { formatPrice } from "../../utils";
+import {
+  bgDeliveryState,
+  bgInvoiceState,
+  formatPrice,
+  translateDeliveryState,
+  translateInvoiceState,
+} from "../../utils";
 
 export default function SalesList({ sales }) {
   return (
@@ -17,14 +23,18 @@ export default function SalesList({ sales }) {
             </div>
             <div className="col-4">{sale.customer}</div>
             <div className="col-2">{sale.invoiceId}</div>
-            <div className="col-1">{sale.stateInvoice}</div>
+            <div className={`col-1 ${bgInvoiceState(sale.invoiceState)}`}>
+              {translateInvoiceState(sale.invoiceState)}
+            </div>
             <div className="col-1">{sale.purchaseOrder || "-"}</div>
-            <div className="col-1">{sale.delivery || "-"}</div>
+            <div className="col-1">{sale.delivery || ""}</div>
             <div className="col-1 d-flex justify-content-between">
               <span>$</span>
               <span>{formatPrice(sale.deliveryCost)}</span>
             </div>
-            <div className="col-1">{sale.deliveryState}</div>
+            <div className={`col-1 ${bgDeliveryState(sale.deliveryState)}`}>
+              {translateDeliveryState(sale.deliveryState)}
+            </div>
           </Link>
         ))}
     </>

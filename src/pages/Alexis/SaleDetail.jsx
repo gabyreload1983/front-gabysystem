@@ -2,7 +2,14 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalError, SwalToast, SwalWaiting, formatPrice } from "../../utils";
+import {
+  SwalError,
+  SwalToast,
+  SwalWaiting,
+  formatPrice,
+  translateInvoiceState,
+  translateDeliveryState,
+} from "../../utils";
 import Swal from "sweetalert2";
 
 export default function SaleDetail() {
@@ -83,28 +90,27 @@ export default function SaleDetail() {
   const getSelectDeliveryState = (deliveryState) => {
     return deliveryState ? (
       <>
-        <option value={true}>Entregado</option>
-        <option value={false}>Pendiente</option>
+        <option value={true}>{translateDeliveryState(true)}</option>
+        <option value={false}>{translateDeliveryState(false)}</option>
       </>
     ) : (
       <>
-        <option value={false}>Pendiente</option>
-        <option value={true}>Entregado</option>
+        <option value={false}>{translateDeliveryState(false)}</option>
+        <option value={true}>{translateDeliveryState(true)}</option>
       </>
     );
   };
 
-  const getSelectStateinvoice = (stateinvoice) => {
+  const getSelectInvoiceState = (invoiceState) => {
     const states = ["pay", "pending", "toFree"];
-    const translate = { pay: "Pago", pending: "Pendinte", toFree: "A liberar" };
 
-    const mySet = new Set([stateinvoice]);
+    const mySet = new Set([invoiceState]);
     for (const state of states) mySet.add(state);
     const myArraySet = Array.from(mySet);
 
     return myArraySet.map((state) => (
       <option key={state} value={state}>
-        {translate[state]}
+        {translateInvoiceState(state)}
       </option>
     ));
   };
@@ -170,18 +176,18 @@ export default function SaleDetail() {
               </div>
             </div>
             <div className="p-3 d-flex justify-content-between">
-              <label htmlFor="stateInvoice" className="me-3">
+              <label htmlFor="invoiceState" className="me-3">
                 PAGO:
               </label>
               <div>
                 <select
-                  value={sale.stateInvoice}
-                  name="stateInvoice"
-                  id="stateInvoice"
+                  value={sale.invoiceState}
+                  name="invoiceState"
+                  id="invoiceState"
                   onChange={handleChange}
                   className="form-select"
                 >
-                  {getSelectStateinvoice(sale.stateInvoice)}
+                  {getSelectInvoiceState(sale.invoiceState)}
                 </select>
               </div>
             </div>

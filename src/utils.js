@@ -172,3 +172,21 @@ export const isValidUrl = (string) => {
     return false;
   }
 };
+
+export const translateInvoiceState = (invoiceState) => {
+  const translate = { pay: "Pago", pending: "Pendinte", toFree: "A liberar" };
+
+  return translate[invoiceState];
+};
+
+export const translateDeliveryState = (deliveryState) =>
+  deliveryState ? "Entregado" : "Pendiente";
+
+export const bgDeliveryState = (deliveryState) =>
+  deliveryState ? "bg-success" : "bg-danger";
+
+export const bgInvoiceState = (invoiceState) => {
+  if (invoiceState === "pay") return "bg-success";
+  if (invoiceState === "pending") return "bg-danger";
+  if (invoiceState === "toFree") return "bg-warning";
+};
