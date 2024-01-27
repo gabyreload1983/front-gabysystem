@@ -60,7 +60,6 @@ export default function Payment() {
         SwalToast("Se ingreso el pago correctamente", 1000);
       }
     } catch (error) {
-      console.log(error);
       SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();

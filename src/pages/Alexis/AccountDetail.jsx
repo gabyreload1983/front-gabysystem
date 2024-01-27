@@ -28,7 +28,6 @@ export default function AccountDetail() {
         setItem(item);
       }
     } catch (error) {
-      console.log(error);
       SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();
@@ -67,7 +66,6 @@ export default function AccountDetail() {
       }
       SwalToast("ALgo salio mal. Contactar al administrador");
     } catch (error) {
-      console.log(error);
       SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();

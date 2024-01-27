@@ -34,7 +34,6 @@ export default function SaleDetail() {
         setSale(sale);
       }
     } catch (error) {
-      console.log(error);
       SwalError(error);
       if (error?.response?.status === 403) {
         logoutUserContext();
