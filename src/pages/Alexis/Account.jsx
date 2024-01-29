@@ -7,8 +7,17 @@ import axios from "axios";
 export default function Account() {
   const [account, setAccount] = useState([]);
   const [accountTotal, setAccountTotal] = useState(0);
-  const YEAR = moment().format("YYYY");
-  const [year, setYear] = useState(moment().format("YYYY"));
+  const CURRENT_YEAR = moment().format("YYYY");
+  const yearsAvailable = [
+    CURRENT_YEAR,
+    CURRENT_YEAR - 1,
+    ,
+    CURRENT_YEAR - 2,
+    CURRENT_YEAR - 3,
+    CURRENT_YEAR - 4,
+    CURRENT_YEAR - 5,
+  ];
+  const [year, setYear] = useState(CURRENT_YEAR);
 
   const getAccount = async (year) => {
     try {
@@ -71,10 +80,11 @@ export default function Account() {
               className="form-select"
               onChange={handleYear}
             >
-              <option>{YEAR}</option>
-              <option value={YEAR - 1}>{YEAR - 1}</option>
-              <option value={YEAR - 2}>{YEAR - 2}</option>
-              <option value={YEAR - 3}>{YEAR - 3}</option>
+              {yearsAvailable.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
             </select>
           </div>
           <div className="col-5 col-md-3 col-lg-2">

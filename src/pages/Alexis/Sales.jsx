@@ -9,11 +9,27 @@ export default function Sales() {
   const { logoutUserContext } = useContext(UserContext);
   const [sales, setSales] = useState([]);
   const [salesPartial, setSalesPartial] = useState([]);
+  const CURRENT_YEAR = moment().format("YYYY");
+  const yearsAvailable = [
+    CURRENT_YEAR,
+    CURRENT_YEAR - 1,
+    ,
+    CURRENT_YEAR - 2,
+    CURRENT_YEAR - 3,
+    CURRENT_YEAR - 4,
+    CURRENT_YEAR - 5,
+  ];
+  const [year, setYear] = useState(CURRENT_YEAR);
 
-  const getSales = async () => {
+  const getSales = async (year) => {
     try {
+      const from = moment().format(`${year}-01-01`);
+      const to = moment().format(`${year}-12-31`);
+
       const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
+        `http://${
+          import.meta.env.VITE_URL_HOST
+        }/api/alexis/sales?from=${from}&to=${to}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -42,8 +58,8 @@ export default function Sales() {
   const updateSalesCurrentYear = async () => {
     try {
       const body = {
-        from: moment().format("YYYY-01-01 00:00:00"),
-        to: moment().format("YYYY-MM-DD 23:59:59"),
+        from: moment().format(`${year}-01-01 00:00:00`),
+        to: moment().format(`${year}-12-31 23:59:59`),
       };
 
       const response = await axios.post(
@@ -60,7 +76,7 @@ export default function Sales() {
 
       if (response?.data?.status === "success") {
         SwalToast("Se actualizaron facturas");
-        getSales();
+        getSales(year);
       }
     } catch (error) {
       SwalError(error);
@@ -69,22 +85,44 @@ export default function Sales() {
       }
     }
   };
+  const handleYear = (e) => {
+    const { value } = e.target;
+    setYear(value);
+    getSales(value);
+  };
 
   useEffect(() => {
-    getSales();
+    getSales(year);
   }, []);
 
   return (
     <div className="row">
       <div className="col">
         <div className="col d-flex justify-content-between align-items-center">
-          <h2>VENTAS {moment().format("YYYY")}</h2>
-          <button
-            onClick={updateSalesCurrentYear}
-            className="btn btn-outline-success"
-          >
-            ACTUALIZAR
-          </button>
+          <div className="col-7 col-md-5 col-lg-3 d-flex">
+            <span className="input-group-text me-3">VENTAS</span>
+            <select
+              value={year}
+              name="year"
+              id="year"
+              className="form-select"
+              onChange={handleYear}
+            >
+              {yearsAvailable.map((year) => (
+                <option key={year} value={year}>
+                  {year}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="col-5 col-md-3 col-lg-2">
+            <button
+              onClick={updateSalesCurrentYear}
+              className="btn btn-outline-success"
+            >
+              ACTUALIZAR
+            </button>
+          </div>
         </div>
         <h3>CANTIDAD: {sales.length}</h3>
         <div className="row bg-success">
