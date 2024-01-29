@@ -7,11 +7,13 @@ import axios from "axios";
 export default function Account() {
   const [account, setAccount] = useState([]);
   const [accountTotal, setAccountTotal] = useState(0);
+  const YEAR = moment().format("YYYY");
+  const [year, setYear] = useState(moment().format("YYYY"));
 
-  const getCurrentAccount = async () => {
+  const getAccount = async (year) => {
     try {
-      const from = moment().format("YYYY-01-01");
-      const to = moment().format("YYYY-MM-DD");
+      const from = moment().format(`${year}-01-01`);
+      const to = moment().format(`${year}-12-31`);
 
       const response = await axios.get(
         `http://${
@@ -46,24 +48,46 @@ export default function Account() {
     }
   };
 
+  const handleYear = (e) => {
+    const { value } = e.target;
+    setYear(value);
+    getAccount(value);
+  };
+
   useEffect(() => {
-    getCurrentAccount();
+    getAccount(year);
   }, []);
 
   return (
     <div className="row">
       <div className="col">
-        <div className="col d-flex justify-content-between align-items-center">
-          <h2>SALDO {moment().format("YYYY")}</h2>
-          <h3
-            className={
-              accountTotal >= 0
-                ? "bg-success rounded p-2"
-                : "bg-danger rounded p-2"
-            }
-          >
-            ${formatPrice(accountTotal)}
-          </h3>
+        <div className="row justify-content-between align-items-center">
+          <div className="col-7 col-md-5 col-lg-3 d-flex">
+            <span className="input-group-text me-3">SALDO</span>
+            <select
+              value={year}
+              name="year"
+              id="year"
+              className="form-select"
+              onChange={handleYear}
+            >
+              <option>{YEAR}</option>
+              <option value={YEAR - 1}>{YEAR - 1}</option>
+              <option value={YEAR - 2}>{YEAR - 2}</option>
+              <option value={YEAR - 3}>{YEAR - 3}</option>
+            </select>
+          </div>
+          <div className="col-5 col-md-3 col-lg-2">
+            <h3
+              className={
+                accountTotal >= 0
+                  ? "bg-success rounded p-2"
+                  : "bg-danger rounded p-2"
+              }
+            >
+              ${formatPrice(accountTotal)}
+            </h3>
+          </div>
         </div>
         <div className="row bg-success">
           <div className="col">FECHA</div>
