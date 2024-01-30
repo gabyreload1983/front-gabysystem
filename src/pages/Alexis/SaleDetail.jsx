@@ -80,7 +80,7 @@ export default function SaleDetail() {
   }, [id]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    let { name, value } = event.target;
     setSale((prevSale) => ({
       ...prevSale,
       [name]: value,
@@ -114,6 +114,43 @@ export default function SaleDetail() {
       </option>
     ));
   };
+
+  const cancelSale = async () => {
+    try {
+      const answer = await Swal.fire({
+        text: `ANULAR FACTURA???
+        Esta acción NO se puede revertir!`,
+        showCancelButton: true,
+        confirmButtonText: "Aceptar",
+      });
+
+      if (!answer.isConfirmed) return;
+
+      const response = await axios.patch(
+        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
+        { sale: { ...sale, isValid: false } },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          },
+        }
+      );
+
+      SwalWaiting("Actualizando Datos...");
+
+      if (response?.data?.status === "success") {
+        SwalToast("Se cancelo la factura!", 1000);
+        getSaleDetail();
+      }
+    } catch (error) {
+      SwalError(error);
+      if (error?.response?.status === 403) {
+        logoutUserContext();
+      }
+    }
+  };
+
+  if (sale && !sale?.isValid) return <h2>Factura Anulada</h2>;
 
   return (
     <>
@@ -257,7 +294,10 @@ export default function SaleDetail() {
                 </select>
               </div>
             </div>
-            <div className="col d-flex justify-content-end mt-3">
+            <div className="col d-flex justify-content-between mt-3">
+              <button onClick={cancelSale} className="btn btn-danger">
+                ANULAR
+              </button>
               <button onClick={updateSale} className="btn btn-info">
                 GUARDAR
               </button>
