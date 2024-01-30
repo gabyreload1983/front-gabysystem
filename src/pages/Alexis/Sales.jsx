@@ -42,9 +42,8 @@ export default function Sales() {
         setSales(sales);
         setSalesPartial(
           sales
-            .filter((sale) => sale.type === "FV")
+            .filter((sale) => sale.type === "FV" && sale.isValid)
             .toSorted((a, b) => new Date(b.date) - new Date(a.date))
-            .slice(0, 100)
         );
       }
     } catch (error) {
@@ -124,7 +123,7 @@ export default function Sales() {
             </button>
           </div>
         </div>
-        <h3>CANTIDAD: {sales.length}</h3>
+        <h3>CANTIDAD: {salesPartial.length}</h3>
         <div className="row bg-success">
           <div className="col-1">FECHA</div>
           <div className="col-4">CLIENTE</div>
