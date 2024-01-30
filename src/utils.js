@@ -193,3 +193,7 @@ export const bgInvoiceState = (invoiceState) => {
 
 export const formatPaymentDate = (paymentDate) =>
   paymentDate ? paymentDate.slice(0, 10) : "";
+
+export const isNotANumber = (value) => value === "" || isNaN(value);
+
+export const isLessThanZero = (value) => Number(value) < 0;

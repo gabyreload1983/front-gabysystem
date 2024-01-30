@@ -10,6 +10,8 @@ import {
   translateInvoiceState,
   translateDeliveryState,
   formatPaymentDate,
+  isNotANumber,
+  isLessThanZero,
 } from "../../utils";
 import Swal from "sweetalert2";
 
@@ -50,6 +52,20 @@ export default function SaleDetail() {
       });
 
       if (!answer.isConfirmed) return;
+      if (
+        isNotANumber(sale.deliveryCost) ||
+        isLessThanZero(sale.deliveryCost)
+      ) {
+        return SwalError({
+          message: "Ingrese un delivery igual o mayor a 0",
+        });
+      }
+
+      if (isNotANumber(sale.profit) || sale.profit <= 0) {
+        return SwalError({
+          message: "Ingrese una renta mayor a 0",
+        });
+      }
 
       const response = await axios.patch(
         `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
