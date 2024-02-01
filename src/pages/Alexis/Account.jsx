@@ -21,13 +21,10 @@ export default function Account() {
 
   const getAccount = async (year) => {
     try {
-      const from = moment().format(`${year}-01-01`);
-      const to = moment().format(`${year}-12-31`);
-
       const response = await axios.get(
         `http://${
           import.meta.env.VITE_URL_HOST
-        }/api/alexis/account?from=${from}&to=${to}`,
+        }/api/alexis/account?year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,

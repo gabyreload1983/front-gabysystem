@@ -7,6 +7,21 @@ import Swal from "sweetalert2";
 
 export default function Payment() {
   const { logoutUserContext } = useContext(UserContext);
+  const CURRENT_YEAR = moment().format("YYYY");
+  const yearsAvailable = [
+    CURRENT_YEAR,
+    CURRENT_YEAR - 1,
+    ,
+    CURRENT_YEAR - 2,
+    CURRENT_YEAR - 3,
+    CURRENT_YEAR - 4,
+    CURRENT_YEAR - 5,
+  ];
+
+  const handleYear = (e) => {
+    const { value } = e.target;
+    setPayment((prev) => ({ ...prev, yearApply: value }));
+  };
 
   const [payment, setPayment] = useState({
     internalId: "",
@@ -14,6 +29,7 @@ export default function Payment() {
     type: "PAY",
     value: "",
     observation: "",
+    yearApply: CURRENT_YEAR,
   });
 
   const handleChange = (event) => {
@@ -67,6 +83,8 @@ export default function Payment() {
     }
   };
 
+  console.log(payment);
+
   return (
     <div className="row">
       <div className="col-4 border rounded p-3">
@@ -96,6 +114,22 @@ export default function Payment() {
             value={payment.value}
           />
           <label htmlFor="value">Importe</label>
+        </div>
+        <div className="form-floating mb-3">
+          <select
+            value={payment.yearApply}
+            name="yearApply"
+            id="yearApply"
+            className="form-select"
+            onChange={handleYear}
+          >
+            {yearsAvailable.map((year) => (
+              <option key={year} value={year}>
+                {year}
+              </option>
+            ))}
+          </select>
+          <label htmlFor="yearApply">Cuenta</label>
         </div>
 
         <button className="btn btn-primary" onClick={savePayment}>
