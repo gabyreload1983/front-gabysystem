@@ -21,10 +21,15 @@ export default function SalesList({ sales }) {
             <div className="col-1">
               {moment(sale.date).format("DD-MM-YYYY")}
             </div>
-            <div className="col-4">{sale.customer}</div>
+            <div className="col-3">{sale.customer}</div>
             <div className="col-2">{sale.invoiceId}</div>
             <div className={`col-1 ${bgInvoiceState(sale.invoiceState)}`}>
               {translateInvoiceState(sale.invoiceState)}
+            </div>
+            <div className="col-1">
+              {(sale.paymentDate &&
+                moment(sale.paymentDate).format("DD-MM-YYYY")) ||
+                "-"}
             </div>
             <div className="col-1">{sale.purchaseOrder || "-"}</div>
             <div className="col-1">{sale.delivery || ""}</div>
