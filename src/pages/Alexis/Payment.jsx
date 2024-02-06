@@ -83,8 +83,6 @@ export default function Payment() {
     }
   };
 
-  console.log(payment);
-
   return (
     <div className="row">
       <div className="col-4 border rounded p-3">

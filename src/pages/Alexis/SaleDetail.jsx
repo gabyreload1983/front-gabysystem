@@ -136,14 +136,24 @@ export default function SaleDetail() {
 
   const cancelSale = async () => {
     try {
-      const answer = await Swal.fire({
-        text: `ANULAR FACTURA???
-        Esta acción NO se puede revertir!`,
+      const { isConfirmed, value: invoiceNumber } = await Swal.fire({
+        title: `ANULAR FACTURA???`,
+        text: `Esta acción NO se puede revertir!`,
+        input: "text",
+        inputLabel: "Ingrese numero de comprobante",
         showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "Debe ingresar el numero de comprobante";
+          }
+          if (value !== sale.invoiceId) {
+            return "Numero de comprobante incorrecto";
+          }
+        },
         confirmButtonText: "Aceptar",
       });
 
-      if (!answer.isConfirmed) return;
+      if (!isConfirmed) return;
 
       const response = await axios.patch(
         `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
@@ -176,7 +186,7 @@ export default function SaleDetail() {
       <h2 className="text-center">DETALLE VENTA</h2>
       {sale && (
         <div className="row gap-2 justify-content-center">
-          <div className="col-5 p-3 border rounded-3 bg-light">
+          <div className="col-12 col-lg-5 p-3 border rounded-3 bg-light">
             <div className="p-3 d-flex justify-content-between">
               <label htmlFor="invoiceId" className="me-3">
                 COMPROBANTE:
@@ -260,66 +270,71 @@ export default function SaleDetail() {
               />
             </div>
           </div>
-          <div className="col-5 p-3 border rounded-3 bg-light">
-            <div className="p-3 d-flex justify-content-between">
-              <label htmlFor="purchaseOrder" className="me-3">
-                ORDEN COMPRA:
-              </label>
-              <input
-                value={sale.purchaseOrder || " -"}
-                name="purchaseOrder"
-                id="purchaseOrder"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="p-3 d-flex justify-content-between">
-              <label htmlFor="delivery" className="me-3">
-                FLETERO:
-              </label>
-              <input
-                value={sale.delivery || " -"}
-                name="delivery"
-                id="delivery"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="p-3 d-flex justify-content-between">
-              <label htmlFor="deliveryCost" className="me-3">
-                DELIVERY:
-              </label>
-              <div>
-                <span className="border border-2 p-1">$</span>
-                <input
-                  value={sale.deliveryCost}
-                  name="deliveryCost"
-                  id="deliveryCost"
-                  onChange={handleChange}
-                />
+          <div className="col-12 col-lg-5 p-3 border rounded-3 bg-light">
+            <div className="row h-100">
+              <div className="col-12">
+                <div className="p-3 d-flex justify-content-between">
+                  <label htmlFor="purchaseOrder" className="me-3">
+                    ORDEN COMPRA:
+                  </label>
+                  <input
+                    value={sale.purchaseOrder || " -"}
+                    name="purchaseOrder"
+                    id="purchaseOrder"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="p-3 d-flex justify-content-between">
+                  <label htmlFor="delivery" className="me-3">
+                    FLETERO:
+                  </label>
+                  <input
+                    value={sale.delivery || " -"}
+                    name="delivery"
+                    id="delivery"
+                    onChange={handleChange}
+                  />
+                </div>
+                <div className="p-3 d-flex justify-content-between">
+                  <label htmlFor="deliveryCost" className="me-3">
+                    DELIVERY:
+                  </label>
+                  <div>
+                    <span className="border border-2 p-1">$</span>
+                    <input
+                      value={sale.deliveryCost}
+                      name="deliveryCost"
+                      id="deliveryCost"
+                      onChange={handleChange}
+                    />
+                  </div>
+                </div>
+                <div className="p-3 d-flex justify-content-between">
+                  <label htmlFor="deliveryState" className="me-3">
+                    ENTREGADO:
+                  </label>
+                  <div>
+                    <select
+                      onChange={handleChange}
+                      className="form-select"
+                      id="deliveryState"
+                      name="deliveryState"
+                      value={sale.deliveryState}
+                    >
+                      {getSelectDeliveryState(sale.deliveryState)}
+                    </select>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div className="p-3 d-flex justify-content-between">
-              <label htmlFor="deliveryState" className="me-3">
-                ENTREGADO:
-              </label>
-              <div>
-                <select
-                  onChange={handleChange}
-                  className="form-select"
-                  id="deliveryState"
-                  name="deliveryState"
-                  value={sale.deliveryState}
-                >
-                  {getSelectDeliveryState(sale.deliveryState)}
-                </select>
+
+              <div className="col-12 align-self-end d-flex justify-content-between">
+                <button onClick={cancelSale} className="btn btn-danger">
+                  ANULAR
+                </button>
+                <button onClick={updateSale} className="btn btn-info">
+                  GUARDAR
+                </button>
               </div>
-            </div>
-            <div className="col d-flex justify-content-between mt-3">
-              <button onClick={cancelSale} className="btn btn-danger">
-                ANULAR
-              </button>
-              <button onClick={updateSale} className="btn btn-info">
-                GUARDAR
-              </button>
             </div>
           </div>
         </div>
