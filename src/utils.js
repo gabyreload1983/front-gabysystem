@@ -1,3 +1,4 @@
+import moment from "moment";
 import Swal from "sweetalert2";
 
 export const getFromApi = async (path) => {
@@ -192,7 +193,7 @@ export const bgInvoiceState = (invoiceState) => {
 };
 
 export const formatPaymentDate = (paymentDate) =>
-  paymentDate ? paymentDate.slice(0, 10) : "";
+  paymentDate ? moment(paymentDate).format("YYYY-MM-DD") : "";
 
 export const isNotANumber = (value) => value === "" || isNaN(value);
 

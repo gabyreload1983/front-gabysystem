@@ -14,6 +14,7 @@ import {
   isLessThanZero,
 } from "../../utils";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -66,6 +67,8 @@ export default function SaleDetail() {
           message: "Ingrese una renta mayor a 0",
         });
       }
+
+      sale.paymentDate = moment(sale.paymentDate);
 
       const response = await axios.patch(
         `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
