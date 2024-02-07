@@ -18,6 +18,12 @@ import * as bootstrap from "bootstrap";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
+import Alexis from "./pages/Alexis/Alexis";
+import Sales from "./pages/Alexis/Sales";
+import Account from "./pages/Alexis/Account";
+import SaleDetail from "./pages/Alexis/SaleDetail";
+import Payment from "./pages/Alexis/Payment";
+import AccountDetail from "./pages/Alexis/AccountDetail";
 
 function App() {
   return (
@@ -36,6 +42,15 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
+
+            <Route path="alexis" element={<Alexis />}>
+              <Route path="sales" element={<Sales />} />
+              <Route path="sales/:id" element={<SaleDetail />} />
+              <Route path="account" element={<Account />} />
+              <Route path="account/:id" element={<AccountDetail />} />
+              <Route path="payment" element={<Payment />} />
+            </Route>
+
             <Route path="/orders/detail/:id" element={<OrderDetail />} />
             <Route
               path="/orders/update-customer"
