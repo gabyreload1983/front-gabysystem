@@ -16,22 +16,22 @@ export default function AccountList({ account }) {
             <div className="col border-end">{item.observation}</div>
             <div className="col border-end d-flex justify-content-between">
               {item.type === "FV" ? (
+                <></>
+              ) : (
                 <>
                   <span>$</span>
                   <span>{formatPrice(item.value)}</span>
                 </>
-              ) : (
-                <></>
               )}
             </div>
             <div className="col border-end d-flex justify-content-between">
               {item.type === "PAY" ? (
+                <></>
+              ) : (
                 <>
                   <span>$</span>
                   <span>{formatPrice(item.value)}</span>
                 </>
-              ) : (
-                <></>
               )}
             </div>
           </Link>
