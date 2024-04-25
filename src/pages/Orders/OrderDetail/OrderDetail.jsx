@@ -599,6 +599,18 @@ export default function OrderDetail() {
                     </button>
                   </div>
                 )}
+              {order.products.length > 0 && (
+                <a
+                  href={`http://${import.meta.env.VITE_URL_HOST}/${
+                    order.nrocompro
+                  }.pdf`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-sm btn-outline-warning"
+                >
+                  PDF
+                </a>
+              )}
             </div>
           </div>
 
