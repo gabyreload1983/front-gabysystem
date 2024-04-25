@@ -40,7 +40,7 @@ export default function SideBarCommon() {
   return (
     <div className="d-flex flex-row text-white flex-xl-column bg-dark m-2 rounded-2">
       <NavLink
-        className="nav-link flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
+        className="navLink flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
         to="profile"
       >
         {user?.imageUrl ? (
@@ -61,7 +61,7 @@ export default function SideBarCommon() {
         return (
           <NavLink
             key={link.name}
-            className="nav-link flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
+            className="navLink flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
             to={link.to}
           >
             <Icon className="icon" />
@@ -69,13 +69,13 @@ export default function SideBarCommon() {
           </NavLink>
         );
       })}
-      <NavLink
-        className="nav-link flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
+      <div
+        className="navLink flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center justify-content-xl-start"
         onClick={logout}
       >
         <ArrowLeftStartOnRectangleIcon className="icon" />
         <p className="d-none d-xl-block">Salir</p>
-      </NavLink>
+      </div>
     </div>
   );
 }
