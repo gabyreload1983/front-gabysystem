@@ -65,7 +65,7 @@ export default function SideBarCommon() {
             to={link.to}
           >
             <Icon className="icon" />
-            <p className="d-none d-xl-block">{link.name}</p>
+            <p className="d-none d-xl-block m-0">{link.name}</p>
           </NavLink>
         );
       })}
@@ -74,7 +74,7 @@ export default function SideBarCommon() {
         onClick={logout}
       >
         <ArrowLeftStartOnRectangleIcon className="icon" />
-        <p className="d-none d-xl-block">Salir</p>
+        <p className="d-none d-xl-block m-0">Salir</p>
       </div>
     </div>
   );
