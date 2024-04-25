@@ -9,7 +9,7 @@ export default function Layout() {
   const { user, logoutUserContext } = useContext(UserContext);
 
   return (
-    <div className="site-wrapper">
+    <div className="container-fluid m-0 p-0">
       <NavBar />
       <div className="row p-0 m-0 vh-100">
         <div className="col-md-3 col-lg-2 bg-dark">{user && <SideBar />}</div>
