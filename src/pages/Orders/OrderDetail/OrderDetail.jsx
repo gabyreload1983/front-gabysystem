@@ -601,7 +601,7 @@ export default function OrderDetail() {
                 )}
               {order.products.length > 0 && (
                 <a
-                  href={`http://${import.meta.env.VITE_URL_HOST}/${
+                  href={`http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
                     order.nrocompro
                   }.pdf`}
                   target="_blank"
