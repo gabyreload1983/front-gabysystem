@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { SwalError, getFromApi, validateStatus } from "../../utils";
 import StatisticsTable from "./StatisticsTable";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -59,49 +59,43 @@ export default function Statistics() {
   return (
     <div className="container">
       <h2 className="text-center">Estadisticas</h2>
-      <div className="row">
-        <div className="col-12">
-          <div className="row mb-3 text-center">
-            <div className="col-12 col-md-4">
-              <label htmlFor="from">Desde</label>
-              <input
-                className="ms-3"
-                type="date"
-                name="from"
-                id="from"
-                required
-                value={from}
-                onChange={handleFrom}
-              />
-            </div>
-            <div className="col-12 col-md-4">
-              <label htmlFor="to">Hasta</label>
-              <input
-                className="ms-3"
-                type="date"
-                name="to"
-                id="to"
-                required
-                value={to}
-                onChange={handleTo}
-              />
-            </div>
-            <div className="col-12 col-md-4">
-              <button onClick={getStaticts} className="btn btn-info">
-                Aceptar
-              </button>
-            </div>
-            <div className="col-12 my-3">
-              {loader && (
-                <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />
-              )}
-            </div>
-          </div>
+      <div className="d-flex flex-column flex-md-row justify-content-center gap-2">
+        <div className="d-flex justify-content-center align-items-center">
+          <label htmlFor="from">Desde</label>
+          <input
+            className="ms-3"
+            type="date"
+            name="from"
+            id="from"
+            required
+            value={from}
+            onChange={handleFrom}
+          />
         </div>
-        <div className="col-12 mt-3">
-          <StatisticsTable statistics={statistics} />
+        <div className="d-flex justify-content-center align-items-center">
+          <label htmlFor="to">Hasta</label>
+          <input
+            className="ms-3"
+            type="date"
+            name="to"
+            id="to"
+            required
+            value={to}
+            onChange={handleTo}
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <button onClick={getStaticts} className="btn btn-info">
+            Aceptar
+          </button>
         </div>
       </div>
+      <div className="col-12 my-3">
+        {loader && (
+          <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />
+        )}
+      </div>
+      <StatisticsTable statistics={statistics} />
     </div>
   );
 }

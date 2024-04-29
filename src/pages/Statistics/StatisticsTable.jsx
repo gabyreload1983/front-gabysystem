@@ -4,7 +4,7 @@ import StatisticsDetail from "./StatisticsDetail";
 
 export default function StatisticsTable({ statistics }) {
   return (
-    <>
+    <div className="table-responsive">
       <table className="table table-hover">
         <thead>
           <tr className="table-success">
@@ -34,6 +34,6 @@ export default function StatisticsTable({ statistics }) {
             ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
