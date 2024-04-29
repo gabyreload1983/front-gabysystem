@@ -1,4 +1,3 @@
-import React from "react";
 import { formatPrice } from "../../utils";
 
 export default function ProductDetail({ product }) {
