@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CustomersList({ customers, onSearchCustomerOrders }) {
   return (
-    <>
+    <div className="table-responsive">
       <table className="table table-hover">
         <thead>
           <tr className="table-success">
@@ -30,6 +30,6 @@ export default function CustomersList({ customers, onSearchCustomerOrders }) {
             ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
