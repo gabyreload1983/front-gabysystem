@@ -14,7 +14,6 @@ import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
 import Orders from "./pages/Orders/Orders";
 import Statistics from "./pages/Statistics/Statistics";
-import * as bootstrap from "bootstrap";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
