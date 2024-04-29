@@ -1,11 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { isTurno, getOrderTier, getOrderTierBackground } from "./orderUtils";
 import moment from "moment";
 
 export default function OrderList({ orders }) {
   return (
-    <>
+    <div className="table-responsive">
       <table className="table">
         <thead>
           <tr>
@@ -49,6 +48,6 @@ export default function OrderList({ orders }) {
             })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }
