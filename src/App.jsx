@@ -23,6 +23,7 @@ import Account from "./pages/Alexis/Account";
 import SaleDetail from "./pages/Alexis/SaleDetail";
 import Payment from "./pages/Alexis/Payment";
 import AccountDetail from "./pages/Alexis/AccountDetail";
+import * as bootstrap from "bootstrap";
 
 function App() {
   return (
