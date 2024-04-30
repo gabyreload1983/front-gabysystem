@@ -35,7 +35,7 @@ export default function SearchOrder() {
   };
 
   return (
-    <div className="d-flex ms-auto">
+    <div className="d-flex m-auto">
       <input
         className="form-control me-2"
         type="search"

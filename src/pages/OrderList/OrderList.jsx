@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   SwalError,
   SwalToast,
@@ -93,57 +93,38 @@ export default function OrderList() {
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col">
-          {loader && (
-            <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />
-          )}
-          <div className="container">
-            <div className="row">
-              <div className="col">
-                <div className="row justify-content-around my-2">
-                  <div className="col">
-                    <h1>Productos Pedidos: {products.length}</h1>
-                  </div>
-                  <div className="col-2">
-                    <button
-                      onClick={cleanOrderList}
-                      className="btn btn-outline-warning"
-                    >
-                      Limpiar Lista
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <div className="col-12">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th scope="col">FECHA</th>
-                      <th scope="col">CODIGO</th>
-                      <th scope="col">DESCRIPCION</th>
-                      <th scope="col">SOLICITO</th>
-                      <th scope="col">CLIENTE</th>
-                      <th scope="col">CANTIDAD</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.length > 0 &&
-                      products.map((product, index) => (
-                        <tr key={`${product.codiart}-${index}`}>
-                          <OrderListItem
-                            product={product}
-                            onHandleRemove={handleRemove}
-                          />
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
+      {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
+      <div className="d-flex justify-content-around my-2 align-items-center">
+        <h1 className="m-0">Productos Pedidos: {products.length}</h1>
+        <button onClick={cleanOrderList} className="btn btn-outline-warning">
+          Limpiar Lista
+        </button>
+      </div>
+      <div className="table-responsive">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">FECHA</th>
+              <th scope="col">CODIGO</th>
+              <th scope="col">DESCRIPCION</th>
+              <th scope="col">SOLICITO</th>
+              <th scope="col">CLIENTE</th>
+              <th scope="col">CANTIDAD</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {products.length > 0 &&
+              products.map((product, index) => (
+                <tr key={`${product.codiart}-${index}`}>
+                  <OrderListItem
+                    product={product}
+                    onHandleRemove={handleRemove}
+                  />
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

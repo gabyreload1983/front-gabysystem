@@ -1,9 +1,7 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-.site-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+:root {
+  background-color: $secondary;
 }
 
 .table {
@@ -79,8 +77,8 @@ td > a {
 }
 
 .img-profile-thumb {
-  width: 50px;
-  height: 50px;
+  width: 2rem;
+  height: 2rem;
   border-radius: 25px;
 }
 
@@ -96,16 +94,25 @@ td > a {
 
 .navLink {
   text-decoration: none;
-  color: #000;
-  margin-left: 10px;
+  cursor: pointer;
+  color: #fff;
 }
 
 .navLink:hover {
-  background-color: rgb(130, 182, 182);
-  border-radius: 15px;
+  background-color: $success;
+  transition: 0.3 ease-in-out;
 }
 
 .navLinkActive {
   background-color: #82b6b6;
   border-radius: 15px;
+}
+
+.icon {
+  width: 2rem;
+}
+
+.active {
+  background-color: #249b52;
+  color: #000;
 }
