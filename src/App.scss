@@ -1,9 +1,7 @@
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-.site-wrapper {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+:root {
+  background-color: $secondary;
 }
 
 .table {

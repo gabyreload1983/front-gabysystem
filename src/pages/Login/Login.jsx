@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
 import { SwalError, postToApi } from "../../utils";
 import Swal from "sweetalert2";
@@ -61,11 +61,12 @@ export default function Login() {
     }
   };
   return (
-    <div className="container">
+    <div className="container-fluid bg-secondary">
       {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
       <div className="row justify-content-center mt-3">
         <div className="col-12 col-md-6 col-lg-4">
-          <h1 className="text-center">LOGIN</h1>
+          <h1 className="text-center">GS</h1>
+          <h2 className="text-center">LOGIN</h2>
           <form onKeyDown={handleKeyDown}>
             <div className="form-floating mb-3">
               <input
