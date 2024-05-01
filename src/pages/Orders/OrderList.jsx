@@ -8,6 +8,7 @@ export default function OrderList({ orders }) {
       <table className="table">
         <thead>
           <tr>
+            <th>#</th>
             <th>FECHA</th>
             <th>NRO ORDEN</th>
             <th>CLIENTE</th>
@@ -20,12 +21,13 @@ export default function OrderList({ orders }) {
         </thead>
         <tbody>
           {orders.length > 0 &&
-            orders.map((order) => {
+            orders.map((order, index) => {
               return (
                 <tr
                   key={`${order.nrocompro}`}
                   className={getOrderTierBackground(order.prioridad)}
                 >
+                  <td>{index + 1}</td>
                   <td>
                     {moment(order.ingresado).format("DD/MM/YYYY hh:mm a")}
                   </td>

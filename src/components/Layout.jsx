@@ -17,7 +17,7 @@ export default function Layout() {
             <div className="col-xl-3 col-xxl-2">
               <SideBar />
             </div>
-            <div className="col-xl-9 col-xxl-10 p-0">
+            <div className="col-xl-9 col-xxl-10">
               <Outlet />
             </div>
           </main>

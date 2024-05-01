@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import * as bootstrap from "bootstrap";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -23,7 +24,12 @@ import Account from "./pages/Alexis/Account";
 import SaleDetail from "./pages/Alexis/SaleDetail";
 import Payment from "./pages/Alexis/Payment";
 import AccountDetail from "./pages/Alexis/AccountDetail";
-import * as bootstrap from "bootstrap";
+import LayoutServiceWork from "./pages/ServiceWork/LayoutServiceWork";
+import ServiceWork from "./pages/ServiceWork/ServiceWork";
+import Pc from "./pages/ServiceWork/Pc/Pc";
+import Printers from "./pages/ServiceWork/Printers/Printers";
+import Process from "./pages/ServiceWork/Process/Process";
+import MyWorks from "./pages/ServiceWork/MyWorks/MyWorks";
 
 function App() {
   return (
@@ -59,6 +65,14 @@ function App() {
 
             <Route path="orders" element={<OrdersLayout />}>
               <Route path="search" element={<Orders />} />
+            </Route>
+
+            <Route path="servicework" element={<LayoutServiceWork />}>
+              <Route index element={<ServiceWork />} />
+              <Route path="pc" element={<Pc />} />
+              <Route path="printers" element={<Printers />} />
+              <Route path="process" element={<Process />} />
+              <Route path="my-works" element={<MyWorks />} />
             </Route>
 
             <Route path="*" element={<PageNotFount />} />
