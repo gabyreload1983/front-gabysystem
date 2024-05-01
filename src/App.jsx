@@ -25,7 +25,6 @@ import SaleDetail from "./pages/Alexis/SaleDetail";
 import Payment from "./pages/Alexis/Payment";
 import AccountDetail from "./pages/Alexis/AccountDetail";
 import LayoutServiceWork from "./pages/ServiceWork/LayoutServiceWork";
-import ServiceWork from "./pages/ServiceWork/ServiceWork";
 import Pc from "./pages/ServiceWork/Pc/Pc";
 import Printers from "./pages/ServiceWork/Printers/Printers";
 import Process from "./pages/ServiceWork/Process/Process";
@@ -68,7 +67,6 @@ function App() {
             </Route>
 
             <Route path="servicework" element={<LayoutServiceWork />}>
-              <Route index element={<ServiceWork />} />
               <Route path="pc" element={<Pc />} />
               <Route path="printers" element={<Printers />} />
               <Route path="process" element={<Process />} />

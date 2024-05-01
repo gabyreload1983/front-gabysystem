@@ -5,28 +5,47 @@ import {
   ComputerDesktopIcon,
   PrinterIcon,
 } from "@heroicons/react/24/outline";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../context/userContext";
+import { getInfoAllPendingServiceWorks } from "../../utils";
 
 export default function LayoutServiceWork() {
+  const { user } = useContext(UserContext);
+  const [serviceWorksInfo, setServiecWorkInfo] = useState(null);
+
+  const getData = async () => {
+    const data = await getInfoAllPendingServiceWorks({ user });
+    setServiecWorkInfo(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const links = [
     {
       name: "Pc",
       to: "pc",
       icon: ComputerDesktopIcon,
+      quantity: serviceWorksInfo ? serviceWorksInfo["pc"] : 0,
     },
     {
       name: "Impresoras",
       to: "printers",
       icon: PrinterIcon,
+      quantity: serviceWorksInfo ? serviceWorksInfo["printers"] : 0,
     },
     {
       name: "Proceso",
       to: "process",
       icon: ClipboardDocumentListIcon,
+      quantity: serviceWorksInfo ? serviceWorksInfo["process"] : 0,
     },
     {
       name: "Mis Ordenes",
       to: "my-works",
       icon: CubeIcon,
+      quantity: serviceWorksInfo ? serviceWorksInfo["myWorks"] : 0,
     },
   ];
 
@@ -43,6 +62,7 @@ export default function LayoutServiceWork() {
             >
               <Icon className="icon" />
               <p className="d-none d-xl-block m-0">{link.name}</p>
+              <span className="bg-info px-2 py-1 rounded">{link.quantity}</span>
             </NavLink>
           );
         })}

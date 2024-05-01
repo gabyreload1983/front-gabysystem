@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import ServiceWOrkList from "../ServiceWOrkList";
+import ServiceWork from "../ServiceWork";
 import { UserContext } from "../../../context/userContext";
 
 export default function MyWorks() {
@@ -8,5 +8,5 @@ export default function MyWorks() {
     user.code_technical
   }`;
 
-  return <ServiceWOrkList url={url} />;
+  return <ServiceWork url={url} />;
 }
