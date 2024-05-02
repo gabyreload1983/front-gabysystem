@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import { isTurno, getOrderTier, getOrderTierBackground } from "./orderUtils";
+import { isTurno, getOrderTier, getOrderTierBackground } from "../../utils";
 import moment from "moment";
 
-export default function OrderList({ orders }) {
+export default function ServiceWorkList({ serviceWorks }) {
   return (
     <div className="table-responsive">
       <table className="table">
@@ -15,13 +15,15 @@ export default function OrderList({ orders }) {
             <th>TIER</th>
             <th>
               {" "}
-              {orders.length > 0 && orders[0].estado === 22 && "TECNICO"}
+              {serviceWorks.length > 0 &&
+                serviceWorks[0].estado === 22 &&
+                "TECNICO"}
             </th>
           </tr>
         </thead>
         <tbody>
-          {orders.length > 0 &&
-            orders.map((order, index) => {
+          {serviceWorks.length > 0 &&
+            serviceWorks.map((order, index) => {
               return (
                 <tr
                   key={`${order.nrocompro}`}

@@ -22,7 +22,7 @@ export default function SideBarCommon() {
   const links = [
     {
       name: "Ordenes",
-      to: "orders",
+      to: "servicework",
       icon: ClipboardDocumentListIcon,
     },
     {
