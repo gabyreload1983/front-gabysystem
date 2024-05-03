@@ -89,10 +89,12 @@ export const formatPrice = (price) => {
     : p.slice(0, index).replaceAll(",", ".");
 };
 
-export const getTotalOrder = (order) =>
-  order.products.reduce((acc, val) => {
+export const getTotalOrder = (order) => {
+  const total = order.products.reduce((acc, val) => {
     return (acc += Number(val.priceList1WithTax));
   }, Number(order.costo));
+  return formatPrice(total);
+};
 
 export const SwalError = async (error) => {
   return Swal.fire({

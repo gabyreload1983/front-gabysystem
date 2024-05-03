@@ -35,7 +35,7 @@ export default function ServiceWorkList({ serviceWorks }) {
                   </td>
                   <td>
                     <Link
-                      to={`/orders/detail/${order.nrocompro}`}
+                      to={`/servicework/detail/${order.nrocompro}`}
                       className="link-order"
                     >
                       {order.nrocompro}
