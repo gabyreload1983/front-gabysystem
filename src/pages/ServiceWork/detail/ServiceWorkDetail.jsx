@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import {
   getFromApi,
   getOrderDiagnosis,
@@ -29,17 +29,17 @@ export default function ServiceWorkDetail() {
   return (
     <>
       {order && (
-        <div className="row justify-content-center px-3 text-white">
-          <div className="col-12 col-md-10 col-lg-8 border text-center rounded p-2">
+        <div className="row justify-content-center px-3 text-white mt-3">
+          <div className="col-12 col-lg-8 border text-center rounded p-2">
             <p
               className={`${getOrderTierBackground(
                 order.prioridad
-              )} mb-2 rounded px-2 py-1 text-center text-xs text-gray-950`}
+              )} m-0 rounded px-2 py-1 text-center text-xs text-gray-950`}
             >
               Tier {getOrderTier(order.prioridad)}
             </p>
-            <strong className="fs-2">{order.nrocompro}</strong>
-            <p className="fs-2 fw-semibold">
+            <strong className="fs-3">{order.nrocompro}</strong>
+            <p className="fs-3 fw-semibold m-0">
               {order.codigo} - {order.nombre}
             </p>
             <div className="d-flex justify-content-center gap-3">
@@ -47,23 +47,23 @@ export default function ServiceWorkDetail() {
               <p className="mb-2">Telefono: {order.telefono}</p>
             </div>
             <div className="row text-center gap-3 p-0 m-0 mb-3">
-              <div className="col-12  m-0 px-0 py-2 col-lg rounded bg-success">
+              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
                 <span className="m-0">
                   Estado {getOrderState(order.estado)}
                 </span>
               </div>
-              <div className="col-12  m-0 px-0 py-2 col-lg rounded bg-success">
+              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
                 <span className="m-0">
                   Diagnostico {getOrderDiagnosis(order.diag)}
                 </span>
               </div>
-              <div className="col-12  m-0 px-0 py-2 col-lg rounded bg-success">
+              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
                 <span className="m-0">
                   Ubicacion {getOrderUbication(order.ubicacion)}
                 </span>
               </div>
             </div>
-            <div className="d-flex flex-column align-items-center justify-content-between rounded bg-light py-2 text-black">
+            <div className="d-flex flex-column align-items-center justify-content-between rounded bg-light py-1 text-black">
               <p className="m-0 fs-5">{order.descart}</p>
               <p className="m-0">{order.accesorios}</p>
             </div>
@@ -75,13 +75,19 @@ export default function ServiceWorkDetail() {
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
-            <div className="col-12 p-2 d-flex flex-column gap-2">
-              <button className="btn btn-info align-self-start w-100">
+            <div className="col-12 p-2 d-flex gap-2">
+              <NavLink
+                to={`/orders/detail/${order.nrocompro}`}
+                className="w-100 btn btn-info"
+              >
                 Editar
-              </button>
-              <button className="btn btn-info align-self-start w-100">
+              </NavLink>
+              <NavLink
+                to={`/orders/detail/${order.nrocompro}`}
+                className="w-100 btn btn-info"
+              >
                 Agregar Articulos
-              </button>
+              </NavLink>
             </div>
           </div>
         </div>

@@ -38,7 +38,9 @@ export default function ServiceWorkProducts({ order }) {
             <td>Total</td>
             <td></td>
             <td className="d-none d-md-table-cell"></td>
-            <td className="custom-td text-end">${getTotalOrder(order)}</td>
+            <td className="custom-td text-end bg-primary">
+              ${getTotalOrder(order)}
+            </td>
           </tr>
         </tfoot>
       </table>
