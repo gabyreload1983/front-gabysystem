@@ -36,11 +36,11 @@ export default function ServiceWorkList({ serviceWorks }) {
                   <td>
                     <Link
                       to={`/servicework/detail/${order.nrocompro}`}
-                      className="link-order"
+                      className="table-dark"
                     >
                       {order.nrocompro}
                       {isTurno(order.falla) && (
-                        <span className="badge bg-dark ms-2">TURNO</span>
+                        <span className="badge bg-info ms-2 border">TURNO</span>
                       )}
                     </Link>
                   </td>

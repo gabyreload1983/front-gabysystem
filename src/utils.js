@@ -264,7 +264,7 @@ export const getOrderTier = (tier) => {
 };
 
 export const getOrderTierBackground = (tier) => {
-  if (tier === 0) return "";
+  if (tier === 0) return "table-dark";
   if (tier === 1) return "tier1";
   if (tier === 2) return "tier2";
   if (tier === 3) return "tier3";
