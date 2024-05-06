@@ -30,8 +30,6 @@ export default function ServiceWorkDetail() {
     getOrder();
   }, [id]);
 
-  console.log(order);
-
   return (
     <>
       {order && (

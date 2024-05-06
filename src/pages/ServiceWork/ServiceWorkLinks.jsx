@@ -8,7 +8,6 @@ import {
   CubeIcon,
   PrinterIcon,
 } from "@heroicons/react/16/solid";
-import Loading from "../../components/Loading";
 
 export default function ServiceWorkLinks() {
   const { user } = useContext(UserContext);
