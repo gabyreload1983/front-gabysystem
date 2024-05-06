@@ -2,10 +2,13 @@ import { NavLink, useParams } from "react-router-dom";
 import {
   getFromApi,
   getOrderDiagnosis,
+  getOrderDiagnosisBackground,
   getOrderState,
+  getOrderStateBackground,
   getOrderTier,
   getOrderTierBackground,
   getOrderUbication,
+  getOrderUbicationBackground,
 } from "../../../utils";
 import { useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
@@ -30,7 +33,7 @@ export default function ServiceWorkDetail() {
     <>
       {order && (
         <div className="row justify-content-center px-3 text-white mt-3">
-          <div className="col-12 col-lg-8 border text-center rounded p-2">
+          <div className="col-12 col-lg-8 border text-center rounded p-2 bg-dark">
             <p
               className={`${getOrderTierBackground(
                 order.prioridad
@@ -47,17 +50,29 @@ export default function ServiceWorkDetail() {
               <p className="mb-2">Telefono: {order.telefono}</p>
             </div>
             <div className="row text-center gap-3 p-0 m-0 mb-3">
-              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
+              <div
+                className={`${getOrderStateBackground(
+                  order.estado
+                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+              >
                 <span className="m-0">
                   Estado {getOrderState(order.estado)}
                 </span>
               </div>
-              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
+              <div
+                className={`${getOrderDiagnosisBackground(
+                  order.diag
+                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+              >
                 <span className="m-0">
                   Diagnostico {getOrderDiagnosis(order.diag)}
                 </span>
               </div>
-              <div className="col-12  m-0 px-0 py-1 col-lg rounded bg-success">
+              <div
+                className={`${getOrderUbicationBackground(
+                  order.ubicacion
+                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+              >
                 <span className="m-0">
                   Ubicacion {getOrderUbication(order.ubicacion)}
                 </span>
@@ -68,10 +83,16 @@ export default function ServiceWorkDetail() {
               <p className="m-0">{order.accesorios}</p>
             </div>
 
-            <p className="py-3 m-0">
-              <strong>Falla: </strong>
+            <p className="py-3 m-0 text-start">
+              <strong className="bg-danger p-1 rounded">Falla: </strong>
               {order.falla}
             </p>
+            {order.diagnostico !== "" && (
+              <p className="py-3 m-0 text-start">
+                <strong className="bg-info p-1 rounded">Diagnostico: </strong>
+                {order.diagnostico}
+              </p>
+            )}
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>

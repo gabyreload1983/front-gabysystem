@@ -3,7 +3,7 @@ import { formatPrice, getTotalOrder, validateUserRole } from "../../../utils";
 export default function ServiceWorkProducts({ order }) {
   return (
     <div className="table-responsive">
-      <table className="table">
+      <table className="table table-dark">
         <thead>
           <tr>
             <th>Codigo</th>

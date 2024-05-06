@@ -278,15 +278,20 @@ export const getOrderTierBackground = (tier) => {
 };
 
 export const getOrderDiagnosisBackground = (diagnosis) => {
-  if (diagnosis === 21) return "";
-  if (diagnosis === 22) return "success";
-  if (diagnosis === 23) return "danger";
+  if (diagnosis === 21) return "border rounded";
+  if (diagnosis === 22) return "bg-success";
+  if (diagnosis === 23) return "bg-danger";
 };
 
 export const getOrderStateBackground = (state) => {
-  if (state === 21) return "danger";
-  if (state === 22) return "warning";
-  if (state === 23) return "success";
+  if (state === 21) return "bg-danger";
+  if (state === 22) return "bg-warning";
+  if (state === 23) return "bg-success";
+};
+
+export const getOrderUbicationBackground = (ubication) => {
+  if (ubication === 21) return "border rounded";
+  if (ubication === 22) return "bg-success";
 };
 
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
