@@ -64,7 +64,7 @@ export default function ServiceWorkLinks() {
             <Icon className="icon" />
             <p className="d-none d-xl-block m-0">{link.name}</p>
             {link.quantity === 0 ? (
-              <div className="spinner-border" role="status">
+              <div className="spinner-border spinner-border-sm" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             ) : (

@@ -9,13 +9,16 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
+  validateUserRole,
 } from "../../../utils";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
+import { UserContext } from "../../../context/userContext";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
+  const { user } = useContext(UserContext);
 
   const getOrder = async () => {
     const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
@@ -85,30 +88,34 @@ export default function ServiceWorkDetail() {
 
             <p className="py-3 m-0 text-start">
               <strong className="bg-danger p-1 rounded">Falla: </strong>
-              {order.falla}
+              <span className="ms-2">{order.falla}</span>
             </p>
             {order.diagnostico !== "" && (
               <p className="py-3 m-0 text-start">
                 <strong className="bg-info p-1 rounded">Diagnostico: </strong>
-                {order.diagnostico}
+                <span className="ms-2">{order.diagnostico}</span>
               </p>
             )}
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
             <div className="col-12 p-2 d-flex gap-2">
-              <NavLink
-                to={`/orders/detail/${order.nrocompro}`}
-                className="w-100 btn btn-info"
-              >
-                Editar
-              </NavLink>
-              <NavLink
-                to={`/orders/detail/${order.nrocompro}`}
-                className="w-100 btn btn-info"
-              >
-                Agregar Articulos
-              </NavLink>
+              {validateUserRole(user, "technical", "saler", "premium") && (
+                <NavLink
+                  to={`/orders/detail/${order.nrocompro}`}
+                  className="w-100 btn btn-info"
+                >
+                  EDITAR
+                </NavLink>
+              )}
+              {validateUserRole(user, "premium") && (
+                <NavLink
+                  to={`/orders/detail/${order.nrocompro}`}
+                  className="w-100 btn btn-info"
+                >
+                  AGREGAR ARTICULOS
+                </NavLink>
+              )}
             </div>
           </div>
         </div>
