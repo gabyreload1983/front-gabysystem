@@ -19,7 +19,7 @@ export default function SearchOrder() {
     if (orderInput.length === 5) {
       let orderPrefix = "ORX0011000";
       const nrocompro = orderPrefix + orderInput;
-      navigate(`/orders/detail/${nrocompro}`);
+      navigate(`/servicework/detail/${nrocompro}`);
     }
     if (orderInput.length !== 5) await Swal.fire(warningSearchOrder);
   };

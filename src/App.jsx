@@ -29,6 +29,7 @@ import Pc from "./pages/ServiceWork/Pc/Pc";
 import Printers from "./pages/ServiceWork/Printers/Printers";
 import Process from "./pages/ServiceWork/Process/Process";
 import MyWorks from "./pages/ServiceWork/MyWorks/MyWorks";
+import ServiceWorkDetail from "./pages/ServiceWork/detail/ServiceWorkDetail";
 
 function App() {
   return (
@@ -62,9 +63,10 @@ function App() {
               element={<UpdateCustomer />}
             />
 
-            <Route path="orders" element={<OrdersLayout />}>
-              <Route path="search" element={<Orders />} />
-            </Route>
+            <Route
+              path="servicework/detail/:id"
+              element={<ServiceWorkDetail />}
+            />
 
             <Route path="servicework" element={<LayoutServiceWork />}>
               <Route path="pc" element={<Pc />} />

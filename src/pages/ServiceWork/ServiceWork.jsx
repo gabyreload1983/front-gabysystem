@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getFromApi } from "../../utils";
 import ServiceWorkList from "./ServiceWorkList";
+import Loading from "../../components/Loading";
 
 export default function ServiceWork({ url }) {
   const [serviceWorks, setServiceWorks] = useState([]);
@@ -14,6 +15,8 @@ export default function ServiceWork({ url }) {
   useEffect(() => {
     getServiceWorks();
   }, []);
+
+  if (serviceWorks.length === 0) return <Loading />;
 
   return <ServiceWorkList serviceWorks={serviceWorks} />;
 }
