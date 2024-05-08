@@ -7,7 +7,7 @@ export default function ServiceWorkList({ serviceWorks }) {
     <div className="table-responsive">
       <table className="table">
         <thead>
-          <tr>
+          <tr className="table-light">
             <th>#</th>
             <th>FECHA</th>
             <th>NRO ORDEN</th>
@@ -36,11 +36,13 @@ export default function ServiceWorkList({ serviceWorks }) {
                   <td>
                     <Link
                       to={`/servicework/detail/${order.nrocompro}`}
-                      className="link-order"
+                      className={
+                        order.prioridad === 0 ? "table-dark" : "table-secondary"
+                      }
                     >
                       {order.nrocompro}
                       {isTurno(order.falla) && (
-                        <span className="badge bg-dark ms-2">TURNO</span>
+                        <span className="badge bg-info ms-2 border">TURNO</span>
                       )}
                     </Link>
                   </td>
