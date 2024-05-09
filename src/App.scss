@@ -107,7 +107,17 @@ td > a {
   width: 2rem;
 }
 
+.iconTable {
+  width: 1rem;
+  margin-bottom: 3px;
+  margin-left: 2px;
+}
+
 .active {
   background-color: #249b52;
   color: #000;
+}
+
+.tableHeaderSort {
+  cursor: pointer;
 }
