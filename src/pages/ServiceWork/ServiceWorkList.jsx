@@ -46,7 +46,7 @@ export default function ServiceWorkList({ serviceWorks }) {
                       )}
                     </Link>
                   </td>
-                  <td>{order.nombre} - </td>
+                  <td>{order.nombre}</td>
                   <td>{getOrderTier(order.prioridad)}</td>
                   <td>{order.estado === 22 && order.tecnico}</td>
                 </tr>

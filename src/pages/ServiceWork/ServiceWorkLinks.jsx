@@ -14,7 +14,6 @@ export default function ServiceWorkLinks() {
   const [serviceWorksInfo, setServiecWorkInfo] = useState(null);
 
   const getData = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 3000));
     const data = await getInfoAllPendingServiceWorks({ user });
     setServiecWorkInfo(data);
   };
