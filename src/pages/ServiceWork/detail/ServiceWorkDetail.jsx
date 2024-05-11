@@ -50,6 +50,14 @@ export default function ServiceWorkDetail() {
               <p>Fecha: {order.ingresado.slice(0, 10)}</p>
               <p className="mb-2">Telefono: {order.telefono}</p>
             </div>
+            <div className="d-flex justify-content-center gap-3 mb-3">
+              <p className="m-0 bg-secondary px-3 rounded">
+                Vendedor: {order.operador}
+              </p>
+              <p className="m-0 bg-secondary px-3 rounded">
+                Tecnico: {order.tecnico}
+              </p>
+            </div>
             <div className="row text-center gap-3 p-0 m-0 mb-3">
               <div
                 className={`${getOrderStateBackground(
