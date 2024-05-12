@@ -308,3 +308,28 @@ export const validateFreeOrder = (user, order) => {
       order.tecnico === user?.code_technical)
   );
 };
+
+export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
+  await putToApi(`http://${import.meta.env.VITE_URL_HOST}/api/orders/take`, {
+    nrocompro: `${nrocompro}`,
+    code_technical: `${codeTechnical}`,
+  });
+
+export const validateEditServiceWork = (user, order) => {
+  return (
+    (user.role === "technical" || user.role === "premium") &&
+    order.estado === 22 &&
+    order.tecnico === user.code_technical
+  );
+};
+
+export const validateTakeServiceWork = (user, order) => {
+  return (
+    (user.role === "technical" || user.role === "premium") &&
+    order.estado === 21
+  );
+};
+
+export const validateAddingProducts = (user, order) => {
+  return user.role === "premium" && order.estado === 22;
+};

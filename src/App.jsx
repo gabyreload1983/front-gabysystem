@@ -63,12 +63,8 @@ function App() {
               element={<UpdateCustomer />}
             />
 
-            <Route
-              path="servicework/detail/:id"
-              element={<ServiceWorkDetail />}
-            />
-
             <Route path="servicework" element={<LayoutServiceWork />}>
+              <Route path="detail/:id" element={<ServiceWorkDetail />} />
               <Route path="pc" element={<Pc />} />
               <Route path="printers" element={<Printers />} />
               <Route path="process" element={<Process />} />
