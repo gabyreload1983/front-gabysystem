@@ -9,11 +9,15 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
+  validateAddingProducts,
+  validateEditServiceWork,
+  validateTakeServiceWork,
   validateUserRole,
 } from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
+import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -106,7 +110,13 @@ export default function ServiceWorkDetail() {
               <ServiceWorkProducts order={order} />
             </div>
             <div className="col-12 p-2 d-flex gap-2">
-              {validateUserRole(user, "technical", "saler", "premium") && (
+              {validateTakeServiceWork(user, order) && (
+                <TakeServiceWorkButton
+                  nrocompro={order.nrocompro}
+                  codeTechnical={user.code_technical}
+                />
+              )}
+              {validateEditServiceWork(user, order) && (
                 <NavLink
                   to={`/orders/detail/${order.nrocompro}`}
                   className="w-100 btn btn-info"
@@ -114,7 +124,7 @@ export default function ServiceWorkDetail() {
                   EDITAR
                 </NavLink>
               )}
-              {validateUserRole(user, "premium") && (
+              {validateAddingProducts(user, order) && (
                 <NavLink
                   to={`/orders/detail/${order.nrocompro}`}
                   className="w-100 btn btn-info"
