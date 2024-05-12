@@ -333,3 +333,12 @@ export const validateTakeServiceWork = (user, order) => {
 export const validateAddingProducts = (user, order) => {
   return user.role === "premium" && order.estado === 22;
 };
+
+export const getOrder = async ({ id }) => {
+  const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
+  const data = await getFromApi(path);
+  return data.payload;
+};
+
+export const wait = async (delay) =>
+  await new Promise((resolve) => setTimeout(resolve, delay));

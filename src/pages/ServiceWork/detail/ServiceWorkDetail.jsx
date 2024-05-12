@@ -126,7 +126,7 @@ export default function ServiceWorkDetail() {
               )}
               {validateAddingProducts(user, order) && (
                 <NavLink
-                  to={`/orders/detail/${order.nrocompro}`}
+                  to={`/servicework/edit/products/${order.nrocompro}`}
                   className="w-100 btn btn-info"
                 >
                   AGREGAR ARTICULOS
