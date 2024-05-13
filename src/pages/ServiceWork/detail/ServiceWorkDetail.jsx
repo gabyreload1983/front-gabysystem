@@ -109,6 +109,17 @@ export default function ServiceWorkDetail() {
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
+            <div className="col-12 p-2 d-flex justify-content-end">
+              <NavLink
+                to={`http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
+                  order.nrocompro
+                }.pdf`}
+                className="btn btn-warning"
+                target="_blank"
+              >
+                PDF
+              </NavLink>
+            </div>
             <div className="col-12 p-2 d-flex gap-2">
               {validateTakeServiceWork(user, order) && (
                 <TakeServiceWorkButton
