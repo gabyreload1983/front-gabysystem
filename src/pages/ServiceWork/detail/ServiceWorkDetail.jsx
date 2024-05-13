@@ -1,5 +1,6 @@
 import { NavLink, useParams } from "react-router-dom";
 import {
+  SwalToast,
   getFromApi,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
@@ -9,8 +10,10 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
+  putToApi,
   validateAddingProducts,
   validateEditServiceWork,
+  validateServiceWorkOut,
   validateTakeServiceWork,
   validateUserRole,
 } from "../../../utils";
@@ -18,6 +21,8 @@ import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
+import ServiceWorkOut from "./ServiceWorkOut";
+import Swal from "sweetalert2";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -28,6 +33,31 @@ export default function ServiceWorkDetail() {
     const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
     const data = await getFromApi(path);
     setOrder(data.payload);
+  };
+
+  const serviceWorkOut = async (nrocompro) => {
+    const question = await Swal.fire({
+      text: `Queres dar salida a la orden ${order.nrocompro}?`,
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+    });
+    if (!question.isConfirmed) return;
+
+    const notification = await Swal.fire({
+      text: `Notificar al cliente???`,
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+    });
+
+    const response = await putToApi(
+      `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${nrocompro}`,
+      { notification: notification.isConfirmed }
+    );
+
+    if (response.status === "success") {
+      SwalToast("Salida de orden exitosa!");
+      getOrder();
+    }
   };
 
   useEffect(() => {
@@ -142,6 +172,9 @@ export default function ServiceWorkDetail() {
                 >
                   AGREGAR ARTICULOS
                 </NavLink>
+              )}
+              {validateServiceWorkOut(user, order) && (
+                <ServiceWorkOut order={order} serviceWorkOut={serviceWorkOut} />
               )}
             </div>
           </div>
