@@ -34,7 +34,7 @@ export default function SearchProduct({ onChangeProducts }) {
       }
 
       if (response.status === "success")
-        return onChangeProducts(response.products);
+        return onChangeProducts(response.payload);
     } catch (error) {
       SwalError(error);
     }

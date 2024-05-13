@@ -30,6 +30,7 @@ import Printers from "./pages/ServiceWork/Printers/Printers";
 import Process from "./pages/ServiceWork/Process/Process";
 import MyWorks from "./pages/ServiceWork/MyWorks/MyWorks";
 import ServiceWorkDetail from "./pages/ServiceWork/detail/ServiceWorkDetail";
+import EditServiceWorkProducts from "./pages/ServiceWork/edit/products/EditServiceWorkProducts";
 
 function App() {
   return (
@@ -65,6 +66,10 @@ function App() {
 
             <Route path="servicework" element={<LayoutServiceWork />}>
               <Route path="detail/:id" element={<ServiceWorkDetail />} />
+              <Route
+                path="edit/products/:id"
+                element={<EditServiceWorkProducts />}
+              />
               <Route path="pc" element={<Pc />} />
               <Route path="printers" element={<Printers />} />
               <Route path="process" element={<Process />} />

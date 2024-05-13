@@ -333,3 +333,48 @@ export const validateTakeServiceWork = (user, order) => {
 export const validateAddingProducts = (user, order) => {
   return user.role === "premium" && order.estado === 22;
 };
+
+export const getOrder = async ({ id }) => {
+  const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
+  const data = await getFromApi(path);
+  return data.payload;
+};
+
+export const wait = async (delay) =>
+  await new Promise((resolve) => setTimeout(resolve, delay));
+
+export const searchProduct = async ({ input, by = "description" }) => {
+  const response = await getFromApi(
+    `http://${
+      import.meta.env.VITE_URL_HOST
+    }/api/products/search-by?${by}=${input}`
+  );
+
+  return response.payload;
+};
+
+export const validateSerieMatchProduct = async (product, serie) => {
+  const response = await getFromApi(
+    `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${serie}`
+  );
+
+  if (response.payload.length) {
+    const productFind = response.payload[0];
+    if (product.codigo !== productFind.codigo) {
+      await SwalError({
+        message: `El serie pertenece al producto ${productFind.codigo}`,
+      });
+      return false;
+    }
+  }
+  return true;
+};
+
+export const updateProductsInSeriveWork = async (order) => {
+  SwalWaiting("Actualizando orden y enviando email");
+
+  const response = await putToApi(
+    `http://${import.meta.env.VITE_URL_HOST}/api/orders/products`,
+    order
+  );
+};
