@@ -5,7 +5,7 @@ function NavBar() {
     <nav className="navbar navbar-dark bg-dark">
       <div className="container-fluid">
         <a className="navbar-brand m-auto" href="/">
-          <h1 className="m-0">GS - V{import.meta.env.VITE_VERSION}</h1>
+          <h1 className="m-0">GSystem</h1>
         </a>
         <SearchOrder />
       </div>

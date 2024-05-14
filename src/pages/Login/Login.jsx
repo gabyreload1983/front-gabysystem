@@ -4,6 +4,7 @@ import { SwalError, postToApi } from "../../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../constants";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -30,10 +31,7 @@ export default function Login() {
 
   const login = async () => {
     setLoader(true);
-    const response = await postToApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/users/login`,
-      loginForm
-    );
+    const response = await postToApi(`${API_URL}/api/users/login`, loginForm);
     setLoader(false);
 
     if (response.status === "error") {

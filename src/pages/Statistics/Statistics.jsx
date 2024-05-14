@@ -5,6 +5,7 @@ import StatisticsTable from "./StatisticsTable";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../constants";
 
 export default function Statistics() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -33,9 +34,7 @@ export default function Statistics() {
       setLoader(true);
 
       const response = await getFromApi(
-        `http://${
-          import.meta.env.VITE_URL_HOST
-        }/api/orders/statitstics/${from}/${to}`
+        `${API_URL}/api/orders/statitstics/${from}/${to}`
       );
 
       if (validateStatus(response) === "jwt-expired") {

@@ -14,6 +14,7 @@ import SearchProducts from "./SearchProducts";
 import ProductsList from "./ProductsList";
 import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
+import { API_URL } from "../../../../constants";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();
@@ -132,12 +133,7 @@ export default function EditServiceWorkProducts() {
       },
     });
 
-    window.open(
-      `http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
-        order.nrocompro
-      }.pdf`,
-      "_blank"
-    );
+    window.open(`${API_URL}/pdfHistory/${order.nrocompro}.pdf`, "_blank");
   };
 
   const handleCancel = async () => {

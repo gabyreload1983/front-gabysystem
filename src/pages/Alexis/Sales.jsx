@@ -4,6 +4,7 @@ import { UserContext } from "../../context/userContext";
 import SalesList from "./SalesList";
 import { SwalError, SwalToast, SwalWaiting } from "../../utils";
 import moment from "moment";
+import { API_URL } from "../../constants";
 
 export default function Sales() {
   const { logoutUserContext } = useContext(UserContext);
@@ -27,9 +28,7 @@ export default function Sales() {
       const to = moment().format(`${year}-12-31`);
 
       const response = await axios.get(
-        `http://${
-          import.meta.env.VITE_URL_HOST
-        }/api/alexis/sales?from=${from}&to=${to}`,
+        `${API_URL}/api/alexis/sales?from=${from}&to=${to}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
@@ -62,7 +61,7 @@ export default function Sales() {
       };
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales/refresh`,
+        `${API_URL}/api/alexis/sales/refresh`,
         body,
         {
           headers: {

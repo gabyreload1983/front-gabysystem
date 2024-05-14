@@ -9,6 +9,7 @@ import {
 } from "../../utils";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { API_URL } from "../../constants";
 
 export default function Profile() {
   const { user, updateUserContext } = useContext(UserContext);
@@ -34,7 +35,7 @@ export default function Profile() {
 
         const userUpdate = { imageUrl };
         const res = await axios.put(
-          `http://${import.meta.env.VITE_URL_HOST}/api/users/${user._id}`,
+          `${API_URL}/api/users/${user._id}`,
           { userUpdate },
           {
             headers: {

@@ -4,6 +4,7 @@ import CustomersList from "./CustomersList";
 import CustomerOrdersList from "./CustomerOrdersList";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
+import { API_URL } from "../../constants";
 
 export default function Customers() {
   const [orders, setOrders] = useState([]);
@@ -15,9 +16,7 @@ export default function Customers() {
 
   const getCustomers = async (search) => {
     try {
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/customers/${search}`
-      );
+      const response = await getFromApi(`${API_URL}/api/customers/${search}`);
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -33,7 +32,7 @@ export default function Customers() {
   const getCustomerOrders = async (code) => {
     try {
       const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/customer/${code}`
+        `${API_URL}/api/orders/customer/${code}`
       );
 
       if (validateStatus(response) === "jwt-expired") {

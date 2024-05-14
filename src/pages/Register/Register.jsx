@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { SwalError, SwalSuccess, postToApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import { UserContext } from "../../context/userContext";
+import { API_URL } from "../../constants";
 
 export default function Register() {
   const { logoutUserContext } = useContext(UserContext);
@@ -27,10 +28,7 @@ export default function Register() {
     setLoader(true);
     e.preventDefault();
 
-    const response = await postToApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/users/register`,
-      newUser
-    );
+    const response = await postToApi(`${API_URL}/api/users/register`, newUser);
 
     setLoader(false);
 

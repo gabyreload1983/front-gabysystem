@@ -13,6 +13,7 @@ import {
 } from "../../utils";
 import OrderDetailHeader from "./OrderDetail/OrderDetailHeader";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../constants";
 
 export default function UpdateCustomer() {
   const navigate = useNavigate();
@@ -28,9 +29,7 @@ export default function UpdateCustomer() {
   const getOrder = async () => {
     try {
       setLoader(true);
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/${orderId}`
-      );
+      const response = await getFromApi(`${API_URL}/api/orders/${orderId}`);
       setLoader(false);
 
       if (validateStatus(response) === "jwt-expired") {
@@ -48,9 +47,7 @@ export default function UpdateCustomer() {
     try {
       if (input.length >= 3) {
         setLoader(true);
-        const response = await getFromApi(
-          `http://${import.meta.env.VITE_URL_HOST}/api/customers/${input}`
-        );
+        const response = await getFromApi(`${API_URL}/api/customers/${input}`);
         setLoader(false);
 
         if (validateStatus(response) === "jwt-expired") {
@@ -79,10 +76,10 @@ export default function UpdateCustomer() {
       const confirm = await question("Confirma Actualizar Cliente??");
       if (!confirm) return;
       setLoader(true);
-      const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/update-customer`,
-        { nrocompro: order.nrocompro, customerId: customer.codigo }
-      );
+      const response = await putToApi(`${API_URL}/api/orders/update-customer`, {
+        nrocompro: order.nrocompro,
+        customerId: customer.codigo,
+      });
       setLoader(false);
 
       if (validateStatus(response) === "jwt-expired") {

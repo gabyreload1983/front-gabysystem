@@ -5,6 +5,7 @@ import { UserContext } from "../../context/userContext";
 import { SwalError, getFromApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import TableSummaries from "../../components/TableSummaries/TableSummaries";
+import { API_URL } from "../../constants";
 
 export default function Summaries() {
   const navigate = useNavigate();
@@ -21,9 +22,7 @@ export default function Summaries() {
     try {
       setLoader(true);
       setCustomers([]);
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/customers/summaries`
-      );
+      const response = await getFromApi(`${API_URL}/api/customers/summaries`);
       setLoader(false);
 
       if (validateStatus(response) === "jwt-expired") {

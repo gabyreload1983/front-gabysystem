@@ -15,6 +15,7 @@ import {
 } from "../../utils";
 import Swal from "sweetalert2";
 import moment from "moment";
+import { API_URL } from "../../constants";
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -23,14 +24,11 @@ export default function SaleDetail() {
 
   const getSaleDetail = async () => {
     try {
-      const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/alexis/sales/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      });
 
       if (response?.data?.payload) {
         const sale = response.data.payload;
@@ -71,7 +69,7 @@ export default function SaleDetail() {
       sale.paymentDate = moment(sale.paymentDate);
 
       const response = await axios.patch(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
+        `${API_URL}/api/alexis/sales`,
         { sale },
         {
           headers: {
@@ -156,7 +154,7 @@ export default function SaleDetail() {
       if (!isConfirmed) return;
 
       const response = await axios.patch(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/sales`,
+        `${API_URL}/api/alexis/sales`,
         { sale: { ...sale, isValid: false } },
         {
           headers: {
