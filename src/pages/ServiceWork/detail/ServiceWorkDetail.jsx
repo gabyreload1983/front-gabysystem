@@ -22,11 +22,13 @@ import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
 import ServiceWorkOut from "./ServiceWorkOut";
 import Swal from "sweetalert2";
+import Loading from "../../../components/Loading";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
   const getData = async () => {
     const data = await getOrder({ id });
@@ -47,11 +49,14 @@ export default function ServiceWorkDetail() {
       confirmButtonText: "Aceptar",
     });
 
+    setLoading(true);
+
     const response = await serviceWorkPutOut(
       nrocompro,
       notification.isConfirmed
     );
 
+    setLoading(false);
     if (response.status === "success") {
       SwalToast("Salida de orden exitosa!");
       getData();
@@ -67,6 +72,7 @@ export default function ServiceWorkDetail() {
       {order && (
         <div className="row justify-content-center px-3 text-white mt-3">
           <div className="col-12 col-lg-8 border text-center rounded p-2 bg-dark">
+            {loading && <Loading />}
             <p
               className={`${getOrderTierBackground(
                 order.prioridad
