@@ -23,6 +23,7 @@ import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWo
 import ServiceWorkOut from "./ServiceWorkOut";
 import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
+import { API_URL } from "../../../constants";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -145,9 +146,7 @@ export default function ServiceWorkDetail() {
             </div>
             <div className="col-12 p-2 d-flex justify-content-end">
               <NavLink
-                to={`http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
-                  order.nrocompro
-                }.pdf`}
+                to={`${API_URL}/pdfHistory/${order.nrocompro}.pdf`}
                 className="btn btn-warning"
                 target="_blank"
               >

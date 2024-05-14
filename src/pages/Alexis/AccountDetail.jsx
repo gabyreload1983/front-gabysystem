@@ -5,6 +5,7 @@ import { UserContext } from "../../context/userContext";
 import { SwalError, SwalToast, SwalWaiting, formatPrice } from "../../utils";
 import moment from "moment";
 import Swal from "sweetalert2";
+import { API_URL } from "../../constants";
 
 export default function AccountDetail() {
   const { id } = useParams();
@@ -14,14 +15,11 @@ export default function AccountDetail() {
 
   const getItemDetail = async () => {
     try {
-      const response = await axios.get(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/account/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
-          },
-        }
-      );
+      const response = await axios.get(`${API_URL}/api/alexis/account/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        },
+      });
 
       if (response?.data?.payload) {
         const item = response.data.payload;
@@ -52,7 +50,7 @@ export default function AccountDetail() {
 
     try {
       const response = await axios.delete(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/account/${id}`,
+        `${API_URL}/api/alexis/account/${id}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,

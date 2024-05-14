@@ -9,6 +9,7 @@ import {
 } from "../../utils";
 import PieOrdersPending from "../../components/PieOrdersPending";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../constants";
 
 export default function OrdersGraphics() {
   const [loader, setLoader] = useState(false);
@@ -25,9 +26,7 @@ export default function OrdersGraphics() {
     try {
       setLoader(true);
 
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/pendings-all`
-      );
+      const response = await getFromApi(`${API_URL}/api/orders/pendings-all`);
 
       setLoader(false);
 

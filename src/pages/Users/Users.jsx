@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { SwalError, getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../constants";
 
 export default function Users() {
   const [users, setusers, logoutUserContext] = useState([]);
@@ -8,9 +9,7 @@ export default function Users() {
 
   const getUsers = async () => {
     try {
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/users`
-      );
+      const response = await getFromApi(`${API_URL}/api/users`);
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();

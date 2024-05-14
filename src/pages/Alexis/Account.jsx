@@ -3,6 +3,7 @@ import AccountList from "./AccountList";
 import moment from "moment";
 import { SwalError, formatPrice } from "../../utils";
 import axios from "axios";
+import { API_URL } from "../../constants";
 
 export default function Account() {
   const [account, setAccount] = useState([]);
@@ -22,9 +23,7 @@ export default function Account() {
   const getAccount = async (year) => {
     try {
       const response = await axios.get(
-        `http://${
-          import.meta.env.VITE_URL_HOST
-        }/api/alexis/account?year=${year}`,
+        `${API_URL}/api/alexis/account?year=${year}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,

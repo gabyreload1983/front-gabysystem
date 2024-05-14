@@ -1,7 +1,8 @@
+import { API_URL } from "../../../constants";
 import ServiceWork from "../ServiceWork";
 
 export default function Printers() {
-  const url = `http://${import.meta.env.VITE_URL_HOST}/api/orders/pending/imp`;
+  const url = `${API_URL}/api/orders/pending/imp`;
 
   return <ServiceWork url={url} />;
 }

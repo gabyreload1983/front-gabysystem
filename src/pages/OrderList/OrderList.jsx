@@ -11,6 +11,7 @@ import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
 import Swal from "sweetalert2";
+import { API_URL } from "../../constants";
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -22,9 +23,7 @@ export default function OrderList() {
     try {
       setLoader(true);
 
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/products/order-list`
-      );
+      const response = await getFromApi(`${API_URL}/api/products/order-list`);
 
       setLoader(false);
       if (validateStatus(response) === "jwt-expired") {
@@ -48,7 +47,7 @@ export default function OrderList() {
       if (!question.isConfirmed) return;
 
       const response = await deleteToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/products/clear-order-list`
+        `${API_URL}/api/products/clear-order-list`
       );
 
       if (validateStatus(response) === "jwt-expired") {
@@ -68,9 +67,7 @@ export default function OrderList() {
   const handleRemove = async (code) => {
     try {
       const response = await deleteToApi(
-        `http://${
-          import.meta.env.VITE_URL_HOST
-        }/api/products/order-list/${code}`
+        `${API_URL}/api/products/order-list/${code}`
       );
 
       if (validateStatus(response) === "jwt-expired") {

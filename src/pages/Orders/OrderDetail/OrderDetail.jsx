@@ -19,6 +19,7 @@ import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../../constants";
 
 export default function OrderDetail() {
   const [loader, setLoader] = useState(false);
@@ -42,9 +43,7 @@ export default function OrderDetail() {
     try {
       setLoader(true);
 
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`
-      );
+      const response = await getFromApi(`${API_URL}/api/orders/${id}`);
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
         return navigate("/login");
@@ -91,15 +90,12 @@ export default function OrderDetail() {
 
       setLoader(true);
 
-      const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/update`,
-        {
-          nrocompro: `${order.nrocompro}`,
-          code_technical: `${user.code_technical}`,
-          diagnostico: diagnosis,
-          costo: price,
-        }
-      );
+      const response = await putToApi(`${API_URL}/api/orders/update`, {
+        nrocompro: `${order.nrocompro}`,
+        code_technical: `${user.code_technical}`,
+        diagnostico: diagnosis,
+        costo: price,
+      });
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -146,7 +142,7 @@ export default function OrderDetail() {
       if (notification.isConfirmed) orderToClose.notification = true;
 
       const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/close`,
+        `${API_URL}/api/orders/close`,
         orderToClose
       );
 
@@ -185,7 +181,7 @@ export default function OrderDetail() {
       setLoader(true);
 
       const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/free`,
+        `${API_URL}/api/orders/free`,
         orderToFree
       );
 
@@ -216,13 +212,10 @@ export default function OrderDetail() {
 
       setLoader(true);
 
-      const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/take`,
-        {
-          nrocompro: `${order.nrocompro}`,
-          code_technical: `${user.code_technical}`,
-        }
-      );
+      const response = await putToApi(`${API_URL}/api/orders/take`, {
+        nrocompro: `${order.nrocompro}`,
+        code_technical: `${user.code_technical}`,
+      });
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -263,7 +256,7 @@ export default function OrderDetail() {
         value = formatSerialNumber(value);
 
         const response = await getFromApi(
-          `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${value}`
+          `${API_URL}/api/products/serie/${value}`
         );
 
         if (validateStatus(response) === "jwt-expired") {
@@ -332,10 +325,7 @@ export default function OrderDetail() {
 
       SwalWaiting("Actualizando orden y enviando email");
 
-      const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/products`,
-        order
-      );
+      const response = await putToApi(`${API_URL}/api/orders/products`, order);
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -367,9 +357,7 @@ export default function OrderDetail() {
         });
 
         window.open(
-          `http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
-            response.payload.fileName
-          }`,
+          `${API_URL}/pdfHistory/${response.payload.fileName}`,
           "_blank"
         );
       }
@@ -414,10 +402,9 @@ export default function OrderDetail() {
 
       setLoader(true);
 
-      const response = await putToApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${id}`,
-        { notification: notification.isConfirmed }
-      );
+      const response = await putToApi(`${API_URL}/api/orders/out/${id}`, {
+        notification: notification.isConfirmed,
+      });
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -601,9 +588,7 @@ export default function OrderDetail() {
                 )}
               {order.products.length > 0 && (
                 <a
-                  href={`http://${import.meta.env.VITE_URL_HOST}/pdfHistory/${
-                    order.nrocompro
-                  }.pdf`}
+                  href={`${API_URL}/pdfHistory/${order.nrocompro}.pdf`}
                   target="_blank"
                   rel="noreferrer"
                   className="btn btn-sm btn-outline-warning"

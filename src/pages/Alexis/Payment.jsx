@@ -4,6 +4,7 @@ import { SwalError, SwalToast } from "../../utils";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { API_URL } from "../../constants";
 
 export default function Payment() {
   const { logoutUserContext } = useContext(UserContext);
@@ -56,7 +57,7 @@ export default function Payment() {
       payment.date = moment().format("YYYY-MM-DD");
 
       const response = await axios.post(
-        `http://${import.meta.env.VITE_URL_HOST}/api/alexis/payment`,
+        `${API_URL}/api/alexis/payment`,
         { item: payment },
         {
           headers: {

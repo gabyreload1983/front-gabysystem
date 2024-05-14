@@ -1,5 +1,6 @@
 import moment from "moment";
 import Swal from "sweetalert2";
+import API_URL from "./constants";
 
 export const getFromApi = async (path) => {
   try {
@@ -208,7 +209,7 @@ export const getInfoAllPendingServiceWorks = async ({ user }) => {
     process: 0,
     myWorks: 0,
   };
-  const url = `http://${import.meta.env.VITE_URL_HOST}/api/orders/pendings-all`;
+  const url = `${API_URL}/api/orders/pendings-all`;
 
   const data = await getFromApi(url);
 
@@ -310,7 +311,7 @@ export const validateFreeOrder = (user, order) => {
 };
 
 export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
-  await putToApi(`http://${import.meta.env.VITE_URL_HOST}/api/orders/take`, {
+  await putToApi(`${API_URL}/api/orders/take`, {
     nrocompro: `${nrocompro}`,
     code_technical: `${codeTechnical}`,
   });
@@ -343,7 +344,7 @@ export const validateServiceWorkOut = (user, order) => {
 };
 
 export const getOrder = async ({ id }) => {
-  const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
+  const path = `${API_URL}/api/orders/${id}`;
   const data = await getFromApi(path);
   return data.payload;
 };
@@ -353,18 +354,14 @@ export const wait = async (delay) =>
 
 export const searchProduct = async ({ input, by = "description" }) => {
   const response = await getFromApi(
-    `http://${
-      import.meta.env.VITE_URL_HOST
-    }/api/products/search-by?${by}=${input}`
+    `${API_URL}/api/products/search-by?${by}=${input}`
   );
 
   return response.payload;
 };
 
 export const validateSerieMatchProduct = async (product, serie) => {
-  const response = await getFromApi(
-    `http://${import.meta.env.VITE_URL_HOST}/api/products/serie/${serie}`
-  );
+  const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);
 
   if (response.payload.length) {
     const productFind = response.payload[0];
@@ -381,14 +378,8 @@ export const validateSerieMatchProduct = async (product, serie) => {
 export const updateProductsInSeriveWork = async (order) => {
   SwalWaiting("Actualizando orden y enviando email");
 
-  const response = await putToApi(
-    `http://${import.meta.env.VITE_URL_HOST}/api/orders/products`,
-    order
-  );
+  const response = await putToApi(`${API_URL}/api/orders/products`, order);
 };
 
 export const serviceWorkPutOut = async (nrocompro, notification) =>
-  await putToApi(
-    `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${nrocompro}`,
-    { notification }
-  );
+  await putToApi(`${API_URL}/api/orders/out/${nrocompro}`, { notification });

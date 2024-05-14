@@ -4,6 +4,7 @@ import { UserContext } from "../../context/userContext";
 import { SwalError, getFromApi, validateStatus } from "../../utils";
 import OrderList from "./OrderList";
 import { BarLoader } from "react-spinners";
+import { API_URL } from "../../constants";
 
 export default function Orders() {
   const [loader, setLoader] = useState(false);
@@ -14,7 +15,7 @@ export default function Orders() {
   const sector = searchParams.get("sector") || false;
   const state = searchParams.get("state") || false;
   const technical = searchParams.get("technical") || false;
-  let query = `http://${import.meta.env.VITE_URL_HOST}/api/orders/pending/pc`;
+  let query = `${API_URL}/api/orders/pending/pc`;
   let title = "";
 
   const getOrders = async (query) => {
@@ -38,21 +39,17 @@ export default function Orders() {
     (sector === "pc" || sector === "imp") &&
     (state === "pending" || state === "process")
   ) {
-    query = `http://${
-      import.meta.env.VITE_URL_HOST
-    }/api/orders/${state}/${sector}`;
+    query = `${API_URL}/api/orders/${state}/${sector}`;
     title = `${sector} ${state}`;
   }
 
   if (technical) {
-    query = `http://${
-      import.meta.env.VITE_URL_HOST
-    }/api/orders/technical/${technical}`;
+    query = `${API_URL}/api/orders/technical/${technical}`;
     title = `Ordenes ${technical}`;
   }
 
   if (state === "to-deliver" || state === "final-disposition") {
-    query = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${state}`;
+    query = `${API_URL}/api/orders/${state}`;
     title = `Ordenes ${state}`;
   }
 

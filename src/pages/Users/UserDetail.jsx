@@ -4,6 +4,7 @@ import { SwalError, getFromApi, putToApi, validateStatus } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
+import { API_URL } from "../../constants";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -13,9 +14,7 @@ export default function UserDetail() {
 
   const getUser = async () => {
     try {
-      const response = await getFromApi(
-        `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`
-      );
+      const response = await getFromApi(`${API_URL}/api/users/${id}`);
 
       if (validateStatus(response) === "jwt-expired") {
         logoutUserContext();
@@ -40,10 +39,9 @@ export default function UserDetail() {
   };
 
   const update = async () => {
-    const response = await putToApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/users/${id}`,
-      { userUpdate }
-    );
+    const response = await putToApi(`${API_URL}/api/users/${id}`, {
+      userUpdate,
+    });
 
     if (validateStatus(response) === "jwt-expired") {
       logoutUserContext();
@@ -77,7 +75,7 @@ export default function UserDetail() {
       if (!question.isConfirmed) return;
 
       const { data } = await axios.delete(
-        `http://${import.meta.env.VITE_URL_HOST}/api/users/${user.email}`,
+        `${API_URL}/api/users/${user.email}`,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
