@@ -12,6 +12,9 @@ jobs:
       packages: write
       contents: read
       attestations: write
+    env:   # Define las variables de entorno aquí
+      VITE_URL_HOST: ${{ secrets.VITE_URL_HOST }}
+      VITE_VERSION: ${{ secrets.VITE_VERSION }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
