@@ -1,6 +1,7 @@
 import { NavLink, useParams } from "react-router-dom";
 import {
-  getFromApi,
+  SwalToast,
+  getOrder,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderState,
@@ -9,29 +10,61 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
+  serviceWorkPutOut,
   validateAddingProducts,
   validateEditServiceWork,
+  validateServiceWorkOut,
   validateTakeServiceWork,
-  validateUserRole,
 } from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
+import ServiceWorkOut from "./ServiceWorkOut";
+import Swal from "sweetalert2";
+import Loading from "../../../components/Loading";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const { user } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
 
-  const getOrder = async () => {
-    const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
-    const data = await getFromApi(path);
-    setOrder(data.payload);
+  const getData = async () => {
+    const data = await getOrder({ id });
+    setOrder(data);
+  };
+
+  const serviceWorkOut = async (nrocompro) => {
+    const question = await Swal.fire({
+      text: `Queres dar salida a la orden ${order.nrocompro}?`,
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+    });
+    if (!question.isConfirmed) return;
+
+    const notification = await Swal.fire({
+      text: `Notificar al cliente???`,
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+    });
+
+    setLoading(true);
+
+    const response = await serviceWorkPutOut(
+      nrocompro,
+      notification.isConfirmed
+    );
+
+    setLoading(false);
+    if (response.status === "success") {
+      SwalToast("Salida de orden exitosa!");
+      getData();
+    }
   };
 
   useEffect(() => {
-    getOrder();
+    getData();
   }, [id]);
 
   return (
@@ -39,6 +72,7 @@ export default function ServiceWorkDetail() {
       {order && (
         <div className="row justify-content-center px-3 text-white mt-3">
           <div className="col-12 col-lg-8 border text-center rounded p-2 bg-dark">
+            {loading && <Loading />}
             <p
               className={`${getOrderTierBackground(
                 order.prioridad
@@ -142,6 +176,9 @@ export default function ServiceWorkDetail() {
                 >
                   AGREGAR ARTICULOS
                 </NavLink>
+              )}
+              {validateServiceWorkOut(user, order) && (
+                <ServiceWorkOut order={order} serviceWorkOut={serviceWorkOut} />
               )}
             </div>
           </div>

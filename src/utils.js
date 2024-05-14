@@ -334,6 +334,14 @@ export const validateAddingProducts = (user, order) => {
   return user.role === "premium" && order.estado === 22;
 };
 
+export const validateServiceWorkOut = (user, order) => {
+  return (
+    (user.role === "premium" || user.role === "saler") &&
+    order.estado === 23 &&
+    order.ubicacion === 21
+  );
+};
+
 export const getOrder = async ({ id }) => {
   const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
   const data = await getFromApi(path);
@@ -378,3 +386,9 @@ export const updateProductsInSeriveWork = async (order) => {
     order
   );
 };
+
+export const serviceWorkPutOut = async (nrocompro, notification) =>
+  await putToApi(
+    `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${nrocompro}`,
+    { notification }
+  );
