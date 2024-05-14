@@ -1,7 +1,7 @@
 import { NavLink, useParams } from "react-router-dom";
 import {
   SwalToast,
-  getFromApi,
+  getOrder,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderState,
@@ -10,12 +10,11 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
-  putToApi,
+  serviceWorkPutOut,
   validateAddingProducts,
   validateEditServiceWork,
   validateServiceWorkOut,
   validateTakeServiceWork,
-  validateUserRole,
 } from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
@@ -29,10 +28,9 @@ export default function ServiceWorkDetail() {
   const [order, setOrder] = useState(null);
   const { user } = useContext(UserContext);
 
-  const getOrder = async () => {
-    const path = `http://${import.meta.env.VITE_URL_HOST}/api/orders/${id}`;
-    const data = await getFromApi(path);
-    setOrder(data.payload);
+  const getData = async () => {
+    const data = await getOrder({ id });
+    setOrder(data);
   };
 
   const serviceWorkOut = async (nrocompro) => {
@@ -49,19 +47,19 @@ export default function ServiceWorkDetail() {
       confirmButtonText: "Aceptar",
     });
 
-    const response = await putToApi(
-      `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${nrocompro}`,
-      { notification: notification.isConfirmed }
+    const response = await serviceWorkPutOut(
+      nrocompro,
+      notification.isConfirmed
     );
 
     if (response.status === "success") {
       SwalToast("Salida de orden exitosa!");
-      getOrder();
+      getData();
     }
   };
 
   useEffect(() => {
-    getOrder();
+    getData();
   }, [id]);
 
   return (

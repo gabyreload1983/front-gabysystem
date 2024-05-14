@@ -386,3 +386,9 @@ export const updateProductsInSeriveWork = async (order) => {
     order
   );
 };
+
+export const serviceWorkPutOut = async (nrocompro, notification) =>
+  await putToApi(
+    `http://${import.meta.env.VITE_URL_HOST}/api/orders/out/${nrocompro}`,
+    { notification }
+  );
