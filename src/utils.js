@@ -383,3 +383,9 @@ export const updateProductsInSeriveWork = async (order) => {
 
 export const serviceWorkPutOut = async (nrocompro, notification) =>
   await putToApi(`${API_URL}/api/orders/out/${nrocompro}`, { notification });
+
+export const getServiceWorks = async (from, to) => {
+  const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
+  console.log(response.payload);
+  return response.payload;
+};
