@@ -6,15 +6,12 @@ import Register from "./pages/Register/Register";
 import Customers from "./pages/Customers/Customers";
 import Products from "./pages/Products/Products";
 import Profile from "./pages/Profile/Profile";
-import OrdersLayout from "./components/OrdersLayout";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
 import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
 import PageNotFount from "./components/PageNotFount";
 import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
-import Orders from "./pages/Orders/Orders";
-import Statistics from "./pages/Statistics/Statistics";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
 import UpdateCustomer from "./pages/Orders/UpdateCustomer";
@@ -31,6 +28,9 @@ import Process from "./pages/ServiceWork/Process/Process";
 import MyWorks from "./pages/ServiceWork/MyWorks/MyWorks";
 import ServiceWorkDetail from "./pages/ServiceWork/detail/ServiceWorkDetail";
 import EditServiceWorkProducts from "./pages/ServiceWork/edit/products/EditServiceWorkProducts";
+import LayoutStatistics from "./pages/Statistics/LayoutStatistics";
+import StatisticsTechnicals from "./pages/Statistics/Technicals/StatisticsTechnicals";
+import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 
 function App() {
   return (
@@ -47,8 +47,12 @@ function App() {
             <Route path="products" element={<Products />} />
             <Route path="orderList" element={<OrderList />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/statistics" element={<Statistics />} />
             <Route path="/summaries" element={<Summaries />} />
+
+            <Route path="/statistics" element={<LayoutStatistics />}>
+              <Route path="technicals" element={<StatisticsTechnicals />} />
+              <Route path="repairs" element={<StatisticsRepairs />} />
+            </Route>
 
             <Route path="alexis" element={<Alexis />}>
               <Route path="sales" element={<Sales />} />

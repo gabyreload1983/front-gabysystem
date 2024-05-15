@@ -1,11 +1,10 @@
-import React from "react";
-import OrderDetail from "../../components/OrderDetail";
+import OrderDetail from "../../../components/OrderDetail";
 import moment from "moment";
 import {
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderTier,
-} from "../Orders/orderUtils";
+} from "../../Orders/orderUtils";
 
 export default function Accordion({ orders }) {
   return (

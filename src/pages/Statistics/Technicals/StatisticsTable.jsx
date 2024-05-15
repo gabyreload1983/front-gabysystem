@@ -1,5 +1,3 @@
-import React from "react";
-
 import StatisticsDetail from "./StatisticsDetail";
 
 export default function StatisticsTable({ statistics }) {

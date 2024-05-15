@@ -1,13 +1,13 @@
 import moment from "moment";
-import { useContext, useEffect, useState } from "react";
-import { SwalError, getFromApi, validateStatus } from "../../utils";
-import StatisticsTable from "./StatisticsTable";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { UserContext } from "../../context/userContext";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../../context/userContext";
+import { SwalError, getFromApi, validateStatus } from "../../../utils";
 import { BarLoader } from "react-spinners";
-import { API_URL } from "../../constants";
+import StatisticsTable from "./StatisticsTable";
+import { API_URL } from "../../../constants";
 
-export default function Statistics() {
+export default function StatisticsTechnicals() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [from, setFrom] = useState(
     searchParams.get("from") || moment().format("YYYY-MM-DD")
