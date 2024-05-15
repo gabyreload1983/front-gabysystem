@@ -1,4 +1,3 @@
-import React from "react";
 import Accordion from "./Accordion";
 
 export default function StatisticsDetail({ technicalStatistics }) {
