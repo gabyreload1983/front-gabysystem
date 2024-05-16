@@ -386,6 +386,32 @@ export const serviceWorkPutOut = async (nrocompro, notification) =>
 
 export const getServiceWorks = async (from, to) => {
   const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
-  console.log(response.payload);
   return response.payload;
 };
+
+export const getStatisticsServicesWorks = (data) => {
+  const ordersStatistics = {
+    in: 0,
+    repair: 0,
+    out: 0,
+    stay: 0,
+    pending: 0,
+  };
+
+  if (data?.length === 0) return ordersStatistics;
+
+  ordersStatistics.in = data?.length;
+  data?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23) ordersStatistics.repair++;
+    if (serviceWork.estado !== 23) ordersStatistics.pending++;
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
+      ordersStatistics.out++;
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
+      ordersStatistics.stay++;
+  });
+
+  return ordersStatistics;
+};
+
+export const filterServicesWorkBySector = (data, sector) =>
+  data.filter((sw) => sw.codiart === sector);
