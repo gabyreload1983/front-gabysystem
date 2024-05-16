@@ -1,8 +1,8 @@
 export default function StatisticsSector({ statistics, title }) {
   return (
-    <div className="col-12 col-md-4">
+    <div className="col-12 col-md-6 bg-dark text-white">
       <h2>{title}</h2>
-      <p>Entreron: {statistics.in}</p>
+      <p>Entraron: {statistics.in}</p>
       <p>
         Reparaon: {statistics.repair} {" >>> "}
         {((statistics.repair * 100) / statistics.in).toFixed(2)}%

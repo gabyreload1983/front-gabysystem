@@ -252,13 +252,13 @@ export const getOrderUbication = (ubication) => {
 
 export const getOrderTier = (tier) => {
   if (tier === 0) return "NORMAL";
-  if (tier === 1) return "";
-  if (tier === 2) return "";
+  if (tier === 1) return "1";
+  if (tier === 2) return "2";
   if (tier === 3) return "ARMADOS";
   if (tier === 4) return "TURNOS/PRIORIDADES";
   if (tier === 5) return "GARANTIA REPARACION";
-  if (tier === 6) return "";
-  if (tier === 7) return "";
+  if (tier === 6) return "6";
+  if (tier === 7) return "7";
   if (tier === 8) return "BOXES";
   if (tier === 9) return "ABONADOS";
   if (tier === 10) return "GARANTIA COMPRA";
@@ -396,18 +396,52 @@ export const getStatisticsServicesWorks = (data) => {
     out: 0,
     stay: 0,
     pending: 0,
+    zero: 0,
+    one: 0,
+    two: 0,
+    three: 0,
+    four: 0,
+    five: 0,
+    six: 0,
+    seven: 0,
+    eight: 0,
+    nine: 0,
+    ten: 0,
   };
 
   if (data?.length === 0) return ordersStatistics;
 
   ordersStatistics.in = data?.length;
   data?.forEach((serviceWork) => {
+    console.log(serviceWork);
     if (serviceWork.estado === 23) ordersStatistics.repair++;
     if (serviceWork.estado !== 23) ordersStatistics.pending++;
     if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
       ordersStatistics.out++;
     if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
       ordersStatistics.stay++;
+    if (serviceWork.prioridad === 0 && serviceWork.estado === 23)
+      ordersStatistics.zero++;
+    if (serviceWork.prioridad === 1 && serviceWork.estado === 23)
+      ordersStatistics.one++;
+    if (serviceWork.prioridad === 2 && serviceWork.estado === 23)
+      ordersStatistics.two++;
+    if (serviceWork.prioridad === 3 && serviceWork.estado === 23)
+      ordersStatistics.three++;
+    if (serviceWork.prioridad === 4 && serviceWork.estado === 23)
+      ordersStatistics.four++;
+    if (serviceWork.prioridad === 5 && serviceWork.estado === 23)
+      ordersStatistics.five++;
+    if (serviceWork.prioridad === 6 && serviceWork.estado === 23)
+      ordersStatistics.six++;
+    if (serviceWork.prioridad === 7 && serviceWork.estado === 23)
+      ordersStatistics.seven++;
+    if (serviceWork.prioridad === 8 && serviceWork.estado === 23)
+      ordersStatistics.eight++;
+    if (serviceWork.prioridad === 9 && serviceWork.estado === 23)
+      ordersStatistics.nine++;
+    if (serviceWork.prioridad === 10 && serviceWork.estado === 23)
+      ordersStatistics.ten++;
   });
 
   return ordersStatistics;

@@ -8,6 +8,7 @@ import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
 import StatisticsSector from "./StatisticsSector";
+import StatisticsRepaired from "./StatisticsRepaired";
 
 export default function StatisticsRepairs() {
   const [serviceWorks, setServiceWorks] = useState(null);
@@ -77,16 +78,34 @@ export default function StatisticsRepairs() {
       </div>
       <div className="row mt-3">
         {serviceWorks && (
-          <StatisticsSector title="Todo" statistics={serviceWorks} />
+          <>
+            <StatisticsSector title="Todo" statistics={serviceWorks} />
+            <StatisticsRepaired
+              title="TOTAL REPARADAS"
+              statistics={serviceWorks}
+            />
+          </>
         )}
         {serviceWorksPc && (
-          <StatisticsSector title="PC" statistics={serviceWorksPc} />
+          <>
+            <StatisticsSector title="PC" statistics={serviceWorksPc} />
+            <StatisticsRepaired
+              title="PC Reparadas"
+              statistics={serviceWorksPc}
+            />
+          </>
         )}
         {serviceWorksPrinter && (
-          <StatisticsSector
-            title="Impresoras"
-            statistics={serviceWorksPrinter}
-          />
+          <>
+            <StatisticsSector
+              title="Impresoras"
+              statistics={serviceWorksPrinter}
+            />
+            <StatisticsRepaired
+              title="Impresoras Reparadas"
+              statistics={serviceWorksPrinter}
+            />
+          </>
         )}
       </div>
     </div>
