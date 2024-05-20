@@ -1,40 +1,68 @@
 import { useState } from "react";
 import {
   filterServicesWorkBySector,
+  getOrderTier,
   getServiceWorks,
   getStatisticsServicesWorks,
 } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
-import StatisticsSector from "./StatisticsSector";
-import StatisticsRepaired from "./StatisticsRepaired";
+import { colorsTiers } from "../../../constants";
+import PieGraph from "../../../components/PieGraph";
+import { useSearchParams } from "react-router-dom";
 
 export default function StatisticsRepairs() {
-  const [serviceWorks, setServiceWorks] = useState(null);
+  const now = moment().format("YYYY-MM-DD");
+  const [searchParams] = useSearchParams();
+  const from = searchParams.get("from") || now;
+  const to = searchParams.get("to") || now;
+
   const [serviceWorksPc, setServiceWorksPc] = useState(null);
   const [serviceWorksPrinter, setServiceWorksPrinter] = useState(null);
   const [loader, setLoader] = useState(false);
-  const now = moment().format("YYYY-MM-DD");
   const [calendar, setCalendar] = useState({
-    from: now,
-    to: now,
+    from: from,
+    to: to,
   });
 
   const getData = async () => {
     setLoader(true);
     const data = await getServiceWorks(calendar.from, calendar.to);
-    const statistics = getStatisticsServicesWorks(data);
-    const pc = getStatisticsServicesWorks(
+
+    const pcServiceWoks = getStatisticsServicesWorks(
       filterServicesWorkBySector(data, ".PC")
     );
-    const printer = getStatisticsServicesWorks(
+    const itemsPc = pcServiceWoks.repairs.map((item, index) => [
+      getOrderTier(index),
+      item,
+    ]);
+    const dataPiePc = [["PC reparadas", "Cantidad"], ...itemsPc];
+    const optionsPc = {
+      title: `PCs Reparadas ${pcServiceWoks.repair}`,
+      is3D: true,
+      colors: colorsTiers,
+    };
+
+    const printerServiceWoks = getStatisticsServicesWorks(
       filterServicesWorkBySector(data, ".IMP")
     );
+    const itemsPrinter = printerServiceWoks.repairs.map((item, index) => [
+      getOrderTier(index),
+      item,
+    ]);
+    const dataPiePrinter = [
+      ["Impresoras Reparadas", "Cantidad"],
+      ...itemsPrinter,
+    ];
+    const optionsPrinter = {
+      title: `Impresoras Reparadas ${printerServiceWoks.repair}`,
+      is3D: true,
+      colors: colorsTiers,
+    };
 
-    setServiceWorks(statistics);
-    setServiceWorksPc(pc);
-    setServiceWorksPrinter(printer);
+    setServiceWorksPc({ dataPiePc, optionsPc });
+    setServiceWorksPrinter({ dataPiePrinter, optionsPrinter });
     setLoader(false);
   };
 
@@ -77,34 +105,24 @@ export default function StatisticsRepairs() {
         </div>
       </div>
       <div className="row mt-3">
-        {serviceWorks && (
-          <>
-            <StatisticsSector title="Todo" statistics={serviceWorks} />
-            <StatisticsRepaired
-              title="TOTAL REPARADAS"
-              statistics={serviceWorks}
-            />
-          </>
-        )}
         {serviceWorksPc && (
           <>
-            <StatisticsSector title="PC" statistics={serviceWorksPc} />
-            <StatisticsRepaired
-              title="PC Reparadas"
-              statistics={serviceWorksPc}
-            />
+            <div className="col-12 col-lg-6 p-2">
+              <PieGraph
+                data={serviceWorksPc.dataPiePc}
+                options={serviceWorksPc.optionsPc}
+              />
+            </div>
           </>
         )}
         {serviceWorksPrinter && (
           <>
-            <StatisticsSector
-              title="Impresoras"
-              statistics={serviceWorksPrinter}
-            />
-            <StatisticsRepaired
-              title="Impresoras Reparadas"
-              statistics={serviceWorksPrinter}
-            />
+            <div className="col-12 col-lg-6 p-2">
+              <PieGraph
+                data={serviceWorksPrinter.dataPiePrinter}
+                options={serviceWorksPrinter.optionsPrinter}
+              />
+            </div>
           </>
         )}
       </div>
