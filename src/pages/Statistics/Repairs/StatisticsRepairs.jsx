@@ -82,14 +82,14 @@ export default function StatisticsRepairs() {
     <div className="container">
       {loader && <Loading />}
       <div className="row justify-content-center">
-        <div className="col-6 col-md-4 col-lg-3">
+        <div className="col-12 col-md-4 col-lg-3 p-2">
           <CalendarPicker
             label="from"
             value={calendar.from}
             handleOnChange={handleCalendarChange}
           />
         </div>
-        <div className="col-6 col-md-4 col-lg-3">
+        <div className="col-12 col-md-4 col-lg-3 p-2">
           <CalendarPicker
             label="to"
             value={calendar.to}
