@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  getSectorStatistics,
-  getServiceWorks,
-  getStatisticsServicesWorks,
-} from "../../../utils";
+import { getSectorStatistics, getServiceWorks } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
@@ -16,7 +12,6 @@ export default function StatisticsRepairs() {
   const from = searchParams.get("from") || now;
   const to = searchParams.get("to") || now;
 
-  const [serviceWorksAll, setServiceWorksAll] = useState(false);
   const [serviceWorksPc, setServiceWorksPc] = useState(false);
   const [serviceWorksPrinter, setServiceWorksPrinter] = useState(false);
   const [loader, setLoader] = useState(false);
@@ -31,11 +26,6 @@ export default function StatisticsRepairs() {
 
     if (!data || data?.length === 0) return setLoader(false);
 
-    // const { dataPie: dataPieAll, options: optionsAll } =
-    //   getStatisticsServicesWorks({
-    //     data,
-    //   });
-
     const { dataPie: dataPiePc, options: optionsPc } = getSectorStatistics({
       data,
       sector: ".PC",
@@ -43,7 +33,6 @@ export default function StatisticsRepairs() {
     const { dataPie: dataPiePrinter, options: optionsPrinter } =
       getSectorStatistics({ data, sector: ".IMP" });
 
-    // setServiceWorksAll({ dataPieAll, optionsAll });
     setServiceWorksPc({ dataPiePc, optionsPc });
     setServiceWorksPrinter({ dataPiePrinter, optionsPrinter });
     setLoader(false);
@@ -88,16 +77,6 @@ export default function StatisticsRepairs() {
         </div>
       </div>
       <div className="row mt-3">
-        {serviceWorksAll && (
-          <>
-            <div className="col-12 p-2">
-              <PieGraph
-                data={serviceWorksAll.dataPiePc}
-                options={serviceWorksAll.optionsPc}
-              />
-            </div>
-          </>
-        )}
         {serviceWorksPc && (
           <>
             <div className="col-12 col-lg-6 p-2">

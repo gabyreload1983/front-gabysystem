@@ -389,30 +389,45 @@ export const getServiceWorks = async (from, to) => {
   return response.payload;
 };
 
-export const getStatisticsServicesWorks = ({ data }) => {
-  const ordersStatistics = {
-    repair: 0,
-    out: 0,
-    stay: 0,
-    pending: 0,
-  };
+export const getStatisticsRepairPending = ({ data }) => {
+  const ordersStatistics = [
+    ["repair", 0],
+    ["pending", 0],
+  ];
 
   data?.forEach((serviceWork) => {
-    if (serviceWork.estado === 23) {
-      ordersStatistics.repair++;
-    }
-    if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
-      ordersStatistics.out++;
-    if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
-      ordersStatistics.stay++;
-    if (serviceWork.estado !== 23) ordersStatistics.pending++;
+    if (serviceWork.estado === 23) ordersStatistics[0][1]++;
+    if (serviceWork.estado !== 23) ordersStatistics[1][1]++;
   });
 
   const dataPie = [[`Total Ordenes`, "Cantidad"], ...ordersStatistics];
   const options = {
     title: `Total Ordenes: ${data.length}`,
     is3D: true,
-    colors: colorsTiers,
+    colors: ["#2BBD51", "#E1E355"],
+  };
+
+  return { dataPie, options };
+};
+
+export const getStatisticsInOut = ({ data }) => {
+  const ordersStatistics = [
+    ["out", 0],
+    ["stay", 0],
+  ];
+
+  data?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
+      ordersStatistics[0][1]++;
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
+      ordersStatistics[1][1]++;
+  });
+
+  const dataPie = [[`Total Ordenes`, "Cantidad"], ...ordersStatistics];
+  const options = {
+    title: `Total Ordenes: ${data.length}`,
+    is3D: true,
+    colors: ["#306EBB", "#BB903D"],
   };
 
   return { dataPie, options };
