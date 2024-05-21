@@ -1,8 +1,17 @@
 import { NavLink } from "react-router-dom";
-import { CubeIcon, UsersIcon } from "@heroicons/react/16/solid";
+import {
+  ClipboardDocumentListIcon,
+  CubeIcon,
+  UsersIcon,
+} from "@heroicons/react/16/solid";
 
 export default function StatisticsLinks() {
   const links = [
+    {
+      name: "Ordenes",
+      to: "/statistics/servicesworks",
+      icon: ClipboardDocumentListIcon,
+    },
     {
       name: "Reparaciones",
       to: "/statistics/repairs",

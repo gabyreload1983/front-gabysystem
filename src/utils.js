@@ -391,8 +391,8 @@ export const getServiceWorks = async (from, to) => {
 
 export const getStatisticsRepairPending = ({ data }) => {
   const ordersStatistics = [
-    ["repair", 0],
-    ["pending", 0],
+    ["Reparadas", 0],
+    ["Pendientes", 0],
   ];
 
   data?.forEach((serviceWork) => {
@@ -400,9 +400,9 @@ export const getStatisticsRepairPending = ({ data }) => {
     if (serviceWork.estado !== 23) ordersStatistics[1][1]++;
   });
 
-  const dataPie = [[`Total Ordenes`, "Cantidad"], ...ordersStatistics];
+  const dataPie = [[`Ordenes Ingresadas`, "Cantidad"], ...ordersStatistics];
   const options = {
-    title: `Total Ordenes: ${data.length}`,
+    title: `Ordenes Ingresadas: ${data.length}`,
     is3D: true,
     colors: ["#2BBD51", "#E1E355"],
   };
@@ -412,8 +412,8 @@ export const getStatisticsRepairPending = ({ data }) => {
 
 export const getStatisticsInOut = ({ data }) => {
   const ordersStatistics = [
-    ["out", 0],
-    ["stay", 0],
+    ["Entregadas", 0],
+    ["Sin Entregar", 0],
   ];
 
   data?.forEach((serviceWork) => {
@@ -423,9 +423,12 @@ export const getStatisticsInOut = ({ data }) => {
       ordersStatistics[1][1]++;
   });
 
-  const dataPie = [[`Total Ordenes`, "Cantidad"], ...ordersStatistics];
+  const dataPie = [[`Ordenes Reparadas`, "Cantidad"], ...ordersStatistics];
   const options = {
-    title: `Total Ordenes: ${data.length}`,
+    title: `Ordenes Reparadas: ${ordersStatistics.reduce(
+      (acc, val) => acc + val[1],
+      0
+    )}`,
     is3D: true,
     colors: ["#306EBB", "#BB903D"],
   };
