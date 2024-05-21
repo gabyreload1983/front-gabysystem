@@ -1,6 +1,6 @@
 import moment from "moment";
 import Swal from "sweetalert2";
-import { API_URL } from "./constants";
+import { API_URL, colorsTiers, tiers } from "./constants";
 
 export const getFromApi = async (path) => {
   try {
@@ -389,33 +389,62 @@ export const getServiceWorks = async (from, to) => {
   return response.payload;
 };
 
-export const getStatisticsServicesWorks = (data) => {
+export const getStatisticsServicesWorks = ({ data }) => {
   const ordersStatistics = {
-    in: 0,
     repair: 0,
     out: 0,
     stay: 0,
     pending: 0,
-    repairs: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   };
 
-  if (data?.length === 0) return ordersStatistics;
-
-  ordersStatistics.in = data?.length;
   data?.forEach((serviceWork) => {
     if (serviceWork.estado === 23) {
       ordersStatistics.repair++;
-      ordersStatistics.repairs[serviceWork.prioridad]++;
     }
-    if (serviceWork.estado !== 23) ordersStatistics.pending++;
     if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
       ordersStatistics.out++;
     if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
       ordersStatistics.stay++;
+    if (serviceWork.estado !== 23) ordersStatistics.pending++;
   });
 
-  return ordersStatistics;
+  const dataPie = [[`Total Ordenes`, "Cantidad"], ...ordersStatistics];
+  const options = {
+    title: `Total Ordenes: ${data.length}`,
+    is3D: true,
+    colors: colorsTiers,
+  };
+
+  return { dataPie, options };
 };
 
-export const filterServicesWorkBySector = (data, sector) =>
+export const filterServicesWorkBySector = ({ data, sector }) =>
   data.filter((sw) => sw.codiart === sector);
+
+export const getSectorStatistics = ({ data, sector }) => {
+  const serviceWoksFiltered = filterServicesWorkBySector({ data, sector });
+
+  const items = tiers.map((item) => [item, 0]);
+  serviceWoksFiltered?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23) {
+      items[serviceWork.prioridad][1]++;
+    }
+  });
+
+  const dataPie = [[`${sector} reparadas`, "Cantidad"], ...items];
+  const options = {
+    title: `${formatNameSector({ sector })} Reparadas ${items.reduce(
+      (acc, val) => acc + val[1],
+      0
+    )}`,
+    is3D: true,
+    colors: colorsTiers,
+  };
+
+  return { dataPie, options };
+};
+
+export const formatNameSector = ({ sector }) => {
+  if (sector === ".PC") return "PC";
+  if (sector === ".IMP") return "Impresoras";
+};

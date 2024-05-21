@@ -18,14 +18,15 @@ export const tiers = [
 ];
 
 export const colorsTiers = [
-  "#ff0000",
-  "#fd7e14",
-  "#f02727",
-  "#a83e73",
-  "#1fe66b",
-  "#ffc107",
-  "#54c0db",
-  "#d3e910",
-  "#e4f58d",
+  "#c4c7b4",
   "#727950",
+  "#e4f58d",
+  "#d3e910",
+  "#54c0db",
+  "#ffc107",
+  "#1fe66b",
+  "#a83e73",
+  "#f02727",
+  "#fd7e14",
+  "#ff0000",
 ];

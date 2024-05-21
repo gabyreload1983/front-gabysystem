@@ -1,14 +1,12 @@
 import { useState } from "react";
 import {
-  filterServicesWorkBySector,
-  getOrderTier,
+  getSectorStatistics,
   getServiceWorks,
   getStatisticsServicesWorks,
 } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
-import { colorsTiers } from "../../../constants";
 import PieGraph from "../../../components/PieGraph";
 import { useSearchParams } from "react-router-dom";
 
@@ -18,8 +16,9 @@ export default function StatisticsRepairs() {
   const from = searchParams.get("from") || now;
   const to = searchParams.get("to") || now;
 
-  const [serviceWorksPc, setServiceWorksPc] = useState(null);
-  const [serviceWorksPrinter, setServiceWorksPrinter] = useState(null);
+  const [serviceWorksAll, setServiceWorksAll] = useState(false);
+  const [serviceWorksPc, setServiceWorksPc] = useState(false);
+  const [serviceWorksPrinter, setServiceWorksPrinter] = useState(false);
   const [loader, setLoader] = useState(false);
   const [calendar, setCalendar] = useState({
     from: from,
@@ -30,37 +29,21 @@ export default function StatisticsRepairs() {
     setLoader(true);
     const data = await getServiceWorks(calendar.from, calendar.to);
 
-    const pcServiceWoks = getStatisticsServicesWorks(
-      filterServicesWorkBySector(data, ".PC")
-    );
-    const itemsPc = pcServiceWoks.repairs.map((item, index) => [
-      getOrderTier(index),
-      item,
-    ]);
-    const dataPiePc = [["PC reparadas", "Cantidad"], ...itemsPc];
-    const optionsPc = {
-      title: `PCs Reparadas ${pcServiceWoks.repair}`,
-      is3D: true,
-      colors: colorsTiers,
-    };
+    if (!data || data?.length === 0) return setLoader(false);
 
-    const printerServiceWoks = getStatisticsServicesWorks(
-      filterServicesWorkBySector(data, ".IMP")
-    );
-    const itemsPrinter = printerServiceWoks.repairs.map((item, index) => [
-      getOrderTier(index),
-      item,
-    ]);
-    const dataPiePrinter = [
-      ["Impresoras Reparadas", "Cantidad"],
-      ...itemsPrinter,
-    ];
-    const optionsPrinter = {
-      title: `Impresoras Reparadas ${printerServiceWoks.repair}`,
-      is3D: true,
-      colors: colorsTiers,
-    };
+    // const { dataPie: dataPieAll, options: optionsAll } =
+    //   getStatisticsServicesWorks({
+    //     data,
+    //   });
 
+    const { dataPie: dataPiePc, options: optionsPc } = getSectorStatistics({
+      data,
+      sector: ".PC",
+    });
+    const { dataPie: dataPiePrinter, options: optionsPrinter } =
+      getSectorStatistics({ data, sector: ".IMP" });
+
+    // setServiceWorksAll({ dataPieAll, optionsAll });
     setServiceWorksPc({ dataPiePc, optionsPc });
     setServiceWorksPrinter({ dataPiePrinter, optionsPrinter });
     setLoader(false);
@@ -105,6 +88,16 @@ export default function StatisticsRepairs() {
         </div>
       </div>
       <div className="row mt-3">
+        {serviceWorksAll && (
+          <>
+            <div className="col-12 p-2">
+              <PieGraph
+                data={serviceWorksAll.dataPiePc}
+                options={serviceWorksAll.optionsPc}
+              />
+            </div>
+          </>
+        )}
         {serviceWorksPc && (
           <>
             <div className="col-12 col-lg-6 p-2">
