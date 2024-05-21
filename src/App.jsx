@@ -31,6 +31,7 @@ import EditServiceWorkProducts from "./pages/ServiceWork/edit/products/EditServi
 import LayoutStatistics from "./pages/Statistics/LayoutStatistics";
 import StatisticsTechnicals from "./pages/Statistics/Technicals/StatisticsTechnicals";
 import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
+import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
 
 function App() {
   return (
@@ -50,6 +51,10 @@ function App() {
             <Route path="/summaries" element={<Summaries />} />
 
             <Route path="/statistics" element={<LayoutStatistics />}>
+              <Route
+                path="servicesworks"
+                element={<StatisticsServicesWorks />}
+              />
               <Route path="technicals" element={<StatisticsTechnicals />} />
               <Route path="repairs" element={<StatisticsRepairs />} />
             </Route>
