@@ -4,9 +4,10 @@ import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
 import PieGraph from "../../../components/PieGraph";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function StatisticsRepairs() {
+  const navigate = useNavigate();
   const now = moment().format("YYYY-MM-DD");
   const [searchParams] = useSearchParams();
   const from = searchParams.get("from") || now;
@@ -44,6 +45,9 @@ export default function StatisticsRepairs() {
     copyCalendar[name] = value;
 
     setCalendar(copyCalendar);
+    navigate(
+      `/statistics/repairs?from=${copyCalendar.from}&to=${copyCalendar.to}`
+    );
   };
 
   useState(() => {
