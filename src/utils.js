@@ -352,9 +352,9 @@ export const getOrder = async ({ id }) => {
 export const wait = async (delay) =>
   await new Promise((resolve) => setTimeout(resolve, delay));
 
-export const searchProduct = async ({ input, by = "description" }) => {
+export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(
-    `${API_URL}/api/products/search-by?${by}=${input}`
+    `${API_URL}/api/products/search-by?${searchBy}=${input}`
   );
 
   return response.payload;
