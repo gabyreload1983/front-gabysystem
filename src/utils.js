@@ -1,6 +1,6 @@
 import moment from "moment";
 import Swal from "sweetalert2";
-import { API_URL } from "./constants";
+import { API_URL, colorsTiers, tiers } from "./constants";
 
 export const getFromApi = async (path) => {
   try {
@@ -252,13 +252,13 @@ export const getOrderUbication = (ubication) => {
 
 export const getOrderTier = (tier) => {
   if (tier === 0) return "NORMAL";
-  if (tier === 1) return "";
-  if (tier === 2) return "";
+  if (tier === 1) return "1";
+  if (tier === 2) return "2";
   if (tier === 3) return "ARMADOS";
   if (tier === 4) return "TURNOS/PRIORIDADES";
   if (tier === 5) return "GARANTIA REPARACION";
-  if (tier === 6) return "";
-  if (tier === 7) return "";
+  if (tier === 6) return "6";
+  if (tier === 7) return "7";
   if (tier === 8) return "BOXES";
   if (tier === 9) return "ABONADOS";
   if (tier === 10) return "GARANTIA COMPRA";
@@ -383,3 +383,86 @@ export const updateProductsInSeriveWork = async (order) => {
 
 export const serviceWorkPutOut = async (nrocompro, notification) =>
   await putToApi(`${API_URL}/api/orders/out/${nrocompro}`, { notification });
+
+export const getServiceWorks = async (from, to) => {
+  const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
+  return response.payload;
+};
+
+export const getStatisticsRepairPending = ({ data }) => {
+  const ordersStatistics = [
+    ["Reparadas", 0],
+    ["Pendientes", 0],
+  ];
+
+  data?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23) ordersStatistics[0][1]++;
+    if (serviceWork.estado !== 23) ordersStatistics[1][1]++;
+  });
+
+  const dataPie = [[`Ordenes Ingresadas`, "Cantidad"], ...ordersStatistics];
+  const options = {
+    title: `Ordenes Ingresadas: ${data.length}`,
+    is3D: true,
+    colors: ["#2BBD51", "#E1E355"],
+  };
+
+  return { dataPie, options };
+};
+
+export const getStatisticsInOut = ({ data }) => {
+  const ordersStatistics = [
+    ["Entregadas", 0],
+    ["Sin Entregar", 0],
+  ];
+
+  data?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
+      ordersStatistics[0][1]++;
+    if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
+      ordersStatistics[1][1]++;
+  });
+
+  const dataPie = [[`Ordenes Reparadas`, "Cantidad"], ...ordersStatistics];
+  const options = {
+    title: `Ordenes Reparadas: ${ordersStatistics.reduce(
+      (acc, val) => acc + val[1],
+      0
+    )}`,
+    is3D: true,
+    colors: ["#306EBB", "#BB903D"],
+  };
+
+  return { dataPie, options };
+};
+
+export const filterServicesWorkBySector = ({ data, sector }) =>
+  data.filter((sw) => sw.codiart === sector);
+
+export const getSectorStatistics = ({ data, sector }) => {
+  const serviceWoksFiltered = filterServicesWorkBySector({ data, sector });
+
+  const items = tiers.map((item) => [item, 0]);
+  serviceWoksFiltered?.forEach((serviceWork) => {
+    if (serviceWork.estado === 23) {
+      items[serviceWork.prioridad][1]++;
+    }
+  });
+
+  const dataPie = [[`${sector} reparadas`, "Cantidad"], ...items];
+  const options = {
+    title: `${formatNameSector({ sector })} Reparadas ${items.reduce(
+      (acc, val) => acc + val[1],
+      0
+    )}`,
+    is3D: true,
+    colors: colorsTiers,
+  };
+
+  return { dataPie, options };
+};
+
+export const formatNameSector = ({ sector }) => {
+  if (sector === ".PC") return "PC";
+  if (sector === ".IMP") return "Impresoras";
+};

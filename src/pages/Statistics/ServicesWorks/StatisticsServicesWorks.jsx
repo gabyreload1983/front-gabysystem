@@ -1,20 +1,25 @@
 import { useState } from "react";
-import { getSectorStatistics, getServiceWorks } from "../../../utils";
+import {
+  getServiceWorks,
+  getStatisticsInOut,
+  getStatisticsRepairPending,
+} from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
 import PieGraph from "../../../components/PieGraph";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
-export default function StatisticsRepairs() {
+export default function StatisticsServicesWorks() {
   const navigate = useNavigate();
   const now = moment().format("YYYY-MM-DD");
   const [searchParams] = useSearchParams();
   const from = searchParams.get("from") || now;
   const to = searchParams.get("to") || now;
 
-  const [serviceWorksPc, setServiceWorksPc] = useState(false);
-  const [serviceWorksPrinter, setServiceWorksPrinter] = useState(false);
+  const [serviceWorksRepairPending, setServiceWorksRepairPending] =
+    useState(false);
+  const [serviceWorksInOut, setServiceWorksInOut] = useState(false);
   const [loader, setLoader] = useState(false);
   const [calendar, setCalendar] = useState({
     from: from,
@@ -27,15 +32,19 @@ export default function StatisticsRepairs() {
 
     if (!data || data?.length === 0) return setLoader(false);
 
-    const { dataPie: dataPiePc, options: optionsPc } = getSectorStatistics({
-      data,
-      sector: ".PC",
-    });
-    const { dataPie: dataPiePrinter, options: optionsPrinter } =
-      getSectorStatistics({ data, sector: ".IMP" });
+    const { dataPie: dataPieRepairPending, options: optionsRepairPending } =
+      getStatisticsRepairPending({
+        data,
+      });
+    const { dataPie: dataPieInOut, options: optionsInOut } = getStatisticsInOut(
+      { data }
+    );
 
-    setServiceWorksPc({ dataPiePc, optionsPc });
-    setServiceWorksPrinter({ dataPiePrinter, optionsPrinter });
+    setServiceWorksRepairPending({
+      dataPieRepairPending,
+      optionsRepairPending,
+    });
+    setServiceWorksInOut({ dataPieInOut, optionsInOut });
     setLoader(false);
   };
 
@@ -46,7 +55,7 @@ export default function StatisticsRepairs() {
 
     setCalendar(copyCalendar);
     navigate(
-      `/statistics/repairs?from=${copyCalendar.from}&to=${copyCalendar.to}`
+      `/statistics/servicesworks?from=${copyCalendar.from}&to=${copyCalendar.to}`
     );
   };
 
@@ -81,22 +90,22 @@ export default function StatisticsRepairs() {
         </div>
       </div>
       <div className="row mt-3">
-        {serviceWorksPc && (
+        {serviceWorksRepairPending && (
           <>
             <div className="col-12 col-lg-6 p-2">
               <PieGraph
-                data={serviceWorksPc.dataPiePc}
-                options={serviceWorksPc.optionsPc}
+                data={serviceWorksRepairPending.dataPieRepairPending}
+                options={serviceWorksRepairPending.optionsRepairPending}
               />
             </div>
           </>
         )}
-        {serviceWorksPrinter && (
+        {serviceWorksInOut && (
           <>
             <div className="col-12 col-lg-6 p-2">
               <PieGraph
-                data={serviceWorksPrinter.dataPiePrinter}
-                options={serviceWorksPrinter.optionsPrinter}
+                data={serviceWorksInOut.dataPieInOut}
+                options={serviceWorksInOut.optionsInOut}
               />
             </div>
           </>
