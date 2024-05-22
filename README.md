@@ -1,8 +1,42 @@
-# React + Vite
+# GabySystem FrontEnd 🚀
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Web App developmented with React.js
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Service Works handler
+- Search Products and Customers
+- Statistics
+- List of Ordered Products
+- Customer Summaries
+- Commissions
+
+## Technologies Used
+
+- Vite
+- React.js
+- Bootstrap
+- Sass
+- Axios
+- Sweetalert2
+
+## Project Structure
+
+## Getting Stared
+
+To set up GabySystem Web App and get it running on your local development environment, follow these steps:
+
+### Prerequisites
+
+- Linux or Windows
+- Visual Studio
+- NODE.js >= 18
+- MongoDB
+- Virtual Machine with Urbano Server [Download](https://linkto)
+- Gabysystem API RESTFull [README](https://github.com/gabyreload1983/api-gabysystem/blob/main/README.md)
+
+## Installation
+
+1. Clone the repository to your local machine.
+
+## Deploy
