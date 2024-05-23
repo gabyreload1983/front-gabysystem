@@ -32,6 +32,7 @@ import LayoutStatistics from "./pages/Statistics/LayoutStatistics";
 import StatisticsTechnicals from "./pages/Statistics/Technicals/StatisticsTechnicals";
 import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
+import Filter from "./pages/ServiceWork/Filter/Filter";
 
 function App() {
   return (
@@ -83,6 +84,7 @@ function App() {
               <Route path="printers" element={<Printers />} />
               <Route path="process" element={<Process />} />
               <Route path="my-works" element={<MyWorks />} />
+              <Route path="filter" element={<Filter />} />
             </Route>
 
             <Route path="*" element={<PageNotFount />} />

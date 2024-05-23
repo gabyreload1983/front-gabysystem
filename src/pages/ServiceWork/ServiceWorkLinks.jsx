@@ -7,6 +7,7 @@ import {
   ComputerDesktopIcon,
   CubeIcon,
   PrinterIcon,
+  DocumentMagnifyingGlassIcon,
 } from "@heroicons/react/16/solid";
 
 export default function ServiceWorkLinks() {
@@ -27,25 +28,31 @@ export default function ServiceWorkLinks() {
       name: "Pc",
       to: "pc",
       icon: ComputerDesktopIcon,
-      quantity: serviceWorksInfo ? serviceWorksInfo["pc"] : 0,
+      quantity: serviceWorksInfo ? serviceWorksInfo["pc"] : null,
     },
     {
       name: "Impresoras",
       to: "printers",
       icon: PrinterIcon,
-      quantity: serviceWorksInfo ? serviceWorksInfo["printers"] : 0,
+      quantity: serviceWorksInfo ? serviceWorksInfo["printers"] : null,
     },
     {
       name: "Proceso",
       to: "process",
       icon: ClipboardDocumentListIcon,
-      quantity: serviceWorksInfo ? serviceWorksInfo["process"] : 0,
+      quantity: serviceWorksInfo ? serviceWorksInfo["process"] : null,
     },
     {
       name: "Mis Ordenes",
       to: "my-works",
       icon: CubeIcon,
-      quantity: serviceWorksInfo ? serviceWorksInfo["myWorks"] : 0,
+      quantity: serviceWorksInfo ? serviceWorksInfo["myWorks"] : null,
+    },
+    {
+      name: "Filtrar",
+      to: "filter",
+      icon: DocumentMagnifyingGlassIcon,
+      quantity: false,
     },
   ];
 
@@ -61,12 +68,18 @@ export default function ServiceWorkLinks() {
           >
             <Icon className="icon" />
             <p className="d-none d-xl-block m-0">{link.name}</p>
-            {link.quantity === 0 ? (
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+            {link.quantity !== false ? (
+              link.quantity === null ? (
+                <div className="spinner-border spinner-border-sm" role="status">
+                  <span className="visually-hidden">Loading...</span>
+                </div>
+              ) : (
+                <span className="bg-info px-2 py-1 rounded">
+                  {link.quantity}
+                </span>
+              )
             ) : (
-              <span className="bg-info px-2 py-1 rounded">{link.quantity}</span>
+              <></>
             )}
           </NavLink>
         );
