@@ -4,19 +4,18 @@ import ServiceWorkList from "./ServiceWorkList";
 import Loading from "../../components/Loading";
 
 export default function ServiceWork({ url }) {
-  const [serviceWorks, setServiceWorks] = useState([]);
+  const [serviceWorks, setServiceWorks] = useState(null);
 
   const getServiceWorks = async () => {
     const data = await getFromApi(url);
-
     setServiceWorks(data.payload);
   };
 
   useEffect(() => {
     getServiceWorks();
-  }, []);
+  }, [url]);
 
-  if (serviceWorks.length === 0) return <Loading />;
+  if (!serviceWorks) return <Loading />;
 
   return <ServiceWorkList serviceWorks={serviceWorks} />;
 }
