@@ -32,7 +32,7 @@ import LayoutStatistics from "./pages/Statistics/LayoutStatistics";
 import StatisticsTechnicals from "./pages/Statistics/Technicals/StatisticsTechnicals";
 import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
-import Filter from "./pages/ServiceWork/FIlter/Filter";
+import Filter from "./pages/ServiceWork/Filter/Filter";
 
 function App() {
   return (

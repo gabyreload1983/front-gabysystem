@@ -2,6 +2,7 @@ import { useState } from "react";
 import ServiceWork from "../ServiceWork";
 import { API_URL } from "../../../constants";
 import { useNavigate, useSearchParams } from "react-router-dom";
+
 export default function Filter() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
