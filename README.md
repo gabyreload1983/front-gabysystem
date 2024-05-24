@@ -35,8 +35,13 @@ To set up GabySystem Web App and get it running on your local development enviro
 - Virtual Machine with Urbano Server [Download](https://linkto)
 - Gabysystem API RESTFull [README](https://github.com/gabyreload1983/api-gabysystem/blob/main/README.md)
 
-## Installation
+### Development
 
 1. Clone the repository to your local machine.
+2. Run npm run dev
 
 ## Deploy
+
+1. Rename front-gabysystem-template.yml to front-gabysystem.yml and copy into the server
+2. Complete data of production
+3. Run docker-compose -f front-gabysystem.yml up -d
