@@ -295,7 +295,7 @@ export default function SaleDetail() {
                 </div>
                 <div className="p-3 d-flex justify-content-between">
                   <label htmlFor="deliveryCost" className="me-3">
-                    DELIVERY:
+                    IMPORTE:
                   </label>
                   <div>
                     <span className="border border-2 p-1">$</span>

@@ -130,9 +130,9 @@ export default function Sales() {
           <div className="col-1">PAGO</div>
           <div className="col-1">FECHA PAGO</div>
           <div className="col-1">OC</div>
-          <div className="col-1">FLETE</div>
-          <div className="col-1">FLETERO</div>
-          <div className="col-1">ENTRAGADO</div>
+          <div className="col-1">FLETETERO</div>
+          <div className="col-1">IMPORTE</div>
+          <div className="col-1">ENTREGADO</div>
         </div>
 
         {salesPartial.length && <SalesList sales={salesPartial} />}

@@ -58,7 +58,7 @@ export default function Profile() {
     <div className="container">
       {user && (
         <div
-          className="row border border-3 border-success p-4 rounded-5 mt-3 justify-content-center align-items-center"
+          className="row border border-3 border-success p-4 rounded-5 mt-3 justify-content-center align-items-center bg-dark text-white"
           style={{ maxWidth: 600 }}
         >
           <div className="col d-flex flex-column justify-content-center align-items-center">
@@ -75,6 +75,7 @@ export default function Profile() {
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                 <path
+                  className="pointer"
                   fillRule="evenodd"
                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
                 />
@@ -106,6 +107,8 @@ export default function Profile() {
             <p className="border-bottom border-2">
               ROL: {capitalize(user.role)}
             </p>
+            <p className="border-bottom border-2">API: V {user.api_version}</p>
+            <p className="border-bottom border-2">GS: V {user.front_version}</p>
           </div>
         </div>
       )}
