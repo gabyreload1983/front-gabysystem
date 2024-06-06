@@ -11,7 +11,7 @@ export const getFromApi = async (path) => {
         Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
-    if (validateResponse(response)) return await response.json();
+    if (await validateResponse(response)) return await response.json();
   } catch (error) {
     return SwalError(error);
   }
@@ -27,7 +27,7 @@ export const putToApi = async (path, body) => {
         Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
-    if (validateResponse(response)) return await response.json();
+    if (await validateResponse(response)) return await response.json();
   } catch (error) {
     return SwalError(error);
   }
@@ -43,7 +43,7 @@ export const postToApi = async (path, body) => {
         Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
-    if (validateResponse(response)) return await response.json();
+    if (await validateResponse(response)) return await response.json();
   } catch (error) {
     return SwalError(error);
   }
@@ -58,20 +58,34 @@ export const deleteToApi = async (path) => {
         Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
       },
     });
-    if (validateResponse(response)) return await response.json();
+    if (await validateResponse(response)) return await response.json();
   } catch (error) {
     return SwalError(error);
   }
 };
 
-const validateResponse = (response) => {
+const validateResponse = async (response) => {
   if (response.status === 500) {
     return SwalError({
       message:
         "Error en el Servidor. Ponerse en contacto con el administrador.",
     });
   }
+
+  if (response.status === 403) {
+    const json = await response.json();
+    if (json.message === "jwt-expired") {
+      destroyJwt();
+    }
+  }
+
   return true;
+};
+
+export const destroyJwt = () => {
+  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("user");
+  return window.location.replace("/login");
 };
 
 export const validateStatus = (response) => {
