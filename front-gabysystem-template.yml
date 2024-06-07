@@ -2,7 +2,7 @@ version: "3.9"
 services:
   gabysystem-front:
     build: .
-    image: gabyreload1983/gabysystem-front:vx.x.x
+    image: gabyreload1983/front-gabysystem:vx.x.x
     container_name: gabysystem-front
     ports:
       - "xxxx:xx"
