@@ -27,4 +27,4 @@ package-lock.json
 .env
 .env.development
 .env.production
-gabysystem-front.yml
+front-gabysystem.yml
