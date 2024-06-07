@@ -107,8 +107,12 @@ export default function Profile() {
             <p className="border-bottom border-2">
               ROL: {capitalize(user.role)}
             </p>
-            <p className="border-bottom border-2">API: V {user.api_version}</p>
-            <p className="border-bottom border-2">GS: V {user.front_version}</p>
+            <p className="border-bottom border-2">
+              API: Version {user.api_version}
+            </p>
+            <p className="border-bottom border-2">
+              GS: Version {process.env.PACKAGE_VERSION}
+            </p>
           </div>
         </div>
       )}
