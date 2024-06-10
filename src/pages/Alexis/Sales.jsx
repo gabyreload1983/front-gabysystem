@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
 import SalesList from "./SalesList";
-import { SwalError, SwalToast, SwalWaiting } from "../../utils";
+import { SwalError, SwalToast, SwalWaiting, getJWT } from "../../utils";
 import moment from "moment";
 import { API_URL } from "../../constants";
 
@@ -31,7 +31,7 @@ export default function Sales() {
         `${API_URL}/api/alexis/sales?from=${from}&to=${to}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );
@@ -65,7 +65,7 @@ export default function Sales() {
         body,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

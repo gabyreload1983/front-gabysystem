@@ -5,6 +5,7 @@ import {
   SwalSuccess,
   SwalWaiting,
   capitalize,
+  getJWT,
   isValidUrl,
 } from "../../utils";
 import Swal from "sweetalert2";
@@ -39,7 +40,7 @@ export default function Profile() {
           { userUpdate },
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+              Authorization: `Bearer ${getJWT()}`,
             },
           }
         );

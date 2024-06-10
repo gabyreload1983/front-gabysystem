@@ -1,21 +1,20 @@
 import { createContext, useState } from "react";
+import { jwtDecode } from "jwt-decode";
+import { getJWT } from "../utils";
 
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(null);
 
   const logoutUserContext = () => {
-    localStorage.removeItem("user");
     localStorage.removeItem("jwtToken");
     setUser(null);
   };
 
-  const loginUserContext = (user, token) => {
-    localStorage.setItem("user", JSON.stringify(user));
+  const loginUserContext = (token) => {
     localStorage.setItem("jwtToken", token);
+    const { user } = jwtDecode(token);
     setUser(user);
   };
 

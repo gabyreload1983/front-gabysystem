@@ -1,6 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { SwalError, getFromApi, putToApi, validateStatus } from "../../utils";
+import {
+  SwalError,
+  getFromApi,
+  getJWT,
+  putToApi,
+  validateStatus,
+} from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
@@ -78,7 +84,7 @@ export default function UserDetail() {
         `${API_URL}/api/users/${user.email}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

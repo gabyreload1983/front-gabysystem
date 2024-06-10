@@ -38,9 +38,9 @@ export default function Login() {
       return await SwalError(response);
     }
     if (response.status === "success") {
-      const { user, accessToken } = response.payload;
+      const { accessToken } = response.payload;
 
-      loginUserContext(user, accessToken);
+      loginUserContext(accessToken);
       navigate("/");
 
       await Swal.fire({
