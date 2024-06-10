@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AccountList from "./AccountList";
 import moment from "moment";
-import { SwalError, formatPrice } from "../../utils";
+import { SwalError, formatPrice, getJWT } from "../../utils";
 import axios from "axios";
 import { API_URL } from "../../constants";
 
@@ -26,7 +26,7 @@ export default function Account() {
         `${API_URL}/api/alexis/account?year=${year}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

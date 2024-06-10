@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useContext, useState } from "react";
-import { SwalError, SwalToast } from "../../utils";
+import { SwalError, SwalToast, getJWT } from "../../utils";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -61,7 +61,7 @@ export default function Payment() {
         { item: payment },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

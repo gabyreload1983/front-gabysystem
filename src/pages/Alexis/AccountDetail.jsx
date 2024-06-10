@@ -2,7 +2,13 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalError, SwalToast, SwalWaiting, formatPrice } from "../../utils";
+import {
+  SwalError,
+  SwalToast,
+  SwalWaiting,
+  formatPrice,
+  getJWT,
+} from "../../utils";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
@@ -17,7 +23,7 @@ export default function AccountDetail() {
     try {
       const response = await axios.get(`${API_URL}/api/alexis/account/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          Authorization: `Bearer ${getJWT()}`,
         },
       });
 
@@ -53,7 +59,7 @@ export default function AccountDetail() {
         `${API_URL}/api/alexis/account/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

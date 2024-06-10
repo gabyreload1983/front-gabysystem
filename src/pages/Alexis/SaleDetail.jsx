@@ -12,6 +12,7 @@ import {
   formatPaymentDate,
   isNotANumber,
   isLessThanZero,
+  getJWT,
 } from "../../utils";
 import Swal from "sweetalert2";
 import moment from "moment";
@@ -26,7 +27,7 @@ export default function SaleDetail() {
     try {
       const response = await axios.get(`${API_URL}/api/alexis/sales/${id}`, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+          Authorization: `Bearer ${getJWT()}`,
         },
       });
 
@@ -73,7 +74,7 @@ export default function SaleDetail() {
         { sale },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );
@@ -158,7 +159,7 @@ export default function SaleDetail() {
         { sale: { ...sale, isValid: false } },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+            Authorization: `Bearer ${getJWT()}`,
           },
         }
       );

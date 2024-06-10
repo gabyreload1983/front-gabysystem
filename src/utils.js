@@ -8,7 +8,7 @@ export const getFromApi = async (path) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        Authorization: `Bearer ${getJWT()}`,
       },
     });
     if (await validateResponse(response)) return await response.json();
@@ -24,7 +24,7 @@ export const putToApi = async (path, body) => {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        Authorization: `Bearer ${getJWT()}`,
       },
     });
     if (await validateResponse(response)) return await response.json();
@@ -40,7 +40,7 @@ export const postToApi = async (path, body) => {
       body: JSON.stringify(body),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        Authorization: `Bearer ${getJWT()}`,
       },
     });
     if (await validateResponse(response)) return await response.json();
@@ -55,7 +55,7 @@ export const deleteToApi = async (path) => {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("jwtToken")}`,
+        Authorization: `Bearer ${getJWT()}`,
       },
     });
     if (await validateResponse(response)) return await response.json();
@@ -480,3 +480,5 @@ export const formatNameSector = ({ sector }) => {
   if (sector === ".PC") return "PC";
   if (sector === ".IMP") return "Impresoras";
 };
+
+export const getJWT = () => localStorage.getItem("jwtToken");
