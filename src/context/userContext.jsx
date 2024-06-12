@@ -5,7 +5,7 @@ import { getUser } from "../utils";
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(getUser()) || null;
+  const [user, setUser] = useState(getUser() || null);
 
   const logoutUserContext = () => {
     localStorage.removeItem("jwtToken");
