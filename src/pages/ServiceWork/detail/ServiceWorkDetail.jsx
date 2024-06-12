@@ -83,7 +83,7 @@ export default function ServiceWorkDetail() {
     setLoading(false);
     if (response.status === "success") {
       SwalToast("Se libero orden!");
-      navigate(0); // refresh all data without reload the page
+      navigate(0); //TODO refresh all data without reload the page
     }
   };
 
