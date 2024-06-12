@@ -314,7 +314,7 @@ export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
 
-export const validateFreeOrder = (user, order) => {
+export const validateFreeServiceWork = (user, order) => {
   return (
     (user.role === "premium" &&
       order.estado !== 21 &&
@@ -398,6 +398,15 @@ export const updateProductsInSeriveWork = async (order) => {
 
 export const serviceWorkPutOut = async (nrocompro, notification) =>
   await putToApi(`${API_URL}/api/orders/out/${nrocompro}`, { notification });
+
+export const serviceWorkPutFree = async (order, user) => {
+  const orderToFree = {
+    nrocompro: order.nrocompro,
+    code_technical: user.code_technical,
+  };
+
+  return await putToApi(`${API_URL}/api/orders/free`, orderToFree);
+};
 
 export const getServiceWorks = async (from, to) => {
   const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);

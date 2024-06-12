@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
   SwalToast,
   getOrder,
@@ -10,9 +10,11 @@ import {
   getOrderTierBackground,
   getOrderUbication,
   getOrderUbicationBackground,
+  serviceWorkPutFree,
   serviceWorkPutOut,
   validateAddingProducts,
   validateEditServiceWork,
+  validateFreeServiceWork,
   validateServiceWorkOut,
   validateTakeServiceWork,
 } from "../../../utils";
@@ -24,12 +26,14 @@ import ServiceWorkOut from "./ServiceWorkOut";
 import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
 import { API_URL } from "../../../constants";
+import ServiceWorkFree from "./ServiceWorkFree";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [order, setOrder] = useState(null);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const getData = async () => {
     const data = await getOrder({ id });
@@ -61,6 +65,25 @@ export default function ServiceWorkDetail() {
     if (response.status === "success") {
       SwalToast("Salida de orden exitosa!");
       getData();
+    }
+  };
+
+  const serviceWorkFree = async (nrocompro) => {
+    const question = await Swal.fire({
+      text: `Queres liberar la orden ${order.nrocompro}?`,
+      showCancelButton: true,
+      confirmButtonText: "Aceptar",
+    });
+    if (!question.isConfirmed) return;
+
+    setLoading(true);
+
+    const response = await serviceWorkPutFree(order, user);
+
+    setLoading(false);
+    if (response.status === "success") {
+      SwalToast("Se libero orden!");
+      navigate(0); //TODO refresh all data without reload the page
     }
   };
 
@@ -178,6 +201,12 @@ export default function ServiceWorkDetail() {
               )}
               {validateServiceWorkOut(user, order) && (
                 <ServiceWorkOut order={order} serviceWorkOut={serviceWorkOut} />
+              )}
+              {validateFreeServiceWork(user, order) && (
+                <ServiceWorkFree
+                  order={order}
+                  serviceWorkFree={serviceWorkFree}
+                />
               )}
             </div>
           </div>
