@@ -76,7 +76,7 @@ export default function SearchProduct({ onChangeProducts }) {
           id="search"
         />
 
-        <button className="btn btn-outline-success" onClick={searchProduct}>
+        <button className="btn btn-success" onClick={searchProduct}>
           Buscar
         </button>
       </div>

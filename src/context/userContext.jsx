@@ -1,14 +1,15 @@
 import { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { getJWT } from "../utils";
+import { getUser } from "../utils";
 
 export const UserContext = createContext();
 
 const UserContextProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(getUser() || null);
 
   const logoutUserContext = () => {
     localStorage.removeItem("jwtToken");
+    localStorage.removeItem("user"); // only for clean old sessions
     setUser(null);
   };
 

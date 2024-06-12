@@ -116,7 +116,7 @@ export default function Sales() {
           <div className="col-5 col-md-3 col-lg-2">
             <button
               onClick={updateSalesCurrentYear}
-              className="btn btn-outline-success"
+              className="btn btn-success"
             >
               ACTUALIZAR
             </button>
@@ -130,7 +130,7 @@ export default function Sales() {
           <div className="col-1">PAGO</div>
           <div className="col-1">FECHA PAGO</div>
           <div className="col-1">OC</div>
-          <div className="col-1">FLETETERO</div>
+          <div className="col-1">FLETERO</div>
           <div className="col-1">IMPORTE</div>
           <div className="col-1">ENTREGADO</div>
         </div>
