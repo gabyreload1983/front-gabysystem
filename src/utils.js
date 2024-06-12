@@ -1,6 +1,7 @@
 import moment from "moment";
 import Swal from "sweetalert2";
 import { API_URL, colorsTiers, tiers } from "./constants";
+import { jwtDecode } from "jwt-decode";
 
 export const getFromApi = async (path) => {
   try {
@@ -482,3 +483,10 @@ export const formatNameSector = ({ sector }) => {
 };
 
 export const getJWT = () => localStorage.getItem("jwtToken");
+
+export const getUser = () => {
+  const jwt = getJWT();
+  if (!jwt) return null;
+  const { user } = jwtDecode(jwt);
+  return user;
+};
