@@ -6,8 +6,8 @@ import {
   getOrderTier,
   getOrderTierBackground,
   getOrderUbication,
-} from "../pages/Orders/orderUtils";
-import { formatPrice } from "../utils";
+  formatPrice,
+} from "../utils";
 import moment from "moment";
 
 export default function OrderDetail({ order }) {

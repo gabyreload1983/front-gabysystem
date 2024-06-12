@@ -13,9 +13,10 @@ import {
   getTotalOrder,
   putToApi,
   validateStatus,
+  formatSerialNumber,
+  validateFreeServiceWork,
 } from "../../../utils";
 import Swal from "sweetalert2";
-import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
 import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
 import { BarLoader } from "react-spinners";
@@ -524,7 +525,7 @@ export default function OrderDetail() {
                 )}
 
               <div className="col text-end">
-                {validateFreeOrder(user, order) && (
+                {validateFreeServiceWork(user, order) && (
                   <button className="btn btn-warning" onClick={freeOrder}>
                     Liberar
                   </button>

@@ -5,7 +5,7 @@ import {
   getOrderTier,
   getOrderTierBackground,
   getOrderUbication,
-} from "../orderUtils";
+} from "../../../utils";
 import moment from "moment";
 import SendWhatsapp from "../../../components/SendWhatsapp";
 
