@@ -6,7 +6,6 @@ export default function ProductsInOrder({
   order,
   total,
   price,
-  onDeletingProduct,
   onHandlePrice,
 }) {
   return (
@@ -17,7 +16,6 @@ export default function ProductsInOrder({
           <th>Descripcion</th>
           <th>Serie</th>
           <th>Precio</th>
-          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -50,7 +48,6 @@ export default function ProductsInOrder({
               )}
             </div>
           </td>
-          <td></td>
         </tr>
         {order.products.length > 0 &&
           order.products.map((product, index) => {
@@ -62,19 +59,6 @@ export default function ProductsInOrder({
                 <td className="custom-td text-end">
                   ${formatPrice(product.priceList1WithTax)}
                 </td>
-                {validateUserRole(user, "saler", "premium") &&
-                order.estado === 22 ? (
-                  <td className="d-flex justify-content-center align-items-center">
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={() => onDeletingProduct(product)}
-                    >
-                      X
-                    </button>
-                  </td>
-                ) : (
-                  <td></td>
-                )}
               </tr>
             );
           })}
@@ -83,7 +67,6 @@ export default function ProductsInOrder({
         <tr>
           <td colSpan={3}>Total</td>
           <td className="custom-td text-end">${formatPrice(total)}</td>
-          <td></td>
         </tr>
       </tfoot>
     </table>
