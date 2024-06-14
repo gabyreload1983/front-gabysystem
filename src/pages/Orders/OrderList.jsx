@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { isTurno, getOrderTier, getOrderTierBackground } from "./orderUtils";
+import { isTurno, getOrderTier, getOrderTierBackground } from "../../utils";
 import moment from "moment";
 
 export default function OrderList({ orders }) {

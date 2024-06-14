@@ -1,6 +1,6 @@
 import moment from "moment";
 import React from "react";
-import { getOrderState, getOrderUbication } from "../Orders/orderUtils";
+import { getOrderState, getOrderUbication } from "../../utils";
 
 export default function CustomerOrdersList({ orders, onSearchOrderDetail }) {
   return (

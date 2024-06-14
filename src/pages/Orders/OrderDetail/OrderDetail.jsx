@@ -13,10 +13,10 @@ import {
   getTotalOrder,
   putToApi,
   validateStatus,
+  formatSerialNumber,
+  validateFreeServiceWork,
 } from "../../../utils";
 import Swal from "sweetalert2";
-import { formatSerialNumber, validateFreeOrder } from "../orderUtils";
-import AddingProduct from "./AddingProduct";
 import OrderDetailHeader from "./OrderDetailHeader";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../../constants";
@@ -26,8 +26,6 @@ export default function OrderDetail() {
   const { user, logoutUserContext } = useContext(UserContext);
   const { id } = useParams();
   const [order, setOrder] = useState(null);
-  const [cancelButton, setCancelButton] = useState(true);
-  const [confirmButton, setConfirmButton] = useState(true);
 
   const [diagnosis, setDiagnosis] = useState(null);
   const [price, setPrice] = useState(null);
@@ -235,156 +233,6 @@ export default function OrderDetail() {
 
   //Saler
 
-  const handleAddingProduct = async (product) => {
-    try {
-      setLoader(true);
-
-      const copyProduct = { ...product };
-      let serie = "";
-      if (copyProduct.trabaserie === "S") {
-        let { value } = await Swal.fire({
-          input: "text",
-          inputLabel: "Ingrese Nº Serie",
-          inputPlaceholder: "Numero de Serie",
-          showCancelButton: true,
-        });
-
-        if (!value) {
-          return;
-        }
-
-        value = formatSerialNumber(value);
-
-        const response = await getFromApi(
-          `${API_URL}/api/products/serie/${value}`
-        );
-
-        if (validateStatus(response) === "jwt-expired") {
-          logoutUserContext();
-          return navigate("/login");
-        }
-
-        if (response.status === "success") {
-          if (response.payload.length) {
-            const productFind = response.payload[0];
-            if (copyProduct.codigo !== productFind.codigo)
-              return await SwalError({
-                message: `El serie pertenece al producto ${productFind.codigo}`,
-              });
-          }
-        }
-        serie = value;
-      }
-
-      copyProduct.serie = serie;
-      order.products.push(copyProduct);
-      order.total = getTotalOrder(order);
-
-      setOrder((prev) => ({
-        ...prev,
-        products: order.products,
-        total: order.total,
-      }));
-
-      setCancelButton(false);
-      setConfirmButton(false);
-    } catch (error) {
-      SwalError(error);
-    } finally {
-      setLoader(false);
-    }
-  };
-
-  const handleDeletingProduct = (product) => {
-    const index = order.products.findIndex(
-      (p) => p.codigo === product.codigo && p.serie === product.serie
-    );
-    order.products.splice(index, 1);
-    order.total = getTotalOrder(order);
-
-    setOrder((prev) => ({
-      ...prev,
-      products: order.products,
-      total: order.total,
-    }));
-
-    setCancelButton(false);
-    setConfirmButton(false);
-  };
-
-  const handleConfirm = async () => {
-    try {
-      const question = await Swal.fire({
-        text: `Guardar cambios en orden ${order.nrocompro}?`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
-
-      setLoader(true);
-
-      SwalWaiting("Actualizando orden y enviando email");
-
-      const response = await putToApi(`${API_URL}/api/orders/products`, order);
-
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
-
-      if (response.status === "success") {
-        setCancelButton(true);
-        setConfirmButton(true);
-        getOrder();
-        if (!order.products.length) {
-          return SwalSuccess(
-            "Cambios guardados con exito! Orden sin productos"
-          );
-        }
-
-        await Swal.fire({
-          icon: "success",
-          text: `Cambios guardados con exito!`,
-          position: "center",
-          showConfirmButton: true,
-          confirmButtonText: "Abrir PDF",
-          allowOutsideClick: false,
-          allowEscapeKey: false,
-          didOpen: (toast) => {
-            toast.addEventListener("mouseenter", Swal.stopTimer);
-            toast.addEventListener("mouseleave", Swal.resumeTimer);
-          },
-        });
-
-        window.open(
-          `${API_URL}/pdfHistory/${response.payload.fileName}`,
-          "_blank"
-        );
-      }
-    } catch (error) {
-      SwalError(error);
-    } finally {
-      setLoader(false);
-    }
-  };
-
-  const handleCancel = async () => {
-    try {
-      const question = await Swal.fire({
-        text: `Cancelar cambios en orden ${order.nrocompro}?`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
-
-      getOrder();
-      setCancelButton(true);
-      setConfirmButton(true);
-    } catch (error) {
-      SwalError(error);
-    }
-  };
-
   const outOrder = async (id) => {
     try {
       const question = await Swal.fire({
@@ -524,7 +372,7 @@ export default function OrderDetail() {
                 )}
 
               <div className="col text-end">
-                {validateFreeOrder(user, order) && (
+                {validateFreeServiceWork(user, order) && (
                   <button className="btn btn-warning" onClick={freeOrder}>
                     Liberar
                   </button>
@@ -561,31 +409,10 @@ export default function OrderDetail() {
                 order={order}
                 total={total}
                 price={price}
-                onDeletingProduct={handleDeletingProduct}
                 onHandlePrice={handlePrice}
               />
             </div>
             <div className="col-12 d-flex justify-content-between mb-3">
-              {validateUserRole(user, "saler", "premium") &&
-                order.estado === 22 && (
-                  <div className="btn-group">
-                    <button
-                      className="btn btn-sm btn-outline-success"
-                      onClick={handleConfirm}
-                      disabled={confirmButton}
-                    >
-                      Confirmar
-                    </button>
-
-                    <button
-                      className="btn btn-sm btn-outline-danger"
-                      onClick={handleCancel}
-                      disabled={cancelButton}
-                    >
-                      Cancelar
-                    </button>
-                  </div>
-                )}
               {order.products.length > 0 && (
                 <a
                   href={`${API_URL}/pdfHistory/${order.nrocompro}.pdf`}
@@ -596,15 +423,6 @@ export default function OrderDetail() {
                   PDF
                 </a>
               )}
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col">
-              {validateUserRole(user, "saler", "premium") &&
-                order.estado === 22 && (
-                  <AddingProduct onAddingProduct={handleAddingProduct} />
-                )}
             </div>
           </div>
         </div>
