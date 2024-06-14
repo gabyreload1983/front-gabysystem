@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { tiers } from "../../../constants";
+import SearchCustomer from "../../../components/Customers/SearchCustomer";
 
 export default function CreateServiceWork() {
   const [serviceWork, setServiceWork] = useState({
@@ -29,7 +30,9 @@ export default function CreateServiceWork() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-12 col-md-6">Buscar cliente</div>
+        <div className="col-12 col-md-6">
+          <SearchCustomer />
+        </div>
         <div className="col-12 col-md-6">
           <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
             <select

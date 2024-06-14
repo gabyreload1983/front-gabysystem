@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function Search({ onSearch }) {
+export default function Search({ onSearch, onClean }) {
   const [input, setInput] = useState("");
 
   const handleInputChange = (event) => {
@@ -16,8 +16,13 @@ export default function Search({ onSearch }) {
     if (input.length >= 3) onSearch(input);
   };
 
+  const handleClean = async () => {
+    setInput("");
+    onClean();
+  };
+
   return (
-    <div className="d-flex ms-auto mb-3">
+    <div className="d-flex ms-auto mb-3 gap-2">
       <input
         className="form-control me-2"
         type="search"
@@ -25,9 +30,13 @@ export default function Search({ onSearch }) {
         onChange={handleInputChange}
         name="search"
         onKeyDown={handleKeyDown}
+        value={input}
       />
-      <button className="btn btn-outline-success" onClick={handleClick}>
+      <button className="btn btn-success" onClick={handleClick}>
         Buscar
+      </button>
+      <button className="btn btn-warning" onClick={handleClean}>
+        Limpiar
       </button>
     </div>
   );
