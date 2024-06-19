@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 
-export default function Search({ onSearch, onClean }) {
+export default function Search({
+  onSearch,
+  onClean,
+  searchDescription = "Buscar",
+}) {
   const [input, setInput] = useState("");
 
   const handleInputChange = (event) => {
@@ -26,7 +30,7 @@ export default function Search({ onSearch, onClean }) {
       <input
         className="form-control me-2"
         type="search"
-        placeholder="Buscar"
+        placeholder={searchDescription}
         onChange={handleInputChange}
         name="search"
         onKeyDown={handleKeyDown}

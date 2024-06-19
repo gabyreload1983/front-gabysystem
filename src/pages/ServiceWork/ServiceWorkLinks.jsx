@@ -92,6 +92,7 @@ export default function ServiceWorkLinks() {
           to="/servicework/create"
         >
           <PlusCircleIcon className="icon" />
+          <p className="d-none d-xl-block m-0">Crear</p>
         </NavLink>
       )}
     </>

@@ -3,16 +3,16 @@ import Search from "../Search";
 import ListCustomers from "./ListCustomers";
 import { getCustomers } from "../../utils";
 
-export default function SearchCustomer() {
+export default function SearchCustomers({ onHandleCustomerSelected }) {
   const [customers, setCustomers] = useState([]);
 
   const search = async (input) => {
     const data = await getCustomers(input);
     setCustomers(data);
-    console.log(data);
   };
   const handleClick = async (customer) => {
-    console.log(customer);
+    setCustomers([]);
+    onHandleCustomerSelected(customer);
   };
 
   const handleClean = async () => {
@@ -20,9 +20,13 @@ export default function SearchCustomer() {
   };
 
   return (
-    <div>
-      <Search onSearch={search} onClean={handleClean} />
+    <>
+      <Search
+        onSearch={search}
+        onClean={handleClean}
+        searchDescription="Buscar Cliente"
+      />
       <ListCustomers customers={customers} onHandleCLick={handleClick} />
-    </div>
+    </>
   );
 }

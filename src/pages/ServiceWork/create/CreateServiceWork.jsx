@@ -1,20 +1,26 @@
-import { useState } from "react";
-import { tiers } from "../../../constants";
-import SearchCustomer from "../../../components/Customers/SearchCustomer";
+import { useContext, useState } from "react";
+import SearchCustomers from "../../../components/Customers/SearchCustomers";
+import { UserContext } from "../../../context/userContext";
+import FormCreateServiceWork from "./FormCreateServiceWork";
+import { serviceWorkTemplate } from "../../../constants";
 
 export default function CreateServiceWork() {
-  const [serviceWork, setServiceWork] = useState({
-    codigo: "",
-    nombre: "",
-    telefono: "",
-    codiart: "",
-    descart: "",
-    serie: "",
-    operador: "",
-    falla: "",
-    accesorios: "",
-    prioridad: "",
-  });
+  const { user } = useContext(UserContext);
+  const [customer, setCustomers] = useState(null);
+
+  const [serviceWork, setServiceWork] = useState(serviceWorkTemplate);
+
+  const handleCustomerSelected = (customer) => {
+    setCustomers(customer);
+    setServiceWork((prev) => ({
+      ...prev,
+      codigo: customer.codigo,
+      nombre: customer.nombre,
+      telefono: customer.telefono,
+      mail: customer.mail,
+      operador: user.code_technical,
+    }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -27,74 +33,29 @@ export default function CreateServiceWork() {
     console.log(newServiceWork);
   };
 
+  const clean = () => {
+    setCustomers(null);
+  };
+
   return (
-    <div className="container-fluid">
+    <div className="container">
       <div className="row">
-        <div className="col-12 col-md-6">
-          <SearchCustomer />
-        </div>
-        <div className="col-12 col-md-6">
-          <form onSubmit={handleSubmit} className="d-flex flex-column gap-3">
-            <select
-              id="codiart"
-              name="codiart"
-              className="form-select"
-              aria-label="Default select example"
-            >
-              <option defaultValue>Sector</option>
-              <option value="pc">PC</option>
-              <option value="printer">Impresoras</option>
-            </select>
-            <div className="form-floating ">
-              <input
-                type="text"
-                className="form-control"
-                id="descart"
-                name="descart"
-                placeholder="descart"
+        <div className="col-12 col-md-8 mx-auto">
+          {customer ? (
+            <>
+              <FormCreateServiceWork
+                customer={customer}
+                onHandleSubmit={handleSubmit}
               />
-              <label htmlFor="descart">Descripcion</label>
-            </div>
-            <div className="form-floating ">
-              <input
-                type="text"
-                className="form-control"
-                id="accesorios"
-                name="accesorios"
-                placeholder="Accesorios"
-              />
-              <label htmlFor="accesorios">Accesorios</label>
-            </div>
-
-            <div className="form-floating">
-              <textarea id="falla" name="falla" placeholder="Falla"></textarea>
-            </div>
-
-            <div className="form-floating ">
-              <input
-                type="text"
-                className="form-control"
-                id="serie"
-                name="serie"
-                placeholder="Serie"
-              />
-              <label htmlFor="serie">Serie</label>
-            </div>
-            <select
-              id="prioridad"
-              name="prioridad"
-              className="form-select"
-              aria-label="Default select example"
-            >
-              <option defaultValue>prioridad</option>
-              {tiers.map((tier, index) => (
-                <option key={index} value={index}>
-                  {tier}
-                </option>
-              ))}
-            </select>
-            <button className="btn btn-success">Crear</button>
-          </form>
+              <button className="btn btn-warning mt-2" onClick={clean}>
+                Limpiar
+              </button>
+            </>
+          ) : (
+            <SearchCustomers
+              onHandleCustomerSelected={handleCustomerSelected}
+            />
+          )}
         </div>
       </div>
     </div>

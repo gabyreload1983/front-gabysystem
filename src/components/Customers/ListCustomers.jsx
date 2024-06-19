@@ -1,4 +1,6 @@
 export default function ListCustomers({ customers, onHandleCLick }) {
+  if (customers.length === 0) return;
+
   return (
     <div className="table-responsive">
       <table className="table table-hover">

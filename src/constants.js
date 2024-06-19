@@ -30,3 +30,17 @@ export const colorsTiers = [
   "#fd7e14",
   "#ff0000",
 ];
+
+export const serviceWorkTemplate = {
+  codigo: "",
+  nombre: "",
+  telefono: "",
+  mail: "",
+  codiart: "",
+  descart: "",
+  serie: "",
+  operador: "",
+  falla: "",
+  accesorios: "",
+  prioridad: "",
+};
