@@ -121,3 +121,12 @@ td > a {
 .tableHeaderSort {
   cursor: pointer;
 }
+
+textarea {
+  field-sizing: content;
+  min-height: 80px;
+  width: 100%;
+  padding: 1rem;
+  border: unset;
+  border-radius: 5px;
+}

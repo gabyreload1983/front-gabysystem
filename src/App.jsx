@@ -33,6 +33,7 @@ import StatisticsTechnicals from "./pages/Statistics/Technicals/StatisticsTechni
 import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
 import Filter from "./pages/ServiceWork/Filter/Filter";
+import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
 
 function App() {
   return (
@@ -85,6 +86,7 @@ function App() {
               <Route path="process" element={<Process />} />
               <Route path="my-works" element={<MyWorks />} />
               <Route path="filter" element={<Filter />} />
+              <Route path="create" element={<CreateServiceWork />} />
             </Route>
 
             <Route path="*" element={<PageNotFount />} />

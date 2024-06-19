@@ -8,7 +8,9 @@ import {
   CubeIcon,
   PrinterIcon,
   DocumentMagnifyingGlassIcon,
+  PlusCircleIcon,
 } from "@heroicons/react/16/solid";
+import { validateCreateServiceWork } from "../../utils/validation";
 
 export default function ServiceWorkLinks() {
   const { user } = useContext(UserContext);
@@ -84,6 +86,15 @@ export default function ServiceWorkLinks() {
           </NavLink>
         );
       })}
+      {validateCreateServiceWork(user) && (
+        <NavLink
+          className="navLink flex-fill p-2 d-flex align-items-center gap-2 flex-row justify-content-center"
+          to="/servicework/create"
+        >
+          <PlusCircleIcon className="icon" />
+          <p className="d-none d-xl-block m-0">Crear</p>
+        </NavLink>
+      )}
     </>
   );
 }

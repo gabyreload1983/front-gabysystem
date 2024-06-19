@@ -499,3 +499,8 @@ export const getUser = () => {
   const { user } = jwtDecode(jwt);
   return user;
 };
+
+export const getCustomers = async (description) => {
+  const response = await getFromApi(`${API_URL}/api/customers/${description}`);
+  return response.payload;
+};
