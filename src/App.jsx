@@ -34,7 +34,6 @@ import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
 import Filter from "./pages/ServiceWork/Filter/Filter";
 import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
-import SearchCustomer from "./components/Customers/SearchCustomers";
 
 function App() {
   return (
