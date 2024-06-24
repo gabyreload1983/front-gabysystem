@@ -509,3 +509,11 @@ export const getPdfServiceWork = async ({ nrocompro }) => {
   const response = await getFromApi(`${API_URL}/api/orders/pdf/${nrocompro}`);
   return response.payload;
 };
+
+export const createServiceWork = async (serviceWork) => {
+  const response = await postToApi(`${API_URL}/api/orders`, {
+    order: { ...serviceWork },
+  });
+  console.log(response);
+  return response.payload;
+};

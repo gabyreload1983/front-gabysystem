@@ -3,6 +3,7 @@ import SearchCustomers from "../../../components/Customers/SearchCustomers";
 import { UserContext } from "../../../context/userContext";
 import FormCreateServiceWork from "./FormCreateServiceWork";
 import { serviceWorkTemplate } from "../../../constants";
+import { createServiceWork } from "../../../utils";
 
 export default function CreateServiceWork() {
   const { user } = useContext(UserContext);
@@ -14,15 +15,15 @@ export default function CreateServiceWork() {
     setCustomers(customer);
     setServiceWork((prev) => ({
       ...prev,
-      codigo: customer.codigo,
-      nombre: customer.nombre,
-      telefono: customer.telefono,
+      code: customer.codigo,
+      client: customer.nombre,
+      phone: customer.telefono,
       mail: customer.mail,
-      operador: user.code_technical,
+      saler: user.code_technical,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const newServiceWork = { ...serviceWork };
@@ -30,7 +31,8 @@ export default function CreateServiceWork() {
       newServiceWork[key] = value;
     }
     setServiceWork(newServiceWork);
-    console.log(newServiceWork);
+    const response = await createServiceWork(newServiceWork);
+    console.log(response);
   };
 
   const clean = () => {
