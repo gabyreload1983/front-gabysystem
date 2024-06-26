@@ -14,8 +14,9 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
         name="sector"
         className="form-select"
         aria-label="Default select example"
+        required
       >
-        <option defaultValue>Sector</option>
+        <option value="">Sector</option>
         <option value=".PC">PC</option>
         <option value=".IMP">Impresoras</option>
       </select>
@@ -25,9 +26,10 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
           className="form-control"
           id="description"
           name="description"
-          placeholder="Descripcion"
+          placeholder="Descripcion Articulo"
+          required
         />
-        <label htmlFor="description">Descripcion</label>
+        <label htmlFor="description">Descripcion Articulo</label>
       </div>
       <div className="form-floating ">
         <input
@@ -36,13 +38,14 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
           id="accesories"
           name="accesories"
           placeholder="Accesorios"
+          required
         />
         <label htmlFor="accesories">Accesorios</label>
       </div>
 
       <div>
         <label htmlFor="fail">Falla</label>
-        <textarea id="fail" name="fail" placeholder="Falla"></textarea>
+        <textarea id="fail" name="fail" placeholder="Falla" required></textarea>
       </div>
 
       <div className="form-floating ">
@@ -61,6 +64,7 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
           name="priority"
           className="form-select"
           aria-label="Default select example"
+          required
         >
           {tiers.map((tier, index) => (
             <option key={index} value={index}>

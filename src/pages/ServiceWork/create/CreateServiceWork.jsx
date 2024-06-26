@@ -19,7 +19,6 @@ export default function CreateServiceWork() {
       client: customer.nombre,
       phone: customer.telefono,
       mail: customer.mail,
-      saler: user.code_technical,
     }));
   };
 
@@ -30,9 +29,9 @@ export default function CreateServiceWork() {
     for (const [key, value] of form) {
       newServiceWork[key] = value;
     }
+
     setServiceWork(newServiceWork);
     const response = await createServiceWork(newServiceWork);
-    console.log(response);
   };
 
   const clean = () => {
