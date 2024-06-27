@@ -27,6 +27,7 @@ import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
 import { API_URL } from "../../../constants";
 import ServiceWorkFree from "./ServiceWorkFree";
+import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -168,13 +169,7 @@ export default function ServiceWorkDetail() {
               <ServiceWorkProducts order={order} />
             </div>
             <div className="col-12 p-2 d-flex justify-content-end">
-              <NavLink
-                to={`${API_URL}/pdfHistory/${order.nrocompro}.pdf`}
-                className="btn btn-warning"
-                target="_blank"
-              >
-                PDF
-              </NavLink>
+              <ButtonPdf nrocompro={order.nrocompro} />
             </div>
             <div className="col-12 p-2 d-flex gap-2">
               {validateTakeServiceWork(user, order) && (

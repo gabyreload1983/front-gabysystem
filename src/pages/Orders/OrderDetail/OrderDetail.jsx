@@ -20,6 +20,7 @@ import Swal from "sweetalert2";
 import OrderDetailHeader from "./OrderDetailHeader";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../../constants";
+import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
 
 export default function OrderDetail() {
   const [loader, setLoader] = useState(false);
@@ -414,14 +415,7 @@ export default function OrderDetail() {
             </div>
             <div className="col-12 d-flex justify-content-between mb-3">
               {order.products.length > 0 && (
-                <a
-                  href={`${API_URL}/pdfHistory/${order.nrocompro}.pdf`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn btn-sm btn-outline-warning"
-                >
-                  PDF
-                </a>
+                <ButtonPdf nrocompro={order.nrocompro} />
               )}
             </div>
           </div>
