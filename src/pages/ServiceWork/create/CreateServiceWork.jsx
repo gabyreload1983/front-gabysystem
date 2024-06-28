@@ -3,10 +3,12 @@ import SearchCustomers from "../../../components/Customers/SearchCustomers";
 import { UserContext } from "../../../context/userContext";
 import FormCreateServiceWork from "./FormCreateServiceWork";
 import { serviceWorkTemplate } from "../../../constants";
-import { createServiceWork } from "../../../utils";
+import { SwalSuccess, createServiceWork } from "../../../utils";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateServiceWork() {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [customer, setCustomers] = useState(null);
 
   const [serviceWork, setServiceWork] = useState(serviceWorkTemplate);
@@ -32,6 +34,10 @@ export default function CreateServiceWork() {
 
     setServiceWork(newServiceWork);
     const response = await createServiceWork(newServiceWork);
+    if (response) {
+      await SwalSuccess(`Orden ${response.nrocompro} creada exitosamente!`);
+      navigate(`/servicework/detail/${response.nrocompro}`);
+    }
   };
 
   const clean = () => {
@@ -41,7 +47,8 @@ export default function CreateServiceWork() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-12 col-md-8 mx-auto">
+        <div className="col-12 col-md-8 mx-auto bg-dark rounded-2 p-3">
+          <h2 className="text-white text-center">Crear Orden De Reparacion</h2>
           {customer ? (
             <>
               <FormCreateServiceWork

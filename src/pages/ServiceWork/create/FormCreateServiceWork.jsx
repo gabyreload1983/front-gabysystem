@@ -44,7 +44,9 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
       </div>
 
       <div>
-        <label htmlFor="fail">Falla</label>
+        <label htmlFor="fail" className="text-white">
+          Falla
+        </label>
         <textarea id="fail" name="fail" placeholder="Falla" required></textarea>
       </div>
 

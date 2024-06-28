@@ -514,6 +514,10 @@ export const createServiceWork = async (serviceWork) => {
   const response = await postToApi(`${API_URL}/api/orders`, {
     order: { ...serviceWork },
   });
-  console.log(response);
-  return response.payload;
+  if (response?.status === "success") {
+    return response.payload;
+  }
+  SwalError({
+    message: "Error al crear orden, actualice la pagina e intente nuevamente.",
+  });
 };
