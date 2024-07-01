@@ -133,7 +133,10 @@ export default function EditServiceWorkProducts() {
       },
     });
 
-    window.open(`${API_URL}/pdfHistory/${order.nrocompro}.pdf`, "_blank");
+    window.open(
+      `${API_URL}/pdfHistory/orders/${order.nrocompro}.pdf`,
+      "_blank"
+    );
   };
 
   const handleCancel = async () => {

@@ -33,6 +33,8 @@ export default function CreateServiceWork() {
     }
 
     setServiceWork(newServiceWork);
+    return console.log(newServiceWork);
+
     const response = await createServiceWork(newServiceWork);
     if (response) {
       await SwalSuccess(`Orden ${response.nrocompro} creada exitosamente!`);
