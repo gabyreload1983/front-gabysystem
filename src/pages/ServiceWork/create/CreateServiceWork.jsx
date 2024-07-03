@@ -33,12 +33,13 @@ export default function CreateServiceWork() {
     }
 
     setServiceWork(newServiceWork);
-    return console.log(newServiceWork);
+    // return console.log(newServiceWork);
 
     const response = await createServiceWork(newServiceWork);
     if (response) {
-      await SwalSuccess(`Orden ${response.nrocompro} creada exitosamente!`);
-      navigate(`/servicework/detail/${response.nrocompro}`);
+      
+      await SwalSuccess(`Orden ${response.fileName} creada exitosamente!`);
+      navigate(`/servicework/detail/${response.fileName}`);
     }
   };
 

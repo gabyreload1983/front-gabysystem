@@ -505,8 +505,11 @@ export const getCustomers = async (description) => {
   return response.payload;
 };
 
-export const getPdfServiceWork = async ({ nrocompro }) => {
-  const response = await getFromApi(`${API_URL}/api/orders/pdf/${nrocompro}`);
+export const createPdfServiceWork = async ({ nrocompro, customer = false }) => {
+  const response = await postToApi(`${API_URL}/api/orders/pdf`, {
+    nrocompro,
+    customer,
+  });
   return response.payload;
 };
 

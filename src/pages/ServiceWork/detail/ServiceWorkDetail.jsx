@@ -27,7 +27,6 @@ import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
 import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
-import ButtonPdfCustomer from "../../../components/ServiceWork/ButtonPdfCustomer";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -170,7 +169,7 @@ export default function ServiceWorkDetail() {
             </div>
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
               <ButtonPdf nrocompro={order.nrocompro} />
-              <ButtonPdfCustomer nrocompro={order.nrocompro} />
+              <ButtonPdf nrocompro={order.nrocompro} customer={true} />
             </div>
             <div className="col-12 p-2 d-flex gap-2">
               {validateTakeServiceWork(user, order) && (
