@@ -34,6 +34,7 @@ import StatisticsRepairs from "./pages/Statistics/Repairs/StatisticsRepairs";
 import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/StatisticsServicesWorks";
 import Filter from "./pages/ServiceWork/Filter/Filter";
 import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
+import EditServiceWork from "./pages/ServiceWork/edit/EditServiceWork";
 
 function App() {
   return (
@@ -87,6 +88,7 @@ function App() {
               <Route path="my-works" element={<MyWorks />} />
               <Route path="filter" element={<Filter />} />
               <Route path="create" element={<CreateServiceWork />} />
+              <Route path="edit/:id" element={<EditServiceWork />} />
             </Route>
 
             <Route path="*" element={<PageNotFount />} />
