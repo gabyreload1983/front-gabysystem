@@ -358,6 +358,9 @@ export const validateServiceWorkOut = (user, order) => {
   );
 };
 
+export const validateSendPdf = (user) =>
+  user.role === "premium" || user.role === "saler";
+
 export const getOrder = async ({ id }) => {
   const path = `${API_URL}/api/orders/${id}`;
   const data = await getFromApi(path);
