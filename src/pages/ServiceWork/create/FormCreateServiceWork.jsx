@@ -10,39 +10,44 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
         className="form-control text-center bg-success"
       />
       <select
-        id="codiart"
-        name="codiart"
+        id="sector"
+        name="sector"
         className="form-select"
         aria-label="Default select example"
+        required
       >
-        <option defaultValue>Sector</option>
-        <option value="pc">PC</option>
-        <option value="printer">Impresoras</option>
+        <option value="">Sector</option>
+        <option value=".PC">PC</option>
+        <option value=".IMP">Impresoras</option>
       </select>
       <div className="form-floating ">
         <input
           type="text"
           className="form-control"
-          id="descart"
-          name="descart"
-          placeholder="descart"
+          id="description"
+          name="description"
+          placeholder="Descripcion Articulo"
+          required
         />
-        <label htmlFor="descart">Descripcion</label>
+        <label htmlFor="description">Descripcion Articulo</label>
       </div>
       <div className="form-floating ">
         <input
           type="text"
           className="form-control"
-          id="accesorios"
-          name="accesorios"
+          id="accesories"
+          name="accesories"
           placeholder="Accesorios"
+          required
         />
-        <label htmlFor="accesorios">Accesorios</label>
+        <label htmlFor="accesories">Accesorios</label>
       </div>
 
       <div>
-        <label htmlFor="falla">Falla</label>
-        <textarea id="falla" name="falla" placeholder="Falla"></textarea>
+        <label htmlFor="fail" className="text-white">
+          Falla
+        </label>
+        <textarea id="fail" name="fail" placeholder="Falla" required></textarea>
       </div>
 
       <div className="form-floating ">
@@ -57,10 +62,11 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
       </div>
       <div className="form-floating ">
         <select
-          id="prioridad"
-          name="prioridad"
+          id="priority"
+          name="priority"
           className="form-select"
           aria-label="Default select example"
+          required
         >
           {tiers.map((tier, index) => (
             <option key={index} value={index}>
@@ -68,7 +74,7 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
             </option>
           ))}
         </select>
-        <label htmlFor="prioridad">Prioridad</label>
+        <label htmlFor="priority">Prioridad</label>
       </div>
       <button className="btn btn-success">Crear</button>
     </form>

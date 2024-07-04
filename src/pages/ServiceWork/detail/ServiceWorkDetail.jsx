@@ -15,6 +15,7 @@ import {
   validateAddingProducts,
   validateEditServiceWork,
   validateFreeServiceWork,
+  validateSendPdf,
   validateServiceWorkOut,
   validateTakeServiceWork,
 } from "../../../utils";
@@ -25,9 +26,9 @@ import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWo
 import ServiceWorkOut from "./ServiceWorkOut";
 import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
-import { API_URL } from "../../../constants";
 import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
+import SendPdf from "../../../components/ServiceWork/SendPdf";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -106,6 +107,7 @@ export default function ServiceWorkDetail() {
               Tier {getOrderTier(order.prioridad)}
             </p>
             <strong className="fs-3">{order.nrocompro}</strong>
+
             <p className="fs-3 fw-semibold m-0">
               {order.codigo} - {order.nombre}
             </p>
@@ -168,8 +170,10 @@ export default function ServiceWorkDetail() {
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
-            <div className="col-12 p-2 d-flex justify-content-end">
+            <div className="col-12 p-2 d-flex justify-content-end gap-2">
               <ButtonPdf nrocompro={order.nrocompro} />
+              <ButtonPdf nrocompro={order.nrocompro} customer={true} />
+              {validateSendPdf(user) && <SendPdf nrocompro={order.nrocompro} />}
             </div>
             <div className="col-12 p-2 d-flex gap-2">
               {validateTakeServiceWork(user, order) && (

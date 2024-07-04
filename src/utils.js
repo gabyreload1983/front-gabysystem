@@ -358,6 +358,9 @@ export const validateServiceWorkOut = (user, order) => {
   );
 };
 
+export const validateSendPdf = (user) =>
+  user.role === "premium" || user.role === "saler";
+
 export const getOrder = async ({ id }) => {
   const path = `${API_URL}/api/orders/${id}`;
   const data = await getFromApi(path);
@@ -505,7 +508,22 @@ export const getCustomers = async (description) => {
   return response.payload;
 };
 
-export const getPdfServiceWork = async ({ nrocompro }) => {
-  const response = await getFromApi(`${API_URL}/api/orders/pdf/${nrocompro}`);
+export const createPdfServiceWork = async ({ nrocompro, customer = false }) => {
+  const response = await postToApi(`${API_URL}/api/orders/pdf`, {
+    nrocompro,
+    customer,
+  });
   return response.payload;
+};
+
+export const createServiceWork = async (serviceWork) => {
+  const response = await postToApi(`${API_URL}/api/orders`, {
+    order: { ...serviceWork },
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+  SwalError({
+    message: "Error al crear orden, actualice la pagina e intente nuevamente.",
+  });
 };

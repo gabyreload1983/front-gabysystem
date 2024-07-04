@@ -3,7 +3,7 @@ export default function ListCustomers({ customers, onHandleCLick }) {
 
   return (
     <div className="table-responsive">
-      <table className="table table-hover">
+      <table className="table table-hover table-dark">
         <thead>
           <tr className="table-success">
             <th scope="col">CODIGO</th>

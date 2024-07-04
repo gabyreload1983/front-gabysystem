@@ -3,9 +3,12 @@ import SearchCustomers from "../../../components/Customers/SearchCustomers";
 import { UserContext } from "../../../context/userContext";
 import FormCreateServiceWork from "./FormCreateServiceWork";
 import { serviceWorkTemplate } from "../../../constants";
+import { SwalSuccess, createServiceWork } from "../../../utils";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateServiceWork() {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
   const [customer, setCustomers] = useState(null);
 
   const [serviceWork, setServiceWork] = useState(serviceWorkTemplate);
@@ -14,23 +17,28 @@ export default function CreateServiceWork() {
     setCustomers(customer);
     setServiceWork((prev) => ({
       ...prev,
-      codigo: customer.codigo,
-      nombre: customer.nombre,
-      telefono: customer.telefono,
+      code: customer.codigo,
+      client: customer.nombre,
+      phone: customer.telefono,
       mail: customer.mail,
-      operador: user.code_technical,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
     const newServiceWork = { ...serviceWork };
     for (const [key, value] of form) {
       newServiceWork[key] = value;
     }
+
     setServiceWork(newServiceWork);
-    console.log(newServiceWork);
+
+    const response = await createServiceWork(newServiceWork);
+    if (response) {
+      await SwalSuccess(`Orden ${response.fileName} creada exitosamente!`);
+      navigate(`/servicework/detail/${response.fileName}`);
+    }
   };
 
   const clean = () => {
@@ -40,7 +48,8 @@ export default function CreateServiceWork() {
   return (
     <div className="container">
       <div className="row">
-        <div className="col-12 col-md-8 mx-auto">
+        <div className="col-12 col-md-8 mx-auto bg-dark rounded-2 p-3">
+          <h2 className="text-white text-center">Crear Orden De Reparacion</h2>
           {customer ? (
             <>
               <FormCreateServiceWork
