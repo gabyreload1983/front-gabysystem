@@ -14,6 +14,7 @@ import {
 import OrderDetailHeader from "./OrderDetail/OrderDetailHeader";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../constants";
+import ButtonPdf from "../../components/ServiceWork/ButtonPdf";
 
 export default function UpdateCustomer() {
   const navigate = useNavigate();
@@ -110,13 +111,19 @@ export default function UpdateCustomer() {
             {orderId} - {order.nombre}
           </h4>
           <OrderDetailHeader order={order} />
-          <button
-            className="btn btn-success ms-auto"
-            onClick={updateCustomer}
-            disabled={disableUpdate}
-          >
-            ACTUALIZAR
-          </button>
+          <div className="d-flex">
+            <button
+              className="btn btn-success"
+              onClick={updateCustomer}
+              disabled={disableUpdate}
+            >
+              ACTUALIZAR
+            </button>
+            <div className="d-flex ms-auto gap-2">
+              <ButtonPdf nrocompro={order.nrocompro} />
+              <ButtonPdf nrocompro={order.nrocompro} customer={true} />
+            </div>
+          </div>
         </div>
         <div className="col-12">
           <Search onSearch={handleSearch} />

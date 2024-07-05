@@ -39,6 +39,7 @@ export default function EditServiceWork() {
     <>
       {serviceWork && (
         <FormEditServiceWork
+          nrocompro={id}
           serviceWork={serviceWork}
           onHandleSubmit={handleSubmit}
         />

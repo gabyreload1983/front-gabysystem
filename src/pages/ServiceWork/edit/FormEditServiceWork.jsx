@@ -1,15 +1,32 @@
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { tiers } from "../../../constants";
-import { formatNameSector, getOrderTier } from "../../../utils";
+import {
+  formatNameSector,
+  getOrderTier,
+  getOrderTierBackground,
+} from "../../../utils";
+import { NavLink } from "react-router-dom";
 
-export default function FormEditServiceWork({ onHandleSubmit, serviceWork }) {
+export default function FormEditServiceWork({
+  nrocompro,
+  onHandleSubmit,
+  serviceWork,
+}) {
   return (
     <form onSubmit={onHandleSubmit} className="d-flex flex-column gap-3">
-      <input
-        readOnly
-        type="text"
-        value={`${serviceWork?.codigo} - ${serviceWork?.nombre}`}
-        className="form-control text-center bg-success"
-      />
+      <h2
+        className={`${getOrderTierBackground(
+          serviceWork.prioridad
+        )} text-center rounded-2 m-0`}
+      >
+        {nrocompro}
+      </h2>
+      <div className="d-flex bg-success justify-content-center align-items-center gap-3 py-1 rounded-2 ">
+        <span className="fs-4">{`${serviceWork?.codigo} - ${serviceWork?.nombre}`}</span>
+        <NavLink to={`/orders/update-customer?orderId=${nrocompro}`}>
+          <PencilSquareIcon className="icon" />
+        </NavLink>
+      </div>
       <select
         id="codiart"
         name="codiart"
