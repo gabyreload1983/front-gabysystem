@@ -532,15 +532,15 @@ export const createServiceWork = async (serviceWork) => {
   });
 };
 
-export const updateServiceWork = async ({ id, serviceWork }) => {
-  return true;
+export const updateServiceWork = async ({ id, updatedServiceWork }) => {
   const response = await patchToApi(`${API_URL}/api/orders/${id}`, {
-    order: { ...serviceWork },
+    order: { ...updatedServiceWork },
   });
   if (response?.status === "success") {
     return response.payload;
   }
   SwalError({
-    message: "Error al crear orden, actualice la pagina e intente nuevamente.",
+    message:
+      "Error al actualizar orden, actualice la pagina e intente nuevamente.",
   });
 };
