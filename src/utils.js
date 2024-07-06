@@ -34,6 +34,22 @@ export const putToApi = async (path, body) => {
   }
 };
 
+export const patchToApi = async (path, body) => {
+  try {
+    const response = await fetch(path, {
+      method: "PATCH",
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getJWT()}`,
+      },
+    });
+    if (await validateResponse(response)) return await response.json();
+  } catch (error) {
+    return SwalError(error);
+  }
+};
+
 export const postToApi = async (path, body) => {
   try {
     const response = await fetch(path, {
@@ -265,19 +281,7 @@ export const getOrderUbication = (ubication) => {
   if (ubication === 22) return "ENTREGADO";
 };
 
-export const getOrderTier = (tier) => {
-  if (tier === 0) return "NORMAL";
-  if (tier === 1) return "1";
-  if (tier === 2) return "2";
-  if (tier === 3) return "ARMADOS";
-  if (tier === 4) return "TURNOS/PRIORIDADES";
-  if (tier === 5) return "GARANTIA REPARACION";
-  if (tier === 6) return "6";
-  if (tier === 7) return "7";
-  if (tier === 8) return "BOXES";
-  if (tier === 9) return "ABONADOS";
-  if (tier === 10) return "GARANTIA COMPRA";
-};
+export const getOrderTier = (tier) => tiers[tier];
 
 export const getOrderTierBackground = (tier) => {
   if (tier === 0) return "table-dark";
@@ -525,5 +529,18 @@ export const createServiceWork = async (serviceWork) => {
   }
   SwalError({
     message: "Error al crear orden, actualice la pagina e intente nuevamente.",
+  });
+};
+
+export const updateServiceWork = async ({ id, updatedServiceWork }) => {
+  const response = await patchToApi(`${API_URL}/api/orders/${id}`, {
+    order: { ...updatedServiceWork },
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+  SwalError({
+    message:
+      "Error al actualizar orden, actualice la pagina e intente nuevamente.",
   });
 };

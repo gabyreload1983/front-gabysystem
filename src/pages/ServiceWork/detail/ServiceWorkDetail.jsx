@@ -29,6 +29,7 @@ import Loading from "../../../components/Loading";
 import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
 import SendPdf from "../../../components/ServiceWork/SendPdf";
+import { PencilSquareIcon } from "@heroicons/react/16/solid";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -106,8 +107,12 @@ export default function ServiceWorkDetail() {
             >
               Tier {getOrderTier(order.prioridad)}
             </p>
-            <strong className="fs-3">{order.nrocompro}</strong>
-
+            <div className="d-flex justify-content-center align-items-center gap-2">
+              <strong className="fs-3">{order.nrocompro}</strong>
+              <NavLink to={`/servicework/edit/${order.nrocompro}`}>
+                <PencilSquareIcon className="icon" />
+              </NavLink>
+            </div>
             <p className="fs-3 fw-semibold m-0">
               {order.codigo} - {order.nombre}
             </p>
