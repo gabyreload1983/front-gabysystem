@@ -51,16 +51,6 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
       </div>
 
       <div className="form-floating ">
-        <input
-          type="text"
-          className="form-control"
-          id="serie"
-          name="serie"
-          placeholder="Serie"
-        />
-        <label htmlFor="serie">Serie</label>
-      </div>
-      <div className="form-floating ">
         <select
           id="priority"
           name="priority"
@@ -76,6 +66,18 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
         </select>
         <label htmlFor="priority">Prioridad</label>
       </div>
+
+      <div className="form-floating ">
+        <input
+          type="text"
+          className="form-control"
+          id="serie"
+          name="serie"
+          placeholder="Serie"
+        />
+        <label htmlFor="serie">Serie</label>
+      </div>
+
       <button className="btn btn-success">Crear</button>
     </form>
   );
