@@ -18,6 +18,7 @@ import {
   validateSendPdf,
   validateServiceWorkOut,
   validateTakeServiceWork,
+  validateUserRole,
 } from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
@@ -109,9 +110,11 @@ export default function ServiceWorkDetail() {
             </p>
             <div className="d-flex justify-content-center align-items-center gap-2">
               <strong className="fs-3">{order.nrocompro}</strong>
-              <NavLink to={`/servicework/edit/${order.nrocompro}`}>
-                <PencilSquareIcon className="icon" />
-              </NavLink>
+              {validateUserRole(user, "premium", "saler") && (
+                <NavLink to={`/servicework/edit/${order.nrocompro}`}>
+                  <PencilSquareIcon className="icon" />
+                </NavLink>
+              )}
             </div>
             <p className="fs-3 fw-semibold m-0">
               {order.codigo} - {order.nombre}

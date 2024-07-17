@@ -1,13 +1,16 @@
 import { useState } from "react";
+import { sendCustomerPdf } from "../../utils";
 
 export default function SendPdf({ nrocompro }) {
   const [loading, setLoading] = useState(false);
 
   const sendPdf = async () => {
-    console.log(nrocompro);
+    setLoading(true);
+    await sendCustomerPdf({ nrocompro });
+    setLoading(false);
   };
   return (
-    <button onClick={sendPdf} className="btn btn-success" disabled>
+    <button onClick={sendPdf} className="btn btn-success">
       {loading ? (
         <>
           <span>Enviando... </span>
@@ -17,7 +20,7 @@ export default function SendPdf({ nrocompro }) {
           ></div>
         </>
       ) : (
-        <span>Enviar PDF</span>
+        <span>Enviar Orden</span>
       )}
     </button>
   );
