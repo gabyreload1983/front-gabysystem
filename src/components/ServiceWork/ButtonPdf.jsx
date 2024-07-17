@@ -22,7 +22,7 @@ export default function ButtonPdf({ nrocompro, customer = false }) {
 
   return (
     <button onClick={handleClick} className="btn btn-warning" target="_blank">
-      PDF {customer ? "Cliente" : "Sinapsis"}
+      PDF {customer ? "Orden" : "Productos"}
       {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
     </button>
   );

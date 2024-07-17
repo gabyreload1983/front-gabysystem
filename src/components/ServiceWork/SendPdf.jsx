@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { API_URL } from "../../constants";
-import { postToApi, sendCustomerPdf } from "../../utils";
+import { sendCustomerPdf } from "../../utils";
 
 export default function SendPdf({ nrocompro }) {
   const [loading, setLoading] = useState(false);
@@ -21,7 +20,7 @@ export default function SendPdf({ nrocompro }) {
           ></div>
         </>
       ) : (
-        <span>Enviar PDF</span>
+        <span>Enviar Orden</span>
       )}
     </button>
   );
