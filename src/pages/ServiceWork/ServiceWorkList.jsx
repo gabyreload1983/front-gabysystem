@@ -1,14 +1,10 @@
 import { Link } from "react-router-dom";
-import {
-  isTurno,
-  getOrderTier,
-  getOrderTierBackground,
-  validateTakeServiceWork,
-} from "../../utils";
+import { isTurno, getOrderTier, getOrderTierBackground } from "../../utils";
 import moment from "moment";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 import TakeServiceWorkButton from "../../components/ServiceWork/TakeServiceWorkButton";
+import { validateTakeServiceWork } from "../../utils/validation";
 
 export default function ServiceWorkList({ serviceWorks }) {
   const { user } = useContext(UserContext);

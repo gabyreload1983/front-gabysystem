@@ -1,5 +1,6 @@
 import React from "react";
-import { formatPrice, validateUserRole } from "../../../utils";
+import { formatPrice } from "../../../utils";
+import { validateUserRole } from "../../../utils/validation";
 
 export default function ProductsInOrder({
   user,

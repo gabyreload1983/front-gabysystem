@@ -1,9 +1,8 @@
 import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { UserContext } from "../context/userContext";
-import SearchOrder from "./SearchOrder";
-import { validateUserRole } from "../utils";
 import OrdersGraphics from "../pages/Orders/OrdersGraphics";
+import { validateUserRole } from "../utils/validation";
 
 export default function OrdersLayout() {
   const { user } = useContext(UserContext);
