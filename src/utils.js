@@ -2,6 +2,7 @@ import moment from "moment";
 import Swal from "sweetalert2";
 import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
+import { validateResponse } from "./utils/validation";
 
 export const getFromApi = async (path) => {
   try {
@@ -12,6 +13,8 @@ export const getFromApi = async (path) => {
         Authorization: `Bearer ${getJWT()}`,
       },
     });
+    if (!response) return;
+
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
     return SwalError(error);
@@ -81,28 +84,11 @@ export const deleteToApi = async (path) => {
   }
 };
 
-const validateResponse = async (response) => {
-  if (response.status === 500) {
-    return SwalError({
-      message:
-        "Error en el Servidor. Ponerse en contacto con el administrador.",
-    });
-  }
-
-  if (response.status === 403) {
-    const json = await response.json();
-    if (json.message === "jwt-expired") {
-      destroyJwt();
-    }
-  }
-
-  return true;
-};
-
 export const destroyJwt = () => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");
-  return window.location.replace("/login");
+  window.location.replace("/login");
+  return false;
 };
 
 export const validateStatus = (response) => {
@@ -128,9 +114,11 @@ export const getTotalOrder = (order) => {
   return formatPrice(total);
 };
 
-export const SwalError = async (error) => {
-  return Swal.fire({
-    text: `${error.message}`,
+export const SwalError = async ({ message }) => {
+  return await Swal.fire({
+    text: `${
+      message || "Error inesperado. Contactar al administrador de la app"
+    }`,
     icon: "error",
   });
 };
@@ -178,8 +166,6 @@ export const SwalWaiting = async (message) => {
     },
   });
 };
-
-export const validateUserRole = (user, ...roles) => roles.includes(user?.role);
 
 export const capitalize = (word) =>
   word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
@@ -243,7 +229,7 @@ export const getInfoAllPendingServiceWorks = async ({ user }) => {
   const url = `${API_URL}/api/orders/pendings-all`;
 
   const data = await getFromApi(url);
-
+  if (!data) return;
   for (const serviceWork of data.payload) {
     if (serviceWork.estado === 21 && serviceWork.codiart === ".PC")
       serviceWorkInfo.pc++;
@@ -318,56 +304,17 @@ export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
 
-export const validateFreeServiceWork = (user, order) => {
-  return (
-    (user.role === "premium" &&
-      order.estado !== 21 &&
-      order.ubicacion !== 22) ||
-    (user.role === "technical" &&
-      order.estado === 22 &&
-      order.tecnico === user?.code_technical)
-  );
-};
-
 export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
   await putToApi(`${API_URL}/api/orders/take`, {
     nrocompro: `${nrocompro}`,
     code_technical: `${codeTechnical}`,
   });
 
-export const validateEditServiceWork = (user, order) => {
-  return (
-    (user.role === "technical" || user.role === "premium") &&
-    order.estado === 22 &&
-    order.tecnico === user.code_technical
-  );
-};
-
-export const validateTakeServiceWork = (user, order) => {
-  return (
-    (user.role === "technical" || user.role === "premium") &&
-    order.estado === 21
-  );
-};
-
-export const validateAddingProducts = (user, order) => {
-  return user.role === "premium" && order.estado === 22;
-};
-
-export const validateServiceWorkOut = (user, order) => {
-  return (
-    (user.role === "premium" || user.role === "saler") &&
-    order.estado === 23 &&
-    order.ubicacion === 21
-  );
-};
-
-export const validateSendPdf = (user) =>
-  user.role === "premium" || user.role === "saler";
-
 export const getOrder = async ({ id }) => {
   const path = `${API_URL}/api/orders/${id}`;
   const data = await getFromApi(path);
+  if (!data) return;
+
   return data.payload;
 };
 
@@ -378,23 +325,9 @@ export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(
     `${API_URL}/api/products/search-by?${searchBy}=${input}`
   );
+  if (!response) return;
 
   return response.payload;
-};
-
-export const validateSerieMatchProduct = async (product, serie) => {
-  const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);
-
-  if (response.payload.length) {
-    const productFind = response.payload[0];
-    if (product.codigo !== productFind.codigo) {
-      await SwalError({
-        message: `El serie pertenece al producto ${productFind.codigo}`,
-      });
-      return false;
-    }
-  }
-  return true;
 };
 
 export const updateProductsInSeriveWork = async (order) => {
@@ -417,6 +350,7 @@ export const serviceWorkPutFree = async (order, user) => {
 
 export const getServiceWorks = async (from, to) => {
   const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
+  if (!response) return;
   return response.payload;
 };
 
@@ -509,6 +443,7 @@ export const getUser = () => {
 
 export const getCustomers = async (description) => {
   const response = await getFromApi(`${API_URL}/api/customers/${description}`);
+  if (!response) return;
   return response.payload;
 };
 

@@ -12,13 +12,6 @@ import {
   getOrderUbicationBackground,
   serviceWorkPutFree,
   serviceWorkPutOut,
-  validateAddingProducts,
-  validateEditServiceWork,
-  validateFreeServiceWork,
-  validateSendPdf,
-  validateServiceWorkOut,
-  validateTakeServiceWork,
-  validateUserRole,
 } from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
@@ -31,6 +24,15 @@ import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
 import SendPdf from "../../../components/ServiceWork/SendPdf";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
+import {
+  validateAddingProducts,
+  validateEditServiceWork,
+  validateFreeServiceWork,
+  validateSendPdf,
+  validateServiceWorkOut,
+  validateTakeServiceWork,
+  validateUserRole,
+} from "../../../utils/validation";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();

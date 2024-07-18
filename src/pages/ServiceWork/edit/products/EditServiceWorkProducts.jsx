@@ -6,7 +6,6 @@ import {
   formatSerialNumber,
   getOrder,
   updateProductsInSeriveWork,
-  validateSerieMatchProduct,
 } from "../../../../utils";
 import Loading from "../../../../components/Loading";
 import ServiceWorkInfo from "./ServiceWorkInfo";
@@ -15,6 +14,7 @@ import ProductsList from "./ProductsList";
 import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
+import { validateSerieMatchProduct } from "../../../../utils/validation";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();

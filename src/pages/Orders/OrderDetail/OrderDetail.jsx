@@ -5,22 +5,21 @@ import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import {
   SwalError,
-  SwalSuccess,
   SwalToast,
   SwalWaiting,
-  validateUserRole,
   getFromApi,
-  getTotalOrder,
   putToApi,
   validateStatus,
-  formatSerialNumber,
-  validateFreeServiceWork,
 } from "../../../utils";
 import Swal from "sweetalert2";
 import OrderDetailHeader from "./OrderDetailHeader";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../../constants";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
+import {
+  validateFreeServiceWork,
+  validateUserRole,
+} from "../../../utils/validation";
 
 export default function OrderDetail() {
   const [loader, setLoader] = useState(false);
