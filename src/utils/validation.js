@@ -1,3 +1,4 @@
+import { API_URL } from "../constants";
 import { SwalError, destroyJwt, getFromApi } from "../utils";
 
 export const validateResponse = async (response) => {
