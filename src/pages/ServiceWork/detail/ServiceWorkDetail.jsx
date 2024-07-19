@@ -33,6 +33,8 @@ import {
   validateTakeServiceWork,
   validateUserRole,
 } from "../../../utils/validation";
+import Diagnosis from "../../../components/ServiceWork/Diagnosis";
+import { saveServiceWork } from "../../../utils/data";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -91,6 +93,15 @@ export default function ServiceWorkDetail() {
       SwalToast("Se libero orden!");
       navigate(0); //TODO refresh all data without reload the page
     }
+  };
+  const serviceWorkSave = async (diagnosis) => {
+    const newOrder = { diagnostico: diagnosis };
+    const response = await saveServiceWork({
+      nrocompro: order.nrocompro,
+      order: newOrder,
+    });
+
+    console.log(response);
   };
 
   useEffect(() => {
@@ -171,12 +182,10 @@ export default function ServiceWorkDetail() {
               <strong className="bg-danger p-1 rounded">Falla: </strong>
               <span className="ms-2">{order.falla}</span>
             </p>
-            {order.diagnostico !== "" && (
-              <p className="py-3 m-0 text-start">
-                <strong className="bg-info p-1 rounded">Diagnostico: </strong>
-                <span className="ms-2">{order.diagnostico}</span>
-              </p>
-            )}
+            <Diagnosis
+              serviceDiagnosis={order.diagnostico}
+              serviceWorkSave={serviceWorkSave}
+            />
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
