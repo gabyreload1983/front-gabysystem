@@ -1,5 +1,6 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
+  SwalError,
   SwalToast,
   getOrder,
   getOrderDiagnosis,
@@ -33,8 +34,9 @@ import {
   validateTakeServiceWork,
   validateUserRole,
 } from "../../../utils/validation";
+import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
+import { closeServiceWork, saveServiceWork } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
-import { saveServiceWork } from "../../../utils/data";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -94,14 +96,22 @@ export default function ServiceWorkDetail() {
       navigate(0); //TODO refresh all data without reload the page
     }
   };
-  const serviceWorkSave = async (diagnosis) => {
-    const newOrder = { diagnostico: diagnosis };
+
+  const handleSaveServiceWork = async (diagnosis) => {
     const response = await saveServiceWork({
       nrocompro: order.nrocompro,
-      order: newOrder,
+      diagnosis,
     });
 
-    console.log(response);
+    if (!response) return;
+    SwalToast(`Orden ${order.nrocompro} actualizada!`, 1000);
+  };
+
+  const serviceWorkClose = async ({ diagnosisStatus, diagnosis }) => {
+    const response = await closeServiceWork();
+
+    if (!response) return;
+    SwalToast(`Se cerro orden ${order.nrocompro}!`, 1000);
   };
 
   useEffect(() => {
@@ -182,10 +192,15 @@ export default function ServiceWorkDetail() {
               <strong className="bg-danger p-1 rounded">Falla: </strong>
               <span className="ms-2">{order.falla}</span>
             </p>
-            <Diagnosis
-              serviceDiagnosis={order.diagnostico}
-              serviceWorkSave={serviceWorkSave}
-            />
+            {validateEditServiceWork(user, order) ? (
+              <TechnicalEdit
+                serviceWorkToEdit={order}
+                handleSaveServiceWork={handleSaveServiceWork}
+                serviceWorkClose={serviceWorkClose}
+              />
+            ) : (
+              <Diagnosis diagnosis={order.diagnostico} />
+            )}
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
             </div>
@@ -200,14 +215,6 @@ export default function ServiceWorkDetail() {
                   nrocompro={order.nrocompro}
                   codeTechnical={user.code_technical}
                 />
-              )}
-              {validateEditServiceWork(user, order) && (
-                <NavLink
-                  to={`/orders/detail/${order.nrocompro}`}
-                  className="w-100 btn btn-info"
-                >
-                  EDITAR
-                </NavLink>
               )}
               {validateAddingProducts(user, order) && (
                 <NavLink
