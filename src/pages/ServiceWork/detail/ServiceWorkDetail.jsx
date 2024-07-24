@@ -37,6 +37,7 @@ import {
 import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import { closeServiceWork, saveServiceWork } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
+import Fail from "../../../components/ServiceWork/Fail";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -107,11 +108,29 @@ export default function ServiceWorkDetail() {
     SwalToast(`Orden ${order.nrocompro} actualizada!`, 1000);
   };
 
-  const serviceWorkClose = async ({ diagnosisStatus, diagnosis }) => {
-    const response = await closeServiceWork();
-
+  const handleCloseServiceWork = async ({
+    diagnosisStatus,
+    notification,
+    cost,
+  }) => {
+    setLoading(true);
+    const response = await closeServiceWork({
+      diagnosisStatus,
+      notification,
+      cost,
+      order,
+      user,
+    });
+    setLoading(false);
     if (!response) return;
-    SwalToast(`Se cerro orden ${order.nrocompro}!`, 1000);
+    if (response.status === "success") {
+      SwalToast(`Se cerro orden ${order.nrocompro}!`, 1000);
+      getData();
+    }
+  };
+
+  const handleOnChange = (diagnosis) => {
+    setOrder((prev) => ({ ...prev, diagnostico: diagnosis }));
   };
 
   useEffect(() => {
@@ -188,15 +207,13 @@ export default function ServiceWorkDetail() {
               <p className="m-0">{order.accesorios}</p>
             </div>
 
-            <p className="py-3 m-0 text-start">
-              <strong className="bg-danger p-1 rounded">Falla: </strong>
-              <span className="ms-2">{order.falla}</span>
-            </p>
+            <Fail fail={order.falla} />
             {validateEditServiceWork(user, order) ? (
               <TechnicalEdit
-                serviceWorkToEdit={order}
+                serviceWork={order}
                 handleSaveServiceWork={handleSaveServiceWork}
-                serviceWorkClose={serviceWorkClose}
+                handleCloseServiceWork={handleCloseServiceWork}
+                handleOnChange={handleOnChange}
               />
             ) : (
               <Diagnosis diagnosis={order.diagnostico} />

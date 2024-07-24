@@ -8,7 +8,6 @@ import Products from "./pages/Products/Products";
 import Profile from "./pages/Profile/Profile";
 import Layout from "./components/Layout";
 import UserContextProvider from "./context/userContext";
-import OrderDetail from "./pages/Orders/OrderDetail/OrderDetail";
 import PageNotFount from "./components/PageNotFount";
 import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
@@ -70,7 +69,6 @@ function App() {
               <Route path="payment" element={<Payment />} />
             </Route>
 
-            <Route path="/orders/detail/:id" element={<OrderDetail />} />
             <Route
               path="/orders/update-customer"
               element={<UpdateCustomer />}

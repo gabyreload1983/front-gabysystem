@@ -11,7 +11,6 @@ import {
   question,
   validateStatus,
 } from "../../utils";
-import OrderDetailHeader from "./OrderDetail/OrderDetailHeader";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../constants";
 import ButtonPdf from "../../components/ServiceWork/ButtonPdf";
@@ -111,7 +110,6 @@ export default function UpdateCustomer() {
           <h4>
             {orderId} - {order.nombre}
           </h4>
-          <OrderDetailHeader order={order} />
           <div className="d-flex">
             <button
               className="btn btn-success"

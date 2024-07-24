@@ -12,20 +12,24 @@ export const saveServiceWork = async ({ nrocompro, diagnosis }) => {
 };
 
 export const closeServiceWork = async ({
+  diagnosisStatus,
+  notification,
+  cost,
   order,
   user,
-  notification = false,
 }) => {
   const orderToClose = {
     nrocompro: order.nrocompro,
     diagnostico: order.diagnostico,
-    costo: order.costo,
-    diag: order.diag,
+    costo: cost,
+    diag: diagnosisStatus,
     code_technical: user.code_technical,
     notification,
   };
 
-  const response = await putToApi(`${API_URL}/api/orders/close`, orderToClose);
+  const response = await putToApi(`${API_URL}/api/orders/close`, {
+    ...orderToClose,
+  });
   if (!response) return;
   return response;
 };

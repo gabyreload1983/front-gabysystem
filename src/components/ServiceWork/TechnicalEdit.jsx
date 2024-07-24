@@ -1,32 +1,44 @@
-import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function TechnicalEdit({
-  serviceWorkToEdit,
+  serviceWork,
   handleSaveServiceWork,
-  serviceWorkClose,
+  handleCloseServiceWork,
+  handleOnChange,
 }) {
-  const [serviceWork, setServiceWork] = useState(serviceWorkToEdit);
-
   const handleClose = async (diagnosisStatus) => {
-    diagnosisStatus = diagnosisStatus ? 22 : 23;
     const { value: cost } = await Swal.fire({
       title: `Cerrar orden ${serviceWork.nrocompro} ${
-        diagnosis ? "" : "Sin Reparacion"
+        diagnosisStatus ? "" : "Sin Reparacion"
       } `,
       input: "text",
       inputLabel: "COSTO: $",
       inputValue: Number(serviceWork.costo).toFixed(),
       showCancelButton: true,
       inputValidator: (value) => {
-        if (!value || Number(value) >= 0 || isNaN(Number(value))) {
+        if (!value || Number(value) <= 0 || isNaN(Number(value))) {
           return "Ingresa un valor igual o superior a 1.";
         }
       },
     });
     if (cost) {
-      setServiceWork((prev) => ({ ...prev, costo: Number(cost) }));
-      serviceWorkClose({ diagnosisStatus, diagnosis: serviceWork.diagnostico });
+      let notification = false;
+
+      const notificationResponse = await Swal.fire({
+        text: `Enviar notificacion por email?`,
+        showCancelButton: true,
+        cancelButtonText: "Cerrar Sin Notificacion",
+        confirmButtonText: "Cerrar y Enviar Email",
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+      });
+      if (notificationResponse.isConfirmed) notification = true;
+      diagnosisStatus = diagnosisStatus ? "repair" : "withoutrepair";
+      handleCloseServiceWork({
+        diagnosisStatus,
+        notification,
+        cost,
+      });
     }
   };
 
@@ -34,13 +46,13 @@ export default function TechnicalEdit({
     handleSaveServiceWork(serviceWork.diagnostico);
   };
 
-  const handleOnChange = (e) => {
+  const onHandleOnChange = (e) => {
     const textArea = e.target.value;
-    setServiceWork((prev) => ({ ...prev, diagnostico: textArea }));
+    handleOnChange(textArea);
   };
 
   return (
-    <div className="p-3 m-0 text-start border rounded-2 d-flex flex-column">
+    <div className="my-2 p-3 m-0 text-start border rounded-2 d-flex flex-column">
       <div className="d-flex justify-content-center">
         <strong className="bg-info px-3 py-1 rounded text-center">
           Diagnostico
@@ -50,7 +62,7 @@ export default function TechnicalEdit({
         value={serviceWork.diagnostico}
         className="form-control mt-2"
         rows="5"
-        onChange={handleOnChange}
+        onChange={onHandleOnChange}
       ></textarea>
       <div className="d-flex gap-2">
         <button
