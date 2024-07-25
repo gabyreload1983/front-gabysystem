@@ -64,7 +64,7 @@ export default function Customers() {
   };
 
   const handleSearchOrderDetail = async (nrocompro) => {
-    navigate(`/orders/detail/${nrocompro}`);
+    navigate(`/servicework/detail/${nrocompro}`);
   };
 
   const handleSearchCustomerOrders = async (code) => {

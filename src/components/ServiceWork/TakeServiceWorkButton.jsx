@@ -9,8 +9,8 @@ export default function TakeServiceWorkButton({ nrocompro, codeTechnical }) {
   const handleOnClick = async () => {
     setLoading(true);
     const response = await takeServiceWork({ nrocompro, codeTechnical });
-    if (response.status === "success") navigate(`/orders/detail/${nrocompro}`);
     setLoading(false);
+    if (response.status === "success") navigate(`/servicework/my-works`);
   };
   return (
     <button className="w-100 btn btn-success" onClick={handleOnClick}>

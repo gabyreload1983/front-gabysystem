@@ -1,5 +1,6 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
+  SwalError,
   SwalToast,
   getOrder,
   getOrderDiagnosis,
@@ -33,6 +34,10 @@ import {
   validateTakeServiceWork,
   validateUserRole,
 } from "../../../utils/validation";
+import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
+import { closeServiceWork, saveServiceWork } from "../../../utils/data";
+import Diagnosis from "../../../components/ServiceWork/Diagnosis";
+import Fail from "../../../components/ServiceWork/Fail";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -91,6 +96,41 @@ export default function ServiceWorkDetail() {
       SwalToast("Se libero orden!");
       navigate(0); //TODO refresh all data without reload the page
     }
+  };
+
+  const handleSaveServiceWork = async (diagnosis) => {
+    const response = await saveServiceWork({
+      nrocompro: order.nrocompro,
+      diagnosis,
+    });
+
+    if (!response) return;
+    SwalToast(`Orden ${order.nrocompro} actualizada!`, 1000);
+  };
+
+  const handleCloseServiceWork = async ({
+    diagnosisStatus,
+    notification,
+    cost,
+  }) => {
+    setLoading(true);
+    const response = await closeServiceWork({
+      diagnosisStatus,
+      notification,
+      cost,
+      order,
+      user,
+    });
+    setLoading(false);
+    if (!response) return;
+    if (response.status === "success") {
+      SwalToast(`Se cerro orden ${order.nrocompro}!`, 1000);
+      getData();
+    }
+  };
+
+  const handleOnChange = (diagnosis) => {
+    setOrder((prev) => ({ ...prev, diagnostico: diagnosis }));
   };
 
   useEffect(() => {
@@ -167,15 +207,16 @@ export default function ServiceWorkDetail() {
               <p className="m-0">{order.accesorios}</p>
             </div>
 
-            <p className="py-3 m-0 text-start">
-              <strong className="bg-danger p-1 rounded">Falla: </strong>
-              <span className="ms-2">{order.falla}</span>
-            </p>
-            {order.diagnostico !== "" && (
-              <p className="py-3 m-0 text-start">
-                <strong className="bg-info p-1 rounded">Diagnostico: </strong>
-                <span className="ms-2">{order.diagnostico}</span>
-              </p>
+            <Fail fail={order.falla} />
+            {validateEditServiceWork(user, order) ? (
+              <TechnicalEdit
+                serviceWork={order}
+                handleSaveServiceWork={handleSaveServiceWork}
+                handleCloseServiceWork={handleCloseServiceWork}
+                handleOnChange={handleOnChange}
+              />
+            ) : (
+              <Diagnosis diagnosis={order.diagnostico} />
             )}
             <div className="col-12 p-2">
               <ServiceWorkProducts order={order} />
@@ -191,14 +232,6 @@ export default function ServiceWorkDetail() {
                   nrocompro={order.nrocompro}
                   codeTechnical={user.code_technical}
                 />
-              )}
-              {validateEditServiceWork(user, order) && (
-                <NavLink
-                  to={`/orders/detail/${order.nrocompro}`}
-                  className="w-100 btn btn-info"
-                >
-                  EDITAR
-                </NavLink>
               )}
               {validateAddingProducts(user, order) && (
                 <NavLink
