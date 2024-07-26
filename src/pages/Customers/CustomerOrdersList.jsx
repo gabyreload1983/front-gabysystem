@@ -1,37 +1,82 @@
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getOrderState, getOrderUbication } from "../../utils";
+import { useNavigate, useParams } from "react-router-dom";
+import { getCustomer, getCustomerServiceWorks } from "../../utils/data";
 
-export default function CustomerOrdersList({ orders, onSearchOrderDetail }) {
+export default function CustomerOrdersList() {
+  const [serviceWorks, setServiceWork] = useState([]);
+  const [customer, setCustomer] = useState(null);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const getData = async () => {
+    const response = await getCustomerServiceWorks({ code: id });
+    if (!response) return;
+    setServiceWork(response);
+    const responseCustomer = await getCustomer({ code: id });
+    if (!response) return;
+    setCustomer(responseCustomer[0]);
+  };
+
+  const handleClick = ({ nrocompro }) => {
+    navigate(`/servicework/detail/${nrocompro}`);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [id]);
+
   return (
-    <>
-      <table className="table table-hover">
+    <div className="row p-2">
+      <div className="col text-center text-white">
+        <h2>Historial Ordenes</h2>
+        <h3>
+          {customer?.codigo} - {customer?.nombre}
+        </h3>
+      </div>
+      <table className="table table-dark table-sm bg-dark table-hover">
         <thead>
           <tr className="table-success">
-            <th scope="col">FECHA</th>
+            <th scope="col" className="d-none d-md-table-cell">
+              FECHA
+            </th>
             <th scope="col">NRO</th>
             <th scope="col">PRODUCTO</th>
-            <th scope="col">ESTADO</th>
-            <th scope="col">UBICACION</th>
+            <th scope="col" className="d-none d-md-table-cell">
+              ESTADO
+            </th>
+            <th scope="col" className="d-none d-md-table-cell">
+              UBICACION
+            </th>
           </tr>
         </thead>
         <tbody>
-          {orders.length > 0 &&
-            orders.map((order) => (
+          {serviceWorks.length > 0 &&
+            serviceWorks.map((serviceWork) => (
               <tr
-                key={order.nrocompro}
+                key={serviceWork.nrocompro}
                 className="cursor-pointer"
-                onClick={() => onSearchOrderDetail(order.nrocompro)}
+                onClick={() =>
+                  handleClick({ nrocompro: serviceWork.nrocompro })
+                }
               >
-                <td> {moment(order.ingresado).format("DD/MM/YYYY hh:mm a")}</td>
-                <td>{order.nrocompro}</td>
-                <td>{order.descart}</td>
-                <td>{getOrderState(order.estado)}</td>
-                <td>{getOrderUbication(order.ubicacion)}</td>
+                <td className="d-none d-md-table-cell">
+                  {" "}
+                  {moment(serviceWork.ingresado).format("DD/MM/YYYY hh:mm a")}
+                </td>
+                <td>{serviceWork.nrocompro}</td>
+                <td>{serviceWork.descart}</td>
+                <td className="d-none d-md-table-cell">
+                  {getOrderState(serviceWork.estado)}
+                </td>
+                <td className="d-none d-md-table-cell">
+                  {getOrderUbication(serviceWork.ubicacion)}
+                </td>
               </tr>
             ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

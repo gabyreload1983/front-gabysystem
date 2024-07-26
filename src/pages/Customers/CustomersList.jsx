@@ -1,6 +1,4 @@
-import React from "react";
-
-export default function CustomersList({ customers, onSearchCustomerOrders }) {
+export default function CustomersList({ customers, onHandleCustomerSelected }) {
   return (
     <div className="table-responsive">
       <table className="table table-hover">
@@ -14,11 +12,13 @@ export default function CustomersList({ customers, onSearchCustomerOrders }) {
           </tr>
         </thead>
         <tbody>
-          {customers.length > 0 &&
+          {customers?.length > 0 &&
             customers.map((customer) => (
               <tr
                 key={customer.codigo}
-                onClick={() => onSearchCustomerOrders(customer.codigo)}
+                onClick={() =>
+                  onHandleCustomerSelected({ id: customer.codigo })
+                }
                 className="cursor-pointer"
               >
                 <td>{customer.codigo}</td>

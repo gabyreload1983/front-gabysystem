@@ -34,6 +34,7 @@ import StatisticsServicesWorks from "./pages/Statistics/ServicesWorks/Statistics
 import Filter from "./pages/ServiceWork/Filter/Filter";
 import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
 import EditServiceWork from "./pages/ServiceWork/edit/EditServiceWork";
+import CustomerOrdersList from "./pages/Customers/CustomerOrdersList";
 
 function App() {
   return (
@@ -46,11 +47,16 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<UserDetail />} />
-            <Route path="customers" element={<Customers />} />
             <Route path="products" element={<Products />} />
             <Route path="orderList" element={<OrderList />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/summaries" element={<Summaries />} />
+
+            <Route path="customers" element={<Customers />} />
+            <Route
+              path="customers/:id/serviceworks"
+              element={<CustomerOrdersList />}
+            />
 
             <Route path="/statistics" element={<LayoutStatistics />}>
               <Route
