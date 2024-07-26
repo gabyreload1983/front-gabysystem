@@ -38,6 +38,7 @@ import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import { closeServiceWork, saveServiceWork } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
+import SendWhatsapp from "../../../components/SendWhatsapp";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -161,9 +162,10 @@ export default function ServiceWorkDetail() {
             <p className="fs-3 fw-semibold m-0">
               {order.codigo} - {order.nombre}
             </p>
-            <div className="d-flex justify-content-center gap-3">
-              <p>Fecha: {order.ingresado.slice(0, 10)}</p>
-              <p className="mb-2">Telefono: {order.telefono}</p>
+            <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
+              <p className="m-0">Fecha: {order.ingresado.slice(0, 10)}</p>
+              <p className="m-0">Telefono: {order.telefono}</p>
+              <SendWhatsapp celphone={order.telefono} />
             </div>
             <div className="d-flex justify-content-center gap-3 mb-3">
               <p className="m-0 bg-secondary px-3 rounded">
