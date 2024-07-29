@@ -1,5 +1,5 @@
 import { API_URL } from "../constants";
-import { putToApi } from "../utils";
+import { getFromApi, putToApi } from "../utils";
 
 export const saveServiceWork = async ({ nrocompro, diagnosis }) => {
   const response = await putToApi(`${API_URL}/api/orders/update`, {
@@ -32,4 +32,22 @@ export const closeServiceWork = async ({
   });
   if (!response) return;
   return response;
+};
+
+export const getCustomer = async ({ code }) => {
+  const response = await getFromApi(`${API_URL}/api/customers/code/${code}`);
+  if (!response) return;
+  return response.payload;
+};
+
+export const getCustomersByDescription = async (description) => {
+  const response = await getFromApi(`${API_URL}/api/customers/${description}`);
+  if (!response) return;
+  return response.payload;
+};
+
+export const getCustomerServiceWorks = async ({ code }) => {
+  const response = await getFromApi(`${API_URL}/api/orders/customer/${code}`);
+  if (!response) return;
+  return response.payload;
 };
