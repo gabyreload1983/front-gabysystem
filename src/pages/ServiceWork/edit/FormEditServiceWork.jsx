@@ -23,7 +23,7 @@ export default function FormEditServiceWork({
       </h2>
       <div className="d-flex bg-success justify-content-center align-items-center gap-3 py-1 rounded-2 ">
         <span className="fs-4">{`${serviceWork?.codigo} - ${serviceWork?.nombre}`}</span>
-        <NavLink to={`/orders/update-customer?orderId=${nrocompro}`}>
+        <NavLink to={`/servicework/edit/${nrocompro}/customer`}>
           <PencilSquareIcon className="icon" />
         </NavLink>
       </div>

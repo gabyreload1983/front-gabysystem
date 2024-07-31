@@ -13,7 +13,6 @@ import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
 import OrderList from "./pages/OrderList/OrderList";
 import Summaries from "./pages/Summaries/Summaries";
-import UpdateCustomer from "./pages/Orders/UpdateCustomer";
 import Alexis from "./pages/Alexis/Alexis";
 import Sales from "./pages/Alexis/Sales";
 import Account from "./pages/Alexis/Account";
@@ -35,6 +34,7 @@ import Filter from "./pages/ServiceWork/Filter/Filter";
 import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
 import EditServiceWork from "./pages/ServiceWork/edit/EditServiceWork";
 import CustomerOrdersList from "./pages/Customers/CustomerOrdersList";
+import EditCustomerServiceWork from "./pages/ServiceWork/edit/customer/EditCustomerServiceWork";
 
 function App() {
   return (
@@ -75,11 +75,6 @@ function App() {
               <Route path="payment" element={<Payment />} />
             </Route>
 
-            <Route
-              path="/orders/update-customer"
-              element={<UpdateCustomer />}
-            />
-
             <Route path="servicework" element={<LayoutServiceWork />}>
               <Route path="detail/:id" element={<ServiceWorkDetail />} />
               <Route
@@ -93,6 +88,10 @@ function App() {
               <Route path="filter" element={<Filter />} />
               <Route path="create" element={<CreateServiceWork />} />
               <Route path="edit/:id" element={<EditServiceWork />} />
+              <Route
+                path="edit/:id/customer"
+                element={<EditCustomerServiceWork />}
+              />
             </Route>
 
             <Route path="*" element={<PageNotFount />} />

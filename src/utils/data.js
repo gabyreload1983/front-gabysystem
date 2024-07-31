@@ -51,3 +51,12 @@ export const getCustomerServiceWorks = async ({ code }) => {
   if (!response) return;
   return response.payload;
 };
+
+export const updateServideWorkCustomer = async ({ nrocompro, customerId }) => {
+  const response = await putToApi(`${API_URL}/api/orders/update-customer`, {
+    nrocompro,
+    customerId,
+  });
+  if (!response) return;
+  return response.payload;
+};

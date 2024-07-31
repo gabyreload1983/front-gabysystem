@@ -483,7 +483,6 @@ export const updateServiceWork = async ({ id, updatedServiceWork }) => {
 export const sendCustomerPdf = async ({ nrocompro }) => {
   const path = `${API_URL}/api/orders/send/customer-pdf`;
   const response = await postToApi(path, { nrocompro });
-  console.log(response);
   if (response.status === "success") {
     SwalSuccess(response.message);
   }
