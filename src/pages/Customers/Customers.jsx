@@ -18,8 +18,8 @@ export default function Customers() {
     setCustomers([]);
   };
 
-  const handleCustomerSelected = ({ id }) => {
-    navigate(`/customers/${id}/serviceworks`);
+  const handleCustomerSelected = (customer) => {
+    navigate(`/customers/${customer.codigo}/serviceworks`);
   };
 
   return (

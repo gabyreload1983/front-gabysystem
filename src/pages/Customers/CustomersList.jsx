@@ -16,9 +16,7 @@ export default function CustomersList({ customers, onHandleCustomerSelected }) {
             customers.map((customer) => (
               <tr
                 key={customer.codigo}
-                onClick={() =>
-                  onHandleCustomerSelected({ id: customer.codigo })
-                }
+                onClick={() => onHandleCustomerSelected(customer)}
                 className="cursor-pointer"
               >
                 <td>{customer.codigo}</td>
