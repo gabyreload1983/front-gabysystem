@@ -7,7 +7,7 @@ export default function Fail({ fail }) {
         </strong>
       </div>
       <textarea
-        defaultValue={fail}
+        value={fail}
         className="form-control mt-2"
         rows="5"
         disabled

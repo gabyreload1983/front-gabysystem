@@ -7,7 +7,7 @@ export default function Diagnosis({ diagnosis }) {
         </strong>
       </div>
       <textarea
-        defaultValue={diagnosis}
+        value={diagnosis}
         className="form-control mt-2"
         rows="5"
         disabled
