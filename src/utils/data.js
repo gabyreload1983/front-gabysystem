@@ -1,6 +1,14 @@
 import { API_URL } from "../constants";
 import { getFromApi, putToApi } from "../utils";
 
+export const getServiceWork = async ({ nrocompro }) => {
+  const path = `${API_URL}/api/orders/${nrocompro}`;
+  const data = await getFromApi(path);
+
+  if (!data) return;
+  return data.payload;
+};
+
 export const saveServiceWork = async ({ nrocompro, diagnosis }) => {
   const response = await putToApi(`${API_URL}/api/orders/update`, {
     nrocompro,

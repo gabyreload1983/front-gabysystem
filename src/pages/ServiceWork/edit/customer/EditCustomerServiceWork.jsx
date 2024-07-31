@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { getOrder, SwalToast } from "../../../../utils";
+import { SwalToast } from "../../../../utils";
 import ButtonPdf from "../../../../components/ServiceWork/ButtonPdf";
 import Search from "../../../../components/Search";
 import {
   getCustomersByDescription,
   updateServideWorkCustomer,
+  getServiceWork,
 } from "../../../../utils/data";
 import CustomersList from "../../../Customers/CustomersList";
 
@@ -16,11 +17,13 @@ export default function EditCustomerServiceWork() {
   const [customer, setCustomer] = useState(null);
 
   const getData = async () => {
-    const data = await getOrder({ id });
+    const data = await getServiceWork({ nrocompro: id });
     setServiceWork(data);
   };
 
   const handleUpdateCustomer = async () => {
+    if (!customer) return;
+
     const response = await updateServideWorkCustomer({
       nrocompro: serviceWork.nrocompro,
       customerId: customer.codigo,
