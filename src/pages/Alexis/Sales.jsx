@@ -124,15 +124,14 @@ export default function Sales() {
         </div>
         <h3>CANTIDAD: {salesPartial.length}</h3>
         <div className="row bg-success">
-          <div className="col-1">FECHA</div>
-          <div className="col-3">CLIENTE</div>
-          <div className="col-2">COMPROBANTE</div>
-          <div className="col-1">PAGO</div>
-          <div className="col-1">FECHA PAGO</div>
-          <div className="col-1">OC</div>
-          <div className="col-1">FLETERO</div>
-          <div className="col-1">IMPORTE</div>
-          <div className="col-1">ENTREGADO</div>
+          <div className="col d-none d-lg-block">FECHA</div>
+          <div className="col col-lg">CLIENTE</div>
+          <div className="col col-lg">COMPROBANTE</div>
+          <div className="col d-none d-lg-block">IMPORTE</div>
+          <div className="col-2 col-lg">SALDO</div>
+          <div className="col d-none d-lg-block">FECHA PAGO</div>
+          <div className="col d-none d-lg-block">OC</div>
+          <div className="col-2 col-lg">ENTREGADO</div>
         </div>
 
         {salesPartial.length && <SalesList sales={salesPartial} />}

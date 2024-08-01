@@ -3,33 +3,16 @@ import { NavLink, Outlet } from "react-router-dom";
 export default function Alexis() {
   return (
     <div className="container-fluid">
-      <div className="row p-3">
-        <div className="col">
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "px-3 py-2 navLink navLinkActive" : "px-3 py-2 navLink"
-            }
-            to="sales"
-          >
-            VENTAS
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "px-3 py-2 navLink navLinkActive" : "px-3 py-2 navLink"
-            }
-            to="account"
-          >
-            CUENTA
-          </NavLink>
-          <NavLink
-            className={({ isActive }) =>
-              isActive ? "px-3 py-2 navLink navLinkActive" : "px-3 py-2 navLink"
-            }
-            to="payment"
-          >
-            PAGOS
-          </NavLink>
-        </div>
+      <div className="d-flex flex-row text-white bg-dark m-2 rounded-2">
+        <NavLink className="navLink flex-fill p-2" to="sales">
+          VENTAS
+        </NavLink>
+        <NavLink className="navLink flex-fill p-2" to="account">
+          CUENTA
+        </NavLink>
+        <NavLink className="navLink flex-fill p-2" to="payment">
+          PAGOS
+        </NavLink>
       </div>
       <div className="row">
         <div className="col">

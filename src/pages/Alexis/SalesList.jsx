@@ -9,6 +9,7 @@ import {
 } from "../../utils";
 
 export default function SalesList({ sales }) {
+  console.log(sales);
   return (
     <>
       {sales.length &&
@@ -18,26 +19,30 @@ export default function SalesList({ sales }) {
             key={sale.invoiceId}
             className="row rowSales"
           >
-            <div className="col-1">
+            <div className="col d-none d-lg-block">
               {moment(sale.date).format("DD-MM-YYYY")}
             </div>
-            <div className="col-3">{sale.customer}</div>
-            <div className="col-2">{sale.invoiceId}</div>
-            <div className={`col-1 ${bgInvoiceState(sale.invoiceState)}`}>
+            <div className="col col-lg text-truncate">{sale.customer}</div>
+            <div className="col col-lg">{sale.invoiceId}</div>
+            <div className="col d-none d-lg-block">
+              $ {formatPrice(sale.subTotal + sale.tax)}
+            </div>
+            <div
+              className={`col-2 col-lg ${bgInvoiceState(sale.invoiceState)}`}
+            >
               {translateInvoiceState(sale.invoiceState)}
             </div>
-            <div className="col-1">
+            <div className="col d-none d-lg-block">
               {(sale.paymentDate &&
                 moment(sale.paymentDate).format("DD-MM-YYYY")) ||
                 "-"}
             </div>
-            <div className="col-1">{sale.purchaseOrder || "-"}</div>
-            <div className="col-1">{sale.delivery || ""}</div>
-            <div className="col-1 d-flex justify-content-between">
-              <span>$</span>
-              <span>{formatPrice(sale.deliveryCost)}</span>
+            <div className="col d-none d-lg-block">
+              {sale.purchaseOrder || "-"}
             </div>
-            <div className={`col-1 ${bgDeliveryState(sale.deliveryState)}`}>
+            <div
+              className={`col-2 col-lg ${bgDeliveryState(sale.deliveryState)}`}
+            >
               {translateDeliveryState(sale.deliveryState)}
             </div>
           </Link>
