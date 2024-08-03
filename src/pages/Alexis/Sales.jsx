@@ -28,7 +28,7 @@ export default function Sales() {
     setSales(data);
   };
 
-  const updateSalesCurrentYear = async () => {
+  const updateSales = async () => {
     const response = await updateAlexisSalesFrom(year);
     if (!response) return;
     SwalToast("Se actualizaron facturas");
@@ -62,7 +62,7 @@ export default function Sales() {
           ))}
         </select>
         <span className="input-group-text bg-info">{sales.length} ventas</span>
-        <button onClick={updateSalesCurrentYear} className="btn btn-success">
+        <button onClick={updateSales} className="btn btn-success">
           ACTUALIZAR
         </button>
       </div>
