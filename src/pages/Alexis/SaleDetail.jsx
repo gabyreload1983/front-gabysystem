@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
 import {
-  SwalWaiting,
   formatPrice,
   translateInvoiceState,
   translateDeliveryState,
@@ -16,7 +15,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { API_URL } from "../../constants";
 import { getAlexisProfit } from "../../utils/alexis";
-import { SwalError, SwalToast } from "../../utils/alerts";
+import { SwalError, SwalToast, SwalWaiting } from "../../utils/alerts";
 
 export default function SaleDetail() {
   const { id } = useParams();

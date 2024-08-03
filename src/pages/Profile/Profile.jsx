@@ -1,10 +1,10 @@
 import React, { useContext } from "react";
 import { UserContext } from "../../context/userContext";
-import { SwalWaiting, capitalize, getJWT, isValidUrl } from "../../utils";
+import { capitalize, getJWT, isValidUrl } from "../../utils";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { API_URL } from "../../constants";
-import { SwalError, SwalSuccess } from "../../utils/alerts";
+import { SwalError, SwalSuccess, SwalWaiting } from "../../utils/alerts";
 
 export default function Profile() {
   const { user, updateUserContext } = useContext(UserContext);

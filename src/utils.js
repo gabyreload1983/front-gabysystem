@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { validateResponse } from "./utils/validation";
-import { SwalError, SwalSuccess } from "./utils/alerts";
+import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 
 export const getFromApi = async (path) => {
   try {
@@ -113,20 +113,6 @@ export const getTotalOrder = (order) => {
     return (acc += Number(val.priceList1WithTax));
   }, Number(order.costo));
   return formatPrice(total);
-};
-
-export const SwalWaiting = async (message) => {
-  return Swal.fire({
-    title: "Wait...",
-    html: `<strong>${message}</strong>`,
-    timerProgressBar: true,
-    allowOutsideClick: false,
-    allowEscapeKey: false,
-    showConfirmButton: false,
-    didOpen: () => {
-      Swal.showLoading();
-    },
-  });
 };
 
 export const capitalize = (word) =>

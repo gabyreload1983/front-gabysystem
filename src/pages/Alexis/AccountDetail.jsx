@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalWaiting, formatPrice, getJWT } from "../../utils";
+import { formatPrice, getJWT } from "../../utils";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
-import { SwalError, SwalToast } from "../../utils/alerts";
+import { SwalError, SwalToast, SwalWaiting } from "../../utils/alerts";
 
 export default function AccountDetail() {
   const { id } = useParams();
