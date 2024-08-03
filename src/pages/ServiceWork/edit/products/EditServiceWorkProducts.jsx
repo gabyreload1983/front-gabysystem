@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  SwalError,
   SwalSuccess,
   formatSerialNumber,
   getOrder,
@@ -15,6 +14,7 @@ import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
 import { validateSerieMatchProduct } from "../../../../utils/validation";
+import { SwalError } from "../../../../utils/alerts";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();
@@ -67,9 +67,7 @@ export default function EditServiceWorkProducts() {
 
       const repeat = order.products.some((p) => p.serie === value);
       if (repeat) {
-        await SwalError({
-          message: `El serie ya existe en esta orden de trabajo`,
-        });
+        await SwalError(`El serie ya existe en esta orden de trabajo`);
         return;
       }
 

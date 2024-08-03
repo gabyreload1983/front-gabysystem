@@ -1,6 +1,5 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
-  SwalError,
   SwalToast,
   getOrder,
   getOrderDiagnosis,

@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
 import {
-  SwalError,
   SwalToast,
   SwalWaiting,
   formatPrice,
@@ -18,6 +17,7 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import { API_URL } from "../../constants";
 import { getAlexisProfit } from "../../utils/alexis";
+import { SwalError } from "../../utils/alerts";
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -37,7 +37,7 @@ export default function SaleDetail() {
         setSale(sale);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }
@@ -57,15 +57,11 @@ export default function SaleDetail() {
         isNotANumber(sale.deliveryCost) ||
         isLessThanZero(sale.deliveryCost)
       ) {
-        return SwalError({
-          message: "Ingrese un delivery igual o mayor a 0",
-        });
+        return SwalError("Ingrese un delivery igual o mayor a 0");
       }
 
       if (isNotANumber(sale.profit) || sale.profit <= 0) {
-        return SwalError({
-          message: "Ingrese una renta mayor a 0",
-        });
+        return SwalError("Ingrese una renta mayor a 0");
       }
 
       sale.paymentDate = moment(sale.paymentDate);
@@ -87,7 +83,7 @@ export default function SaleDetail() {
         getSaleDetail();
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }
@@ -172,7 +168,7 @@ export default function SaleDetail() {
         getSaleDetail();
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { SwalError, SwalSuccess, postToApi, validateStatus } from "../../utils";
+import { SwalSuccess, postToApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import { UserContext } from "../../context/userContext";
 import { API_URL } from "../../constants";

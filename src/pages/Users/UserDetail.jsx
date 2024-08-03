@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  SwalError,
-  getFromApi,
-  getJWT,
-  putToApi,
-  validateStatus,
-} from "../../utils";
+import { getFromApi, getJWT, putToApi, validateStatus } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -29,7 +24,7 @@ export default function UserDetail() {
 
       if (response.status === "success") return setUserUpdate(response.payload);
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
   useEffect(() => {
@@ -111,7 +106,7 @@ export default function UserDetail() {
         navigate("/users");
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

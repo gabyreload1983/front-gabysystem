@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import AccountList from "./AccountList";
 import moment from "moment";
-import { SwalError, formatPrice, getJWT } from "../../utils";
+import { formatPrice, getJWT } from "../../utils";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function Account() {
   const [account, setAccount] = useState([]);
@@ -46,7 +47,7 @@ export default function Account() {
         );
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }

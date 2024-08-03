@@ -1,10 +1,11 @@
 import moment from "moment";
 import React, { useContext, useState } from "react";
-import { SwalError, SwalToast, getJWT } from "../../utils";
+import { SwalToast, getJWT } from "../../utils";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function Payment() {
   const { logoutUserContext } = useContext(UserContext);
@@ -44,7 +45,7 @@ export default function Payment() {
   const savePayment = async () => {
     try {
       if (!payment.observation || !payment.value)
-        return SwalError({ message: "Completa los dos campos" });
+        return SwalError("Completa los dos campos");
 
       const answer = await Swal.fire({
         text: `Ingresar pago???`,
@@ -77,7 +78,7 @@ export default function Payment() {
         SwalToast("Se ingreso el pago correctamente", 1000);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
       if (error?.response?.status === 403) {
         logoutUserContext();
       }

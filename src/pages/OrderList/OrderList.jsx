@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import {
-  SwalError,
   SwalToast,
   deleteToApi,
   getFromApi,
@@ -12,6 +11,7 @@ import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ export default function OrderList() {
 
       if (response.status === "success") setProducts(response.payload);
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 
@@ -60,7 +60,7 @@ export default function OrderList() {
         SwalToast(response.message, 500);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 
@@ -80,7 +80,7 @@ export default function OrderList() {
         return SwalToast(response.message, 300);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

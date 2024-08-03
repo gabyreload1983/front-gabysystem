@@ -3,6 +3,7 @@ import Swal from "sweetalert2";
 import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { validateResponse } from "./utils/validation";
+import { SwalError } from "./utils/alerts";
 
 export const getFromApi = async (path) => {
   try {
@@ -17,7 +18,7 @@ export const getFromApi = async (path) => {
 
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
-    return SwalError(error);
+    return SwalError(error?.message);
   }
 };
 
@@ -33,7 +34,7 @@ export const putToApi = async (path, body) => {
     });
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
-    return SwalError(error);
+    return SwalError(error?.message);
   }
 };
 
@@ -49,7 +50,7 @@ export const patchToApi = async (path, body) => {
     });
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
-    return SwalError(error);
+    return SwalError(error?.message);
   }
 };
 
@@ -65,7 +66,7 @@ export const postToApi = async (path, body) => {
     });
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
-    return SwalError(error);
+    return SwalError(error?.message);
   }
 };
 
@@ -80,7 +81,7 @@ export const deleteToApi = async (path) => {
     });
     if (await validateResponse(response)) return await response.json();
   } catch (error) {
-    return SwalError(error);
+    return SwalError(error?.message);
   }
 };
 
@@ -95,7 +96,7 @@ export const validateStatus = (response) => {
   if (response.status === "error" && response.message === "jwt-expired") {
     return "jwt-expired";
   }
-  if (response.status === "error") return SwalError(response);
+  if (response.status === "error") return SwalError(response?.message);
   return response;
 };
 
@@ -112,15 +113,6 @@ export const getTotalOrder = (order) => {
     return (acc += Number(val.priceList1WithTax));
   }, Number(order.costo));
   return formatPrice(total);
-};
-
-export const SwalError = async ({ message }) => {
-  return await Swal.fire({
-    text: `${
-      message || "Error inesperado. Contactar al administrador de la app"
-    }`,
-    icon: "error",
-  });
 };
 
 export const SwalSuccess = async (message) => {
@@ -462,9 +454,7 @@ export const createServiceWork = async (serviceWork) => {
   if (response?.status === "success") {
     return response.payload;
   }
-  SwalError({
-    message: "Error al crear orden, actualice la pagina e intente nuevamente.",
-  });
+  SwalError("Error al crear orden, actualice la pagina e intente nuevamente.");
 };
 
 export const updateServiceWork = async ({ id, updatedServiceWork }) => {
@@ -474,10 +464,9 @@ export const updateServiceWork = async ({ id, updatedServiceWork }) => {
   if (response?.status === "success") {
     return response.payload;
   }
-  SwalError({
-    message:
-      "Error al actualizar orden, actualice la pagina e intente nuevamente.",
-  });
+  SwalError(
+    "Error al actualizar orden, actualice la pagina e intente nuevamente."
+  );
 };
 
 export const sendCustomerPdf = async ({ nrocompro }) => {
@@ -487,6 +476,6 @@ export const sendCustomerPdf = async ({ nrocompro }) => {
     SwalSuccess(response.message);
   }
   if (response.status === "error") {
-    SwalError({ message: response.message });
+    SwalError(response.message);
   }
 };
