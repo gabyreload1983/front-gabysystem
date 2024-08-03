@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
-import { SwalError, SwalSuccess, postToApi, validateStatus } from "../../utils";
+import { postToApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import { UserContext } from "../../context/userContext";
 import { API_URL } from "../../constants";
+import { SwalSuccess } from "../../utils/alerts";
 
 export default function Register() {
   const { logoutUserContext } = useContext(UserContext);

@@ -3,8 +3,9 @@ import SearchCustomers from "../../../components/Customers/SearchCustomers";
 import { UserContext } from "../../../context/userContext";
 import FormCreateServiceWork from "./FormCreateServiceWork";
 import { serviceWorkTemplate } from "../../../constants";
-import { SwalSuccess, createServiceWork } from "../../../utils";
+import { createServiceWork } from "../../../utils";
 import { useNavigate } from "react-router-dom";
+import { SwalSuccess } from "../../../utils/alerts";
 
 export default function CreateServiceWork() {
   const { user } = useContext(UserContext);

@@ -1,20 +1,18 @@
 import { API_URL } from "../constants";
-import { SwalError, destroyJwt, getFromApi } from "../utils";
+import { destroyJwt, getFromApi } from "../utils";
+import { SwalError } from "./alerts";
 
 export const validateResponse = async (response) => {
   if (response.status === 500) {
-    await SwalError({
-      message:
-        "Error en el Servidor. Ponerse en contacto con el administrador.",
-    });
+    await SwalError(
+      "Error en el Servidor. Ponerse en contacto con el administrador."
+    );
     return false;
   }
 
   if (response.status === 401) {
     const json = await response.json();
-    await SwalError({
-      message: json?.message || "Not authenticated!!!",
-    });
+    await SwalError(json?.message || "Not authenticated!!!");
     return false;
   }
 
@@ -23,27 +21,21 @@ export const validateResponse = async (response) => {
     if (json.message === "jwt-expired") {
       destroyJwt();
     }
-    await SwalError({
-      message: json?.message || "Unauthorized!!!",
-    });
+    await SwalError(json?.message || "Unauthorized!!!");
     return false;
   }
 
   if (response.status === 400) {
     const json = await response.json();
 
-    await SwalError({
-      message: json?.message || "Algo esta mal con tu consulta!!!",
-    });
+    await SwalError(json?.message || "Algo esta mal con tu consulta!!!");
     return false;
   }
 
   if (response.status === 404) {
     const json = await response.json();
 
-    await SwalError({
-      message: json?.message || "Consulta no encontrada!!!",
-    });
+    await SwalError(json?.message || "Consulta no encontrada!!!");
     return false;
   }
 
@@ -103,9 +95,7 @@ export const validateSerieMatchProduct = async (product, serie) => {
   if (response.payload.length) {
     const productFind = response.payload[0];
     if (product.codigo !== productFind.codigo) {
-      await SwalError({
-        message: `El serie pertenece al producto ${productFind.codigo}`,
-      });
+      await SwalError(`El serie pertenece al producto ${productFind.codigo}`);
       return false;
     }
   }

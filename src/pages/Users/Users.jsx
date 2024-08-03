@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { SwalError, getFromApi, validateStatus } from "../../utils";
+import { getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function Users() {
   const [users, setusers, logoutUserContext] = useState([]);
@@ -18,7 +19,7 @@ export default function Users() {
 
       if (response.status === "success") return setusers(response.payload);
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

@@ -1,16 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import {
-  SwalError,
-  getFromApi,
-  getJWT,
-  putToApi,
-  validateStatus,
-} from "../../utils";
+import { getFromApi, getJWT, putToApi, validateStatus } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import { API_URL } from "../../constants";
+import { SwalError, SwalQuestion } from "../../utils/alerts";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -29,7 +24,7 @@ export default function UserDetail() {
 
       if (response.status === "success") return setUserUpdate(response.payload);
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
   useEffect(() => {
@@ -73,12 +68,10 @@ export default function UserDetail() {
 
   const remove = async (user) => {
     try {
-      const question = await Swal.fire({
-        text: `Borrar usuario ${user.first_name} ${user.last_name}???`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
+      const confirm = await SwalQuestion(
+        `Borrar usuario ${user.first_name} ${user.last_name}???`
+      );
+      if (!confirm) return;
 
       const { data } = await axios.delete(
         `${API_URL}/api/users/${user.email}`,
@@ -111,7 +104,7 @@ export default function UserDetail() {
         navigate("/users");
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

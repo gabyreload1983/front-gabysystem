@@ -2,10 +2,11 @@ import moment from "moment";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/userContext";
-import { SwalError, getFromApi, validateStatus } from "../../../utils";
+import { getFromApi, validateStatus } from "../../../utils";
 import { BarLoader } from "react-spinners";
 import StatisticsTable from "./StatisticsTable";
 import { API_URL } from "../../../constants";
+import { SwalError } from "../../../utils/alerts";
 
 export default function StatisticsTechnicals() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -47,7 +48,7 @@ export default function StatisticsTechnicals() {
         setStatistics(response.payload);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

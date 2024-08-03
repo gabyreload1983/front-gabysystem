@@ -1,10 +1,11 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-import { SwalError, postToApi } from "../../utils";
+import { postToApi } from "../../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../constants";
+import { SwalError } from "../../utils/alerts";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -35,7 +36,7 @@ export default function Login() {
     setLoader(false);
 
     if (response.status === "error") {
-      return await SwalError(response);
+      return await SwalError(response?.message);
     }
     if (response.status === "success") {
       const { accessToken } = response.payload;

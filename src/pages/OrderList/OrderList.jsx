@@ -1,17 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  SwalError,
-  SwalToast,
-  deleteToApi,
-  getFromApi,
-  validateStatus,
-} from "../../utils";
+import { deleteToApi, getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
-import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
+import { SwalError, SwalQuestion, SwalToast } from "../../utils/alerts";
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -33,18 +27,14 @@ export default function OrderList() {
 
       if (response.status === "success") setProducts(response.payload);
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 
   const cleanOrderList = async () => {
     try {
-      const question = await Swal.fire({
-        text: `Queres limpiar la lista???`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
+      const confirm = await SwalQuestion(`Queres limpiar la lista???`);
+      if (!confirm) return;
 
       const response = await deleteToApi(
         `${API_URL}/api/products/clear-order-list`
@@ -60,7 +50,7 @@ export default function OrderList() {
         SwalToast(response.message, 500);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 
@@ -80,7 +70,7 @@ export default function OrderList() {
         return SwalToast(response.message, 300);
       }
     } catch (error) {
-      SwalError(error);
+      SwalError(error?.message);
     }
   };
 

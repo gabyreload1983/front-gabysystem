@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { SwalSuccess, getOrder, updateServiceWork } from "../../../utils";
+import { getOrder, updateServiceWork } from "../../../utils";
 import FormEditServiceWork from "./FormEditServiceWork";
 import ServiceWorkUpdateDto from "../../../DTO/ServiceWork.dto";
+import { SwalSuccess } from "../../../utils/alerts";
 
 export default function EditServiceWork() {
   const { id } = useParams();
