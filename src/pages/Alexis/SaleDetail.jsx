@@ -17,6 +17,7 @@ import {
 import Swal from "sweetalert2";
 import moment from "moment";
 import { API_URL } from "../../constants";
+import { getAlexisProfit } from "../../utils/alexis";
 
 export default function SaleDetail() {
   const { id } = useParams();
@@ -225,6 +226,26 @@ export default function SaleDetail() {
                 VENDEDOR:
               </label>
               <input value={sale.saler} name="saler" id="saler" disabled />
+            </div>
+            <div className="p-3 d-flex justify-content-between">
+              <label htmlFor="total" className="me-3">
+                TOTAL:
+              </label>
+              <input
+                value={formatPrice(sale.subTotal + sale.tax)}
+                id="total"
+                disabled
+              />
+            </div>
+            <div className="p-3 d-flex justify-content-between">
+              <label htmlFor="alexisProfit" className="me-3">
+                RENTA ALEXIS:
+              </label>
+              <input
+                value={formatPrice(getAlexisProfit(sale))}
+                id="alexisProfit"
+                disabled
+              />
             </div>
             <div className="p-3 d-flex justify-content-between">
               <label htmlFor="profit" className="me-3">
