@@ -16,10 +16,10 @@ export default function SalesList({ sales }) {
         <div className="col col-lg">CLIENTE</div>
         <div className="col col-lg">COMPROBANTE</div>
         <div className="col d-none d-lg-block">IMPORTE</div>
-        <div className="col-2 col-lg">SALDO</div>
+        <div className="col col-lg">SALDO</div>
         <div className="col d-none d-lg-block">FECHA PAGO</div>
         <div className="col d-none d-lg-block">OC</div>
-        <div className="col-2 col-lg">ENTREGADO</div>
+        <div className="col col-lg">ENTREGADO</div>
       </div>
       {sales.length &&
         sales.map((sale) => (
@@ -36,9 +36,7 @@ export default function SalesList({ sales }) {
             <div className="col d-none d-lg-block">
               $ {formatPrice(sale.subTotal + sale.tax)}
             </div>
-            <div
-              className={`col-2 col-lg ${bgInvoiceState(sale.invoiceState)}`}
-            >
+            <div className={`col col-lg ${bgInvoiceState(sale.invoiceState)}`}>
               {translateInvoiceState(sale.invoiceState)}
             </div>
             <div className="col d-none d-lg-block">
@@ -50,7 +48,7 @@ export default function SalesList({ sales }) {
               {sale.purchaseOrder || "-"}
             </div>
             <div
-              className={`col-2 col-lg ${bgDeliveryState(sale.deliveryState)}`}
+              className={`col col-lg ${bgDeliveryState(sale.deliveryState)}`}
             >
               {translateDeliveryState(sale.deliveryState)}
             </div>

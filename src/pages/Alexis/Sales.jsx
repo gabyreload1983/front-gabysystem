@@ -46,7 +46,7 @@ export default function Sales() {
 
   return (
     <div className="container-fluid">
-      <div className="d-flex gap-2 mb-3">
+      <div className="d-flex gap-2 mb-3 flex-wrap justify-content-center">
         <span className="input-group-text">VENTAS</span>
         <select
           value={year}
