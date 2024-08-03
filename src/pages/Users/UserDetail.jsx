@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import { API_URL } from "../../constants";
-import { SwalError } from "../../utils/alerts";
+import { SwalError, SwalQuestion } from "../../utils/alerts";
 
 export default function UserDetail() {
   const { id } = useParams();
@@ -68,12 +68,10 @@ export default function UserDetail() {
 
   const remove = async (user) => {
     try {
-      const question = await Swal.fire({
-        text: `Borrar usuario ${user.first_name} ${user.last_name}???`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
+      const confirm = await SwalQuestion(
+        `Borrar usuario ${user.first_name} ${user.last_name}???`
+      );
+      if (!confirm) return;
 
       const { data } = await axios.delete(
         `${API_URL}/api/users/${user.email}`,

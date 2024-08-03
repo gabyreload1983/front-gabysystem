@@ -37,7 +37,7 @@ import { closeServiceWork, saveServiceWork } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
-import { SwalToast } from "../../../utils/alerts";
+import { SwalQuestion, SwalToast } from "../../../utils/alerts";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -52,18 +52,12 @@ export default function ServiceWorkDetail() {
   };
 
   const serviceWorkOut = async (nrocompro) => {
-    const question = await Swal.fire({
-      text: `Queres dar salida a la orden ${order.nrocompro}?`,
-      showCancelButton: true,
-      confirmButtonText: "Aceptar",
-    });
-    if (!question.isConfirmed) return;
+    const confirm = await SwalQuestion(
+      `Queres dar salida a la orden ${order.nrocompro}?`
+    );
+    if (!confirm) return;
 
-    const notification = await Swal.fire({
-      text: `Notificar al cliente???`,
-      showCancelButton: true,
-      confirmButtonText: "Aceptar",
-    });
+    const notification = await SwalQuestion(`Notificar al cliente???`);
 
     setLoading(true);
 
@@ -80,12 +74,10 @@ export default function ServiceWorkDetail() {
   };
 
   const serviceWorkFree = async (nrocompro) => {
-    const question = await Swal.fire({
-      text: `Queres liberar la orden ${order.nrocompro}?`,
-      showCancelButton: true,
-      confirmButtonText: "Aceptar",
-    });
-    if (!question.isConfirmed) return;
+    const confirm = await SwalQuestion(
+      `Queres liberar la orden ${order.nrocompro}?`
+    );
+    if (!confirm) return;
 
     setLoading(true);
 

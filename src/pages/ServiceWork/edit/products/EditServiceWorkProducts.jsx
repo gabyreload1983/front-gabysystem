@@ -13,7 +13,7 @@ import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
 import { validateSerieMatchProduct } from "../../../../utils/validation";
-import { SwalError, SwalSuccess } from "../../../../utils/alerts";
+import { SwalError, SwalQuestion, SwalSuccess } from "../../../../utils/alerts";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();
@@ -100,12 +100,10 @@ export default function EditServiceWorkProducts() {
   };
 
   const handleConfirm = async () => {
-    const question = await Swal.fire({
-      text: `Guardar cambios en orden ${order.nrocompro}?`,
-      showCancelButton: true,
-      confirmButtonText: "Aceptar",
-    });
-    if (!question.isConfirmed) return;
+    const confirm = await SwalQuestion(
+      `Guardar cambios en orden ${order.nrocompro}?`
+    );
+    if (!confirm) return;
 
     await updateProductsInSeriveWork(order);
     setCancelButton(true);
@@ -137,12 +135,10 @@ export default function EditServiceWorkProducts() {
   };
 
   const handleCancel = async () => {
-    const question = await Swal.fire({
-      text: `Cancelar cambios en orden ${order.nrocompro}?`,
-      showCancelButton: true,
-      confirmButtonText: "Aceptar",
-    });
-    if (!question.isConfirmed) return;
+    const confirm = await SwalQuestion(
+      `Cancelar cambios en orden ${order.nrocompro}?`
+    );
+    if (!confirm) return;
 
     getData();
     setCancelButton(true);

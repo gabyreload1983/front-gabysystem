@@ -118,15 +118,6 @@ export const getTotalOrder = (order) => {
 export const capitalize = (word) =>
   word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
-export const question = async (questionMessage = "Confirmar accion??") => {
-  const response = await Swal.fire({
-    text: `${questionMessage}?`,
-    showCancelButton: true,
-    confirmButtonText: "Aceptar",
-  });
-  return response.isConfirmed;
-};
-
 export const filterOrders = (orders, estado, sector) => {
   return orders.filter(
     (order) => order.estado === estado && order.codiart === sector

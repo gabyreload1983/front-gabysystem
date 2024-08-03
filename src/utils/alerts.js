@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 export const SwalError = async (
   message = "Error inesperado. Contactar al administrador de la app"
 ) => {

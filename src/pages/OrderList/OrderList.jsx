@@ -4,9 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
-import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
-import { SwalError, SwalToast } from "../../utils/alerts";
+import { SwalError, SwalQuestion, SwalToast } from "../../utils/alerts";
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -34,12 +33,8 @@ export default function OrderList() {
 
   const cleanOrderList = async () => {
     try {
-      const question = await Swal.fire({
-        text: `Queres limpiar la lista???`,
-        showCancelButton: true,
-        confirmButtonText: "Aceptar",
-      });
-      if (!question.isConfirmed) return;
+      const confirm = await SwalQuestion(`Queres limpiar la lista???`);
+      if (!confirm) return;
 
       const response = await deleteToApi(
         `${API_URL}/api/products/clear-order-list`
