@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
-  SwalSuccess,
   formatSerialNumber,
   getOrder,
   updateProductsInSeriveWork,
@@ -14,7 +13,7 @@ import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
 import { validateSerieMatchProduct } from "../../../../utils/validation";
-import { SwalError } from "../../../../utils/alerts";
+import { SwalError, SwalSuccess } from "../../../../utils/alerts";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();
