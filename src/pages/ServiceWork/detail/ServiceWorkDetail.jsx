@@ -1,6 +1,5 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
-  SwalToast,
   getOrder,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
@@ -38,6 +37,7 @@ import { closeServiceWork, saveServiceWork } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
+import { SwalToast } from "../../../utils/alerts";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();

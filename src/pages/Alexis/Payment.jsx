@@ -1,11 +1,11 @@
 import moment from "moment";
 import React, { useContext, useState } from "react";
-import { SwalToast, getJWT } from "../../utils";
+import { getJWT } from "../../utils";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
-import { SwalError } from "../../utils/alerts";
+import { SwalError, SwalToast } from "../../utils/alerts";
 
 export default function Payment() {
   const { logoutUserContext } = useContext(UserContext);

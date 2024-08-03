@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import SalesList from "./SalesList";
-import { SwalToast, formatPrice } from "../../utils";
+import { formatPrice } from "../../utils";
 import moment from "moment";
 import {
   getAlexisSalesFrom,
   getSalesToFreeTotal,
   updateAlexisSalesFrom,
 } from "../../utils/alexis";
+import { SwalToast } from "../../utils/alerts";
 
 export default function Sales() {
   const [sales, setSales] = useState([]);

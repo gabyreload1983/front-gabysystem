@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { SwalToast, SwalWaiting, formatPrice, getJWT } from "../../utils";
+import { SwalWaiting, formatPrice, getJWT } from "../../utils";
 import moment from "moment";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
-import { SwalError } from "../../utils/alerts";
+import { SwalError, SwalToast } from "../../utils/alerts";
 
 export default function AccountDetail() {
   const { id } = useParams();
@@ -63,7 +63,7 @@ export default function AccountDetail() {
         SwalToast(response.data.message);
         return navigate("/alexis/account");
       }
-      SwalToast("ALgo salio mal. Contactar al administrador");
+      SwalToast("Algo salio mal. Contactar al administrador");
     } catch (error) {
       SwalError(error?.message);
       if (error?.response?.status === 403) {

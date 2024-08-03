@@ -1,17 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  SwalToast,
-  deleteToApi,
-  getFromApi,
-  validateStatus,
-} from "../../utils";
+import { deleteToApi, getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
 import Swal from "sweetalert2";
 import { API_URL } from "../../constants";
-import { SwalError } from "../../utils/alerts";
+import { SwalError, SwalToast } from "../../utils/alerts";
 
 export default function OrderList() {
   const navigate = useNavigate();

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { SwalToast } from "../../../../utils";
 import ButtonPdf from "../../../../components/ServiceWork/ButtonPdf";
 import Search from "../../../../components/Search";
 import {
@@ -9,6 +8,7 @@ import {
   getServiceWork,
 } from "../../../../utils/data";
 import CustomersList from "../../../Customers/CustomersList";
+import { SwalToast } from "../../../../utils/alerts";
 
 export default function EditCustomerServiceWork() {
   const { id } = useParams();

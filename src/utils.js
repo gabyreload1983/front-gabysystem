@@ -115,22 +115,6 @@ export const getTotalOrder = (order) => {
   return formatPrice(total);
 };
 
-export const SwalToast = async (message, timer = 3000) => {
-  return Swal.fire({
-    toast: true,
-    icon: "success",
-    text: `${message}`,
-    position: "top-end",
-    timer,
-    showConfirmButton: false,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener("mouseenter", Swal.stopTimer);
-      toast.addEventListener("mouseleave", Swal.resumeTimer);
-    },
-  });
-};
-
 export const SwalWaiting = async (message) => {
   return Swal.fire({
     title: "Wait...",
