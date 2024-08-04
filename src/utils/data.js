@@ -1,6 +1,5 @@
 import { API_URL } from "../constants";
-import { putToApi } from "../utils";
-import { getFromApi } from "./api";
+import { getFromApi, putToApi } from "./api";
 
 export const getServiceWork = async ({ nrocompro }) => {
   const path = `${API_URL}/api/orders/${nrocompro}`;
