@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  formatSerialNumber,
-  getOrder,
-  updateProductsInSeriveWork,
-} from "../../../../utils";
+import { getOrder, updateProductsInSeriveWork } from "../../../../utils";
 import Loading from "../../../../components/Loading";
 import ServiceWorkInfo from "./ServiceWorkInfo";
 import SearchProducts from "./SearchProducts";
@@ -14,6 +10,7 @@ import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
 import { validateSerieMatchProduct } from "../../../../utils/validation";
 import { SwalError, SwalQuestion, SwalSuccess } from "../../../../utils/alerts";
+import { formatSerialNumber } from "../../../../utils/tools";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();

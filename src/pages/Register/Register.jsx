@@ -1,9 +1,9 @@
 import React, { useContext, useState } from "react";
-import { postToApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import { UserContext } from "../../context/userContext";
 import { API_URL } from "../../constants";
 import { SwalSuccess } from "../../utils/alerts";
+import { postToApi } from "../../utils/api";
 
 export default function Register() {
   const { logoutUserContext } = useContext(UserContext);
@@ -32,11 +32,6 @@ export default function Register() {
     const response = await postToApi(`${API_URL}/api/users/register`, newUser);
 
     setLoader(false);
-
-    if (validateStatus(response) === "jwt-expired") {
-      logoutUserContext();
-      return navigate("/login");
-    }
 
     if (response.status === "success") {
       const form = document.querySelector("#formRegister");

@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import AccountList from "./AccountList";
 import moment from "moment";
-import { formatPrice, getJWT } from "../../utils";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
+import { formatPrice, getJWT } from "../../utils/tools";
 
 export default function Account() {
   const [account, setAccount] = useState([]);

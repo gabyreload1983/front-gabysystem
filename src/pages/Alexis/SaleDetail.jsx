@@ -2,20 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import {
-  formatPrice,
-  translateInvoiceState,
-  translateDeliveryState,
-  formatPaymentDate,
-  isNotANumber,
-  isLessThanZero,
-  getJWT,
-} from "../../utils";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { API_URL } from "../../constants";
 import { getAlexisProfit } from "../../utils/alexis";
 import { SwalError, SwalToast, SwalWaiting } from "../../utils/alerts";
+import {
+  formatPaymentDate,
+  formatPrice,
+  getJWT,
+  isLessThanZero,
+  isNotANumber,
+  translateDeliveryState,
+  translateInvoiceState,
+} from "../../utils/tools";
 
 export default function SaleDetail() {
   const { id } = useParams();

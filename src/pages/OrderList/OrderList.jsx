@@ -1,11 +1,11 @@
 import { useContext, useEffect, useState } from "react";
-import { deleteToApi, getFromApi, validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
 import { API_URL } from "../../constants";
 import { SwalError, SwalQuestion, SwalToast } from "../../utils/alerts";
+import { deleteToApi, getFromApi } from "../../utils/api";
 
 export default function OrderList() {
   const navigate = useNavigate();
@@ -20,10 +20,6 @@ export default function OrderList() {
       const response = await getFromApi(`${API_URL}/api/products/order-list`);
 
       setLoader(false);
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (response.status === "success") setProducts(response.payload);
     } catch (error) {
@@ -40,11 +36,6 @@ export default function OrderList() {
         `${API_URL}/api/products/clear-order-list`
       );
 
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
-
       if (response.status === "success") {
         getOrderList();
         SwalToast(response.message, 500);
@@ -59,11 +50,6 @@ export default function OrderList() {
       const response = await deleteToApi(
         `${API_URL}/api/products/order-list/${code}`
       );
-
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (response.status === "success") {
         getOrderList();

@@ -4,7 +4,7 @@ import {
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderTier,
-} from "../../../utils";
+} from "../../../utils/tools";
 
 export default function Accordion({ orders }) {
   return (

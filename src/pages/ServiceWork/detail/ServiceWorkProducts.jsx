@@ -1,4 +1,4 @@
-import { formatPrice, getTotalOrder } from "../../../utils";
+import { formatPrice, getTotalOrder } from "../../../utils/tools";
 
 export default function ServiceWorkProducts({ order }) {
   return (

@@ -2,11 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { getFromApi, validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import TableSummaries from "../../components/TableSummaries/TableSummaries";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
+import { getFromApi } from "../../utils/api";
 
 export default function Summaries() {
   const navigate = useNavigate();
@@ -25,11 +25,6 @@ export default function Summaries() {
       setCustomers([]);
       const response = await getFromApi(`${API_URL}/api/customers/summaries`);
       setLoader(false);
-
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       const customersFilter = ["000363", "855914", ".CF", "5021", "8600"];
 

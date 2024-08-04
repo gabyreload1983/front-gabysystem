@@ -6,7 +6,7 @@ import {
   formatPrice,
   translateDeliveryState,
   translateInvoiceState,
-} from "../../utils";
+} from "../../utils/tools";
 
 export default function SalesList({ sales }) {
   return (

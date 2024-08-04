@@ -1,7 +1,6 @@
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
 import { NavLink, useNavigate } from "react-router-dom";
-import { capitalize } from "../../utils";
 import {
   ArrowLeftStartOnRectangleIcon,
   ClipboardDocumentListIcon,
@@ -9,6 +8,7 @@ import {
   UserCircleIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
+import { capitalize } from "../../utils/tools";
 
 export default function SideBarCommon() {
   const { user, logoutUserContext } = useContext(UserContext);

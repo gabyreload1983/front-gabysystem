@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { getFromApi, validateStatus } from "./../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { API_URL } from "../constants";
 import { SwalError } from "../utils/alerts";
+import { getFromApi } from "../utils/api";
 
 export default function SearchProduct({ onChangeProducts }) {
   const [input, setInput] = useState(null);
@@ -28,10 +28,6 @@ export default function SearchProduct({ onChangeProducts }) {
       const response = await getFromApi(
         `${API_URL}/api/products/search-by?${searchBy}=${input}`
       );
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (response.status === "success")
         return onChangeProducts(response.payload);

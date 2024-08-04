@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { UserContext } from "../../context/userContext";
-import { postToApi } from "../../utils";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
+import { postToApi } from "../../utils/api";
 
 export default function Login() {
   const navigate = useNavigate();

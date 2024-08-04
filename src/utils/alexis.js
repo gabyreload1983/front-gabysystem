@@ -1,6 +1,6 @@
 import moment from "moment";
-import { getFromApi, postToApi } from "../utils";
 import { API_URL } from "../constants";
+import { getFromApi, postToApi } from "./api";
 const RENT_PORCENTAGE = 0.4;
 const CHECH_TAX_PORCENTAGE = 1.2 / 100;
 
