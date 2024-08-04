@@ -5,21 +5,6 @@ import { validateResponse } from "./utils/validation";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
 
-export const deleteToApi = async (path) => {
-  try {
-    const response = await fetch(path, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getJWT()}`,
-      },
-    });
-    if (await validateResponse(response)) return await response.json();
-  } catch (error) {
-    return SwalError(error?.message);
-  }
-};
-
 export const destroyJwt = () => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");

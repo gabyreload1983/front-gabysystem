@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { deleteToApi, validateStatus } from "../../utils";
+import { validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { BarLoader } from "react-spinners";
 import OrderListItem from "./OrderListItem";
 import { API_URL } from "../../constants";
 import { SwalError, SwalQuestion, SwalToast } from "../../utils/alerts";
-import { getFromApi } from "../../utils/api";
+import { deleteToApi, getFromApi } from "../../utils/api";
 
 export default function OrderList() {
   const navigate = useNavigate();
