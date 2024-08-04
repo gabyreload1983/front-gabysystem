@@ -5,3 +5,6 @@ export const formatPrice = (price) => {
     ? p.replaceAll(",", ".")
     : p.slice(0, index).replaceAll(",", ".");
 };
+
+export const capitalize = (word) =>
+  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
