@@ -1,5 +1,5 @@
-import { getJWT } from "../utils";
 import { SwalError } from "./alerts";
+import { getJWT } from "./tools";
 import { validateResponse } from "./validation";
 
 export const getFromApi = async (path) => {

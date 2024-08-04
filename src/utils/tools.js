@@ -1,3 +1,8 @@
+export const wait = async (delay) =>
+  await new Promise((resolve) => setTimeout(resolve, delay));
+
+export const getJWT = () => localStorage.getItem("jwtToken");
+
 export const formatPrice = (price) => {
   let p = price.toLocaleString("en-US");
   let index = p.indexOf(".");
@@ -17,3 +22,12 @@ export const isValidUrl = (string) => {
     return false;
   }
 };
+
+export const formatPaymentDate = (paymentDate) =>
+  paymentDate ? moment(paymentDate).format("YYYY-MM-DD") : "";
+
+export const isNotANumber = (value) => value === "" || isNaN(value);
+
+export const isLessThanZero = (value) => Number(value) < 0;
+
+export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");

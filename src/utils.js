@@ -3,7 +3,7 @@ import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
-import { formatPrice } from "./utils/tools";
+import { formatPrice, getJWT } from "./utils/tools";
 
 export const destroyJwt = () => {
   localStorage.removeItem("jwtToken");
@@ -42,13 +42,6 @@ export const bgInvoiceState = (invoiceState) => {
   if (invoiceState === "pending") return "bg-danger";
   if (invoiceState === "toFree") return "bg-warning";
 };
-
-export const formatPaymentDate = (paymentDate) =>
-  paymentDate ? moment(paymentDate).format("YYYY-MM-DD") : "";
-
-export const isNotANumber = (value) => value === "" || isNaN(value);
-
-export const isLessThanZero = (value) => Number(value) < 0;
 
 export const getInfoAllPendingServiceWorks = async ({ user }) => {
   const serviceWorkInfo = {
@@ -133,8 +126,6 @@ export const getOrderUbicationBackground = (ubication) => {
 
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
-export const formatSerialNumber = (serie) => serie.replaceAll("'", "-");
-
 export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
   await putToApi(`${API_URL}/api/orders/take`, {
     nrocompro: `${nrocompro}`,
@@ -148,9 +139,6 @@ export const getOrder = async ({ id }) => {
 
   return data.payload;
 };
-
-export const wait = async (delay) =>
-  await new Promise((resolve) => setTimeout(resolve, delay));
 
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(
@@ -262,8 +250,6 @@ export const formatNameSector = ({ sector }) => {
   if (sector === ".PC") return "PC";
   if (sector === ".IMP") return "Impresoras";
 };
-
-export const getJWT = () => localStorage.getItem("jwtToken");
 
 export const getUser = () => {
   const jwt = getJWT();
