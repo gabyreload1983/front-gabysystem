@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getJWT, validateStatus } from "../../utils";
+import { getJWT } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
@@ -17,11 +17,6 @@ export default function UserDetail() {
   const getUser = async () => {
     try {
       const response = await getFromApi(`${API_URL}/api/users/${id}`);
-
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (response.status === "success") return setUserUpdate(response.payload);
     } catch (error) {
@@ -44,11 +39,6 @@ export default function UserDetail() {
     const response = await putToApi(`${API_URL}/api/users/${id}`, {
       userUpdate,
     });
-
-    if (validateStatus(response) === "jwt-expired") {
-      logoutUserContext();
-      return navigate("/login");
-    }
 
     if (response.status === "success") {
       await Swal.fire({
@@ -82,11 +72,6 @@ export default function UserDetail() {
           },
         }
       );
-
-      if (validateStatus(data) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (data.status === "success") {
         await Swal.fire({

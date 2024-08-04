@@ -12,14 +12,6 @@ export const destroyJwt = () => {
   return false;
 };
 
-export const validateStatus = (response) => {
-  if (response.status === "error" && response.message === "jwt-expired") {
-    return "jwt-expired";
-  }
-  if (response.status === "error") return SwalError(response?.message);
-  return response;
-};
-
 export const formatPrice = (price) => {
   let p = price.toLocaleString("en-US");
   let index = p.indexOf(".");

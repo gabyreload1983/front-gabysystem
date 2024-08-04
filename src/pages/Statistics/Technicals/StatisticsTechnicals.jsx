@@ -2,7 +2,6 @@ import moment from "moment";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/userContext";
-import { validateStatus } from "../../../utils";
 import { BarLoader } from "react-spinners";
 import StatisticsTable from "./StatisticsTable";
 import { API_URL } from "../../../constants";
@@ -38,11 +37,6 @@ export default function StatisticsTechnicals() {
       const response = await getFromApi(
         `${API_URL}/api/orders/statitstics/${from}/${to}`
       );
-
-      if (validateStatus(response) === "jwt-expired") {
-        logoutUserContext();
-        return navigate("/login");
-      }
 
       if (response.status === "success") {
         setLoader(false);
