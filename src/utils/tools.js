@@ -3,6 +3,13 @@ export const wait = async (delay) =>
 
 export const getJWT = () => localStorage.getItem("jwtToken");
 
+export const destroyJwt = () => {
+  localStorage.removeItem("jwtToken");
+  localStorage.removeItem("user");
+  window.location.replace("/login");
+  return false;
+};
+
 export const formatPrice = (price) => {
   let p = price.toLocaleString("en-US");
   let index = p.indexOf(".");

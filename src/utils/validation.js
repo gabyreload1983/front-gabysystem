@@ -1,7 +1,7 @@
 import { API_URL } from "../constants";
-import { destroyJwt } from "../utils";
 import { SwalError } from "./alerts";
 import { getFromApi } from "./api";
+import { destroyJwt } from "./tools";
 
 export const validateResponse = async (response) => {
   if (response.status === 500) {

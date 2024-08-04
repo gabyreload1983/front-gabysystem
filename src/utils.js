@@ -5,13 +5,6 @@ import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
 import { formatPrice, getJWT } from "./utils/tools";
 
-export const destroyJwt = () => {
-  localStorage.removeItem("jwtToken");
-  localStorage.removeItem("user");
-  window.location.replace("/login");
-  return false;
-};
-
 export const getTotalOrder = (order) => {
   const total = order.products.reduce((acc, val) => {
     return (acc += Number(val.priceList1WithTax));
