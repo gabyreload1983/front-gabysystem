@@ -1,40 +1,8 @@
-import moment from "moment";
-import { API_URL, colorsTiers, tiers } from "./constants";
+import { API_URL } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
-import { formatPrice, getJWT } from "./utils/tools";
-
-export const getTotalOrder = (order) => {
-  const total = order.products.reduce((acc, val) => {
-    return (acc += Number(val.priceList1WithTax));
-  }, Number(order.costo));
-  return formatPrice(total);
-};
-
-export const filterOrders = (orders, estado, sector) => {
-  return orders.filter(
-    (order) => order.estado === estado && order.codiart === sector
-  );
-};
-
-export const translateInvoiceState = (invoiceState) => {
-  const translate = { pay: "Pago", pending: "Pendinte", toFree: "A liberar" };
-
-  return translate[invoiceState];
-};
-
-export const translateDeliveryState = (deliveryState) =>
-  deliveryState ? "Entregado" : "Pendiente";
-
-export const bgDeliveryState = (deliveryState) =>
-  deliveryState ? "bg-success" : "bg-danger";
-
-export const bgInvoiceState = (invoiceState) => {
-  if (invoiceState === "pay") return "bg-success";
-  if (invoiceState === "pending") return "bg-danger";
-  if (invoiceState === "toFree") return "bg-warning";
-};
+import { getJWT } from "./utils/tools";
 
 export const getInfoAllPendingServiceWorks = async ({ user }) => {
   const serviceWorkInfo = {
@@ -66,58 +34,6 @@ export const getInfoAllPendingServiceWorks = async ({ user }) => {
 
   return serviceWorkInfo;
 };
-
-export const getOrderState = (state) => {
-  if (state === 21) return "PENDIENTE";
-  if (state === 22) return "EN PROCESO";
-  if (state === 23) return "FINALIZADA";
-};
-
-export const getOrderDiagnosis = (diagnosis) => {
-  if (diagnosis === 21) return "PENDIENTE";
-  if (diagnosis === 22) return "REPARADO";
-  if (diagnosis === 23) return "SIN REPARACION";
-};
-
-export const getOrderUbication = (ubication) => {
-  if (ubication === 21) return "SIN ENTREGAR";
-  if (ubication === 22) return "ENTREGADO";
-};
-
-export const getOrderTier = (tier) => tiers[tier];
-
-export const getOrderTierBackground = (tier) => {
-  if (tier === 0) return "table-dark";
-  if (tier === 1) return "tier1";
-  if (tier === 2) return "tier2";
-  if (tier === 3) return "tier3";
-  if (tier === 4) return "tier4";
-  if (tier === 5) return "tier5";
-  if (tier === 6) return "tier6";
-  if (tier === 7) return "tier7";
-  if (tier === 8) return "tier8";
-  if (tier === 9) return "tier9";
-  if (tier === 10) return "tier10";
-};
-
-export const getOrderDiagnosisBackground = (diagnosis) => {
-  if (diagnosis === 21) return "border rounded";
-  if (diagnosis === 22) return "bg-success";
-  if (diagnosis === 23) return "bg-danger";
-};
-
-export const getOrderStateBackground = (state) => {
-  if (state === 21) return "bg-danger";
-  if (state === 22) return "bg-warning";
-  if (state === 23) return "bg-success";
-};
-
-export const getOrderUbicationBackground = (ubication) => {
-  if (ubication === 21) return "border rounded";
-  if (ubication === 22) return "bg-success";
-};
-
-export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
   await putToApi(`${API_URL}/api/orders/take`, {
@@ -164,84 +80,6 @@ export const getServiceWorks = async (from, to) => {
   const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
   if (!response) return;
   return response.payload;
-};
-
-export const getStatisticsRepairPending = ({ data }) => {
-  const ordersStatistics = [
-    ["Reparadas", 0],
-    ["Pendientes", 0],
-  ];
-
-  data?.forEach((serviceWork) => {
-    if (serviceWork.estado === 23) ordersStatistics[0][1]++;
-    if (serviceWork.estado !== 23) ordersStatistics[1][1]++;
-  });
-
-  const dataPie = [[`Ordenes Ingresadas`, "Cantidad"], ...ordersStatistics];
-  const options = {
-    title: `Ordenes Ingresadas: ${data.length}`,
-    is3D: true,
-    colors: ["#2BBD51", "#E1E355"],
-  };
-
-  return { dataPie, options };
-};
-
-export const getStatisticsInOut = ({ data }) => {
-  const ordersStatistics = [
-    ["Entregadas", 0],
-    ["Sin Entregar", 0],
-  ];
-
-  data?.forEach((serviceWork) => {
-    if (serviceWork.estado === 23 && serviceWork.ubicacion === 22)
-      ordersStatistics[0][1]++;
-    if (serviceWork.estado === 23 && serviceWork.ubicacion === 21)
-      ordersStatistics[1][1]++;
-  });
-
-  const dataPie = [[`Ordenes Reparadas`, "Cantidad"], ...ordersStatistics];
-  const options = {
-    title: `Ordenes Reparadas: ${ordersStatistics.reduce(
-      (acc, val) => acc + val[1],
-      0
-    )}`,
-    is3D: true,
-    colors: ["#306EBB", "#BB903D"],
-  };
-
-  return { dataPie, options };
-};
-
-export const filterServicesWorkBySector = ({ data, sector }) =>
-  data.filter((sw) => sw.codiart === sector);
-
-export const getSectorStatistics = ({ data, sector }) => {
-  const serviceWoksFiltered = filterServicesWorkBySector({ data, sector });
-
-  const items = tiers.map((item) => [item, 0]);
-  serviceWoksFiltered?.forEach((serviceWork) => {
-    if (serviceWork.estado === 23) {
-      items[serviceWork.prioridad][1]++;
-    }
-  });
-
-  const dataPie = [[`${sector} reparadas`, "Cantidad"], ...items];
-  const options = {
-    title: `${formatNameSector({ sector })} Reparadas ${items.reduce(
-      (acc, val) => acc + val[1],
-      0
-    )}`,
-    is3D: true,
-    colors: colorsTiers,
-  };
-
-  return { dataPie, options };
-};
-
-export const formatNameSector = ({ sector }) => {
-  if (sector === ".PC") return "PC";
-  if (sector === ".IMP") return "Impresoras";
 };
 
 export const getUser = () => {

@@ -1,14 +1,13 @@
-import React from "react";
+import moment from "moment";
 import {
+  formatPrice,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderState,
   getOrderTier,
   getOrderTierBackground,
   getOrderUbication,
-} from "../utils";
-import moment from "moment";
-import { formatPrice } from "../utils/tools";
+} from "../utils/tools";
 
 export default function OrderDetail({ order }) {
   const total = order.products.reduce(

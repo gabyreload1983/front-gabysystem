@@ -1,11 +1,11 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
 import { tiers } from "../../../constants";
+import { NavLink } from "react-router-dom";
 import {
   formatNameSector,
   getOrderTier,
   getOrderTierBackground,
-} from "../../../utils";
-import { NavLink } from "react-router-dom";
+} from "../../../utils/tools";
 
 export default function FormEditServiceWork({
   nrocompro,

@@ -1,8 +1,8 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { getOrderState, getOrderUbication } from "../../utils";
 import { useNavigate, useParams } from "react-router-dom";
 import { getCustomer, getCustomerServiceWorks } from "../../utils/data";
+import { getOrderState, getOrderUbication } from "../../utils/tools";
 
 export default function CustomerOrdersList() {
   const [serviceWorks, setServiceWork] = useState([]);

@@ -1,14 +1,14 @@
 import { useState } from "react";
-import {
-  getServiceWorks,
-  getStatisticsInOut,
-  getStatisticsRepairPending,
-} from "../../../utils";
+import { getServiceWorks } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
 import PieGraph from "../../../components/PieGraph";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  getStatisticsInOut,
+  getStatisticsRepairPending,
+} from "../../../utils/tools";
 
 export default function StatisticsServicesWorks() {
   const navigate = useNavigate();

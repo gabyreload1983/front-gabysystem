@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { UserContext } from "../../context/userContext";
-import { translateInvoiceState, translateDeliveryState } from "../../utils";
 import Swal from "sweetalert2";
 import moment from "moment";
 import { API_URL } from "../../constants";
@@ -14,6 +13,8 @@ import {
   getJWT,
   isLessThanZero,
   isNotANumber,
+  translateDeliveryState,
+  translateInvoiceState,
 } from "../../utils/tools";
 
 export default function SaleDetail() {

@@ -1,14 +1,6 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import {
   getOrder,
-  getOrderDiagnosis,
-  getOrderDiagnosisBackground,
-  getOrderState,
-  getOrderStateBackground,
-  getOrderTier,
-  getOrderTierBackground,
-  getOrderUbication,
-  getOrderUbicationBackground,
   serviceWorkPutFree,
   serviceWorkPutOut,
 } from "../../../utils";
@@ -38,6 +30,16 @@ import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
 import { SwalQuestion, SwalToast } from "../../../utils/alerts";
+import {
+  getOrderDiagnosis,
+  getOrderDiagnosisBackground,
+  getOrderState,
+  getOrderStateBackground,
+  getOrderTier,
+  getOrderTierBackground,
+  getOrderUbication,
+  getOrderUbicationBackground,
+} from "../../../utils/tools";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
