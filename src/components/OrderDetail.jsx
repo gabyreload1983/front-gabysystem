@@ -6,9 +6,9 @@ import {
   getOrderTier,
   getOrderTierBackground,
   getOrderUbication,
-  formatPrice,
 } from "../utils";
 import moment from "moment";
+import { formatPrice } from "../utils/tools";
 
 export default function OrderDetail({ order }) {
   const total = order.products.reduce(

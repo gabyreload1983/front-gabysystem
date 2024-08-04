@@ -1,4 +1,4 @@
-import { formatPrice } from "../../utils";
+import { formatPrice } from "../../utils/tools";
 
 export default function ProductDetail({ product }) {
   return (

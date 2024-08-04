@@ -1,5 +1,4 @@
-import React from "react";
-import { formatPrice } from "../../utils";
+import { formatPrice } from "../../utils/tools";
 
 export default function SummaryItem({
   customer,

@@ -1,23 +1,15 @@
 import moment from "moment";
 import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
-import { validateResponse } from "./utils/validation";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
 import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
+import { formatPrice } from "./utils/tools";
 
 export const destroyJwt = () => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");
   window.location.replace("/login");
   return false;
-};
-
-export const formatPrice = (price) => {
-  let p = price.toLocaleString("en-US");
-  let index = p.indexOf(".");
-  return index === -1
-    ? p.replaceAll(",", ".")
-    : p.slice(0, index).replaceAll(",", ".");
 };
 
 export const getTotalOrder = (order) => {

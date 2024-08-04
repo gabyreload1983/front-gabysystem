@@ -3,10 +3,10 @@ import { Link } from "react-router-dom";
 import {
   bgDeliveryState,
   bgInvoiceState,
-  formatPrice,
   translateDeliveryState,
   translateInvoiceState,
 } from "../../utils";
+import { formatPrice } from "../../utils/tools";
 
 export default function SalesList({ sales }) {
   return (
