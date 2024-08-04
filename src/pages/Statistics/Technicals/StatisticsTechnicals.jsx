@@ -2,11 +2,12 @@ import moment from "moment";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../../context/userContext";
-import { getFromApi, validateStatus } from "../../../utils";
+import { validateStatus } from "../../../utils";
 import { BarLoader } from "react-spinners";
 import StatisticsTable from "./StatisticsTable";
 import { API_URL } from "../../../constants";
 import { SwalError } from "../../../utils/alerts";
+import { getFromApi } from "../../../utils/api";
 
 export default function StatisticsTechnicals() {
   const [searchParams, setSearchParams] = useSearchParams();

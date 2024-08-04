@@ -2,11 +2,12 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { getFromApi, validateStatus } from "../../utils";
+import { validateStatus } from "../../utils";
 import { BarLoader } from "react-spinners";
 import TableSummaries from "../../components/TableSummaries/TableSummaries";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
+import { getFromApi } from "../../utils/api";
 
 export default function Summaries() {
   const navigate = useNavigate();

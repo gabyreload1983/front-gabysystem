@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getFromApi, getJWT, putToApi, validateStatus } from "../../utils";
+import { getJWT, putToApi, validateStatus } from "../../utils";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
 import { API_URL } from "../../constants";
 import { SwalError, SwalQuestion } from "../../utils/alerts";
+import { getFromApi } from "../../utils/api";
 
 export default function UserDetail() {
   const { id } = useParams();

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getFromApi, validateStatus } from "../../utils";
+import { validateStatus } from "../../utils";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
+import { getFromApi } from "../../utils/api";
 
 export default function Users() {
   const [users, setusers, logoutUserContext] = useState([]);

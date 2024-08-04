@@ -1,26 +1,9 @@
 import moment from "moment";
-import Swal from "sweetalert2";
 import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { validateResponse } from "./utils/validation";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
-
-export const getFromApi = async (path) => {
-  try {
-    const response = await fetch(path, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getJWT()}`,
-      },
-    });
-    if (!response) return;
-
-    if (await validateResponse(response)) return await response.json();
-  } catch (error) {
-    return SwalError(error?.message);
-  }
-};
+import { getFromApi } from "./utils/api";
 
 export const putToApi = async (path, body) => {
   try {

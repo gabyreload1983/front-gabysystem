@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getFromApi } from "../../utils";
 import ServiceWorkList from "./ServiceWorkList";
 import Loading from "../../components/Loading";
+import { getFromApi } from "../../utils/api";
 
 export default function ServiceWork({ url }) {
   const [serviceWorks, setServiceWorks] = useState(null);
