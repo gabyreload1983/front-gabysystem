@@ -3,23 +3,7 @@ import { API_URL, colorsTiers, tiers } from "./constants";
 import { jwtDecode } from "jwt-decode";
 import { validateResponse } from "./utils/validation";
 import { SwalError, SwalSuccess, SwalWaiting } from "./utils/alerts";
-import { getFromApi, patchToApi, putToApi } from "./utils/api";
-
-export const postToApi = async (path, body) => {
-  try {
-    const response = await fetch(path, {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${getJWT()}`,
-      },
-    });
-    if (await validateResponse(response)) return await response.json();
-  } catch (error) {
-    return SwalError(error?.message);
-  }
-};
+import { getFromApi, patchToApi, postToApi, putToApi } from "./utils/api";
 
 export const deleteToApi = async (path) => {
   try {
