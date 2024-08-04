@@ -19,22 +19,10 @@ export const getTotalOrder = (order) => {
   return formatPrice(total);
 };
 
-export const capitalize = (word) =>
-  word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-
 export const filterOrders = (orders, estado, sector) => {
   return orders.filter(
     (order) => order.estado === estado && order.codiart === sector
   );
-};
-
-export const isValidUrl = (string) => {
-  try {
-    new URL(string);
-    return true;
-  } catch (err) {
-    return false;
-  }
 };
 
 export const translateInvoiceState = (invoiceState) => {
