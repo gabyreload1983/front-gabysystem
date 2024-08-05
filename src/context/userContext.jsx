@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import { jwtDecode } from "jwt-decode";
-import { getUser } from "../utils";
+import { getUser } from "../utils/data";
 
 export const UserContext = createContext();
 

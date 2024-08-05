@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Search from "../Search";
 import ListCustomers from "./ListCustomers";
-import { getCustomers } from "../../utils";
+import { getCustomers } from "../../utils/data";
 
 export default function SearchCustomers({ onHandleCustomerSelected }) {
   const [customers, setCustomers] = useState([]);

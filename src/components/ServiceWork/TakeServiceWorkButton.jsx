@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { takeServiceWork } from "../../utils";
 import { useState } from "react";
+import { takeServiceWork } from "../../utils/data";
 
 export default function TakeServiceWorkButton({ nrocompro, codeTechnical }) {
   const navigate = useNavigate();

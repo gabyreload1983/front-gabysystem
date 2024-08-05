@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { getServiceWorks } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
@@ -9,6 +8,7 @@ import {
   getStatisticsInOut,
   getStatisticsRepairPending,
 } from "../../../utils/tools";
+import { getServiceWorks } from "../../../utils/data";
 
 export default function StatisticsServicesWorks() {
   const navigate = useNavigate();

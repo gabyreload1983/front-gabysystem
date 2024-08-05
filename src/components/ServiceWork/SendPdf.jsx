@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { sendCustomerPdf } from "../../utils";
+import { sendServiceWorkPdf } from "../../utils/data";
 
 export default function SendPdf({ nrocompro }) {
   const [loading, setLoading] = useState(false);
 
   const sendPdf = async () => {
     setLoading(true);
-    await sendCustomerPdf({ nrocompro });
+    await sendServiceWorkPdf({ nrocompro });
     setLoading(false);
   };
   return (

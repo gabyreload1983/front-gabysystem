@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getOrder, updateServiceWork } from "../../../utils";
 import FormEditServiceWork from "./FormEditServiceWork";
 import ServiceWorkUpdateDto from "../../../DTO/ServiceWork.dto";
 import { SwalSuccess } from "../../../utils/alerts";
+import { getServiceWork, updateServiceWork } from "../../../utils/data";
 
 export default function EditServiceWork() {
   const { id } = useParams();
@@ -11,7 +11,7 @@ export default function EditServiceWork() {
   const [serviceWork, setServiceWork] = useState(null);
 
   const getData = async () => {
-    const data = await getOrder({ id });
+    const data = await getServiceWork({ nrocompro: id });
     setServiceWork(new ServiceWorkUpdateDto(data));
   };
 
