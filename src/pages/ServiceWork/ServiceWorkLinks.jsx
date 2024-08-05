@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import { getInfoAllPendingServiceWorks } from "../../utils";
 import {
   ClipboardDocumentListIcon,
   ComputerDesktopIcon,
@@ -11,6 +10,7 @@ import {
   PlusCircleIcon,
 } from "@heroicons/react/16/solid";
 import { validateCreateServiceWork } from "../../utils/validation";
+import { getInfoAllPendingServiceWorks } from "../../utils/data";
 
 export default function ServiceWorkLinks() {
   const { user } = useContext(UserContext);

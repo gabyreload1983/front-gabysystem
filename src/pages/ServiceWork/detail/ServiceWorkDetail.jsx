@@ -1,15 +1,9 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import {
-  getOrder,
-  serviceWorkPutFree,
-  serviceWorkPutOut,
-} from "../../../utils";
 import { useContext, useEffect, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
 import ServiceWorkOut from "./ServiceWorkOut";
-import Swal from "sweetalert2";
 import Loading from "../../../components/Loading";
 import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
@@ -25,7 +19,13 @@ import {
   validateUserRole,
 } from "../../../utils/validation";
 import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
-import { closeServiceWork, saveServiceWork } from "../../../utils/data";
+import {
+  closeServiceWork,
+  getServiceWork,
+  saveServiceWork,
+  serviceWorkPutFree,
+  serviceWorkPutOut,
+} from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
@@ -49,7 +49,7 @@ export default function ServiceWorkDetail() {
   const navigate = useNavigate();
 
   const getData = async () => {
-    const data = await getOrder({ id });
+    const data = await getServiceWork({ nrocompro: id });
     setOrder(data);
   };
 
@@ -63,10 +63,7 @@ export default function ServiceWorkDetail() {
 
     setLoading(true);
 
-    const response = await serviceWorkPutOut(
-      nrocompro,
-      notification.isConfirmed
-    );
+    const response = await serviceWorkPutOut(nrocompro, notification);
 
     setLoading(false);
     if (response.status === "success") {

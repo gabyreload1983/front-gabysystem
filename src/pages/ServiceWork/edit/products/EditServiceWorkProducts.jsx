@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getOrder, updateProductsInSeriveWork } from "../../../../utils";
 import Loading from "../../../../components/Loading";
 import ServiceWorkInfo from "./ServiceWorkInfo";
 import SearchProducts from "./SearchProducts";
@@ -9,8 +8,17 @@ import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
 import { API_URL } from "../../../../constants";
 import { validateSerieMatchProduct } from "../../../../utils/validation";
-import { SwalError, SwalQuestion, SwalSuccess } from "../../../../utils/alerts";
+import {
+  SwalError,
+  SwalQuestion,
+  SwalSuccess,
+  SwalWaiting,
+} from "../../../../utils/alerts";
 import { formatSerialNumber } from "../../../../utils/tools";
+import {
+  getServiceWork,
+  updateProductsInSeriveWork,
+} from "../../../../utils/data";
 
 export default function EditServiceWorkProducts() {
   const { id } = useParams();
@@ -20,7 +28,7 @@ export default function EditServiceWorkProducts() {
   const [confirmButton, setConfirmButton] = useState(true);
 
   const getData = async () => {
-    const response = await getOrder({ id });
+    const response = await getServiceWork({ nrocompro: id });
     setOrder(response);
   };
 
@@ -101,6 +109,7 @@ export default function EditServiceWorkProducts() {
       `Guardar cambios en orden ${order.nrocompro}?`
     );
     if (!confirm) return;
+    SwalWaiting("Actualizando orden y enviando email");
 
     await updateProductsInSeriveWork(order);
     setCancelButton(true);

@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { getServiceWorks } from "../../../utils";
 import Loading from "../../../components/Loading";
 import CalendarPicker from "../../../components/CalendarPicker";
 import moment from "moment";
 import PieGraph from "../../../components/PieGraph";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { getSectorStatistics } from "../../../utils/tools";
+import { getServiceWorks } from "../../../utils/data";
 
 export default function StatisticsRepairs() {
   const navigate = useNavigate();

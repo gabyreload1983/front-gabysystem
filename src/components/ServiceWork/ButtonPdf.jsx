@@ -1,7 +1,7 @@
-import { createPdfServiceWork } from "../../utils";
 import { API_URL } from "../../constants";
 import { BarLoader } from "react-spinners";
 import { useState } from "react";
+import { createPdfServiceWork } from "../../utils/data";
 
 export default function ButtonPdf({ nrocompro, customer = false }) {
   const [loader, setLoader] = useState(false);

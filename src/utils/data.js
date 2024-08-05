@@ -1,12 +1,44 @@
+import { jwtDecode } from "jwt-decode";
 import { API_URL } from "../constants";
-import { getFromApi, putToApi } from "./api";
+import { getFromApi, patchToApi, postToApi, putToApi } from "./api";
+import { getJWT } from "./tools";
+import { SwalError, SwalSuccess } from "./alerts";
 
+// SERVICEWORKS
 export const getServiceWork = async ({ nrocompro }) => {
   const path = `${API_URL}/api/orders/${nrocompro}`;
   const data = await getFromApi(path);
 
   if (!data) return;
   return data.payload;
+};
+
+export const getServiceWorks = async (from, to) => {
+  const response = await getFromApi(`${API_URL}/api/orders/all/${from}/${to}`);
+  if (!response) return;
+  return response.payload;
+};
+
+export const createServiceWork = async (serviceWork) => {
+  const response = await postToApi(`${API_URL}/api/orders`, {
+    order: { ...serviceWork },
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+  SwalError("Error al crear orden, actualice la pagina e intente nuevamente.");
+};
+
+export const updateServiceWork = async ({ id, updatedServiceWork }) => {
+  const response = await patchToApi(`${API_URL}/api/orders/${id}`, {
+    order: { ...updatedServiceWork },
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+  SwalError(
+    "Error al actualizar orden, actualice la pagina e intente nuevamente."
+  );
 };
 
 export const saveServiceWork = async ({ nrocompro, diagnosis }) => {
@@ -42,13 +74,94 @@ export const closeServiceWork = async ({
   return response;
 };
 
+export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
+  await putToApi(`${API_URL}/api/orders/take`, {
+    nrocompro: `${nrocompro}`,
+    code_technical: `${codeTechnical}`,
+  });
+
+export const updateServideWorkCustomer = async ({ nrocompro, customerId }) => {
+  const response = await putToApi(`${API_URL}/api/orders/update-customer`, {
+    nrocompro,
+    customerId,
+  });
+  if (!response) return;
+  return response.payload;
+};
+
+export const getInfoAllPendingServiceWorks = async ({ user }) => {
+  const serviceWorkInfo = {
+    pc: 0,
+    printers: 0,
+    process: 0,
+    myWorks: 0,
+  };
+  const url = `${API_URL}/api/orders/pendings-all`;
+
+  const data = await getFromApi(url);
+  if (!data) return;
+  for (const serviceWork of data.payload) {
+    if (serviceWork.estado === 21 && serviceWork.codiart === ".PC")
+      serviceWorkInfo.pc++;
+    if (serviceWork.estado === 21 && serviceWork.codiart === ".IMP")
+      serviceWorkInfo.printers++;
+    if (
+      serviceWork.estado === 22 &&
+      (serviceWork.codiart === ".PC" || serviceWork.codiart === ".IMP")
+    )
+      serviceWorkInfo.process++;
+    if (
+      serviceWork.estado === 22 &&
+      serviceWork.tecnico === user.code_technical
+    )
+      serviceWorkInfo.myWorks++;
+  }
+
+  return serviceWorkInfo;
+};
+
+export const updateProductsInSeriveWork = async (order) =>
+  await putToApi(`${API_URL}/api/orders/products`, order);
+
+export const serviceWorkPutOut = async (nrocompro, notification) =>
+  await putToApi(`${API_URL}/api/orders/out/${nrocompro}`, { notification });
+
+export const serviceWorkPutFree = async (order, user) => {
+  const orderToFree = {
+    nrocompro: order.nrocompro,
+    code_technical: user.code_technical,
+  };
+
+  return await putToApi(`${API_URL}/api/orders/free`, orderToFree);
+};
+
+export const createPdfServiceWork = async ({ nrocompro, customer = false }) => {
+  const response = await postToApi(`${API_URL}/api/orders/pdf`, {
+    nrocompro,
+    customer,
+  });
+  return response.payload;
+};
+
+export const sendServiceWorkPdf = async ({ nrocompro }) => {
+  const path = `${API_URL}/api/orders/send/customer-pdf`;
+  const response = await postToApi(path, { nrocompro });
+  if (response.status === "success") {
+    SwalSuccess(response.message);
+  }
+  if (response.status === "error") {
+    SwalError(response.message);
+  }
+};
+
+// CUSTOMERS
 export const getCustomer = async ({ code }) => {
   const response = await getFromApi(`${API_URL}/api/customers/code/${code}`);
   if (!response) return;
   return response.payload;
 };
 
-export const getCustomersByDescription = async (description) => {
+export const getCustomers = async (description) => {
   const response = await getFromApi(`${API_URL}/api/customers/${description}`);
   if (!response) return;
   return response.payload;
@@ -60,11 +173,26 @@ export const getCustomerServiceWorks = async ({ code }) => {
   return response.payload;
 };
 
-export const updateServideWorkCustomer = async ({ nrocompro, customerId }) => {
-  const response = await putToApi(`${API_URL}/api/orders/update-customer`, {
-    nrocompro,
-    customerId,
-  });
+export const getCustomersByDescription = async (description) => {
+  const response = await getFromApi(`${API_URL}/api/customers/${description}`);
   if (!response) return;
   return response.payload;
+};
+
+// PRODUCTS
+export const searchProduct = async ({ input, searchBy = "description" }) => {
+  const response = await getFromApi(
+    `${API_URL}/api/products/search-by?${searchBy}=${input}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
+// USERS
+export const getUser = () => {
+  const jwt = getJWT();
+  if (!jwt) return null;
+  const { user } = jwtDecode(jwt);
+  return user;
 };
