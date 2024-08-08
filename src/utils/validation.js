@@ -46,7 +46,7 @@ export const validateResponse = async (response) => {
 export const validateUserRole = (user, ...roles) => roles.includes(user?.role);
 
 export const validateCreateServiceWork = (user) =>
-  user.role === "premium" || user.role === "saler";
+  user.role === "premium" || user.role === "seller";
 
 export const validateFreeServiceWork = (user, order) => {
   return (
@@ -80,14 +80,14 @@ export const validateAddingProducts = (user, order) => {
 
 export const validateServiceWorkOut = (user, order) => {
   return (
-    (user.role === "premium" || user.role === "saler") &&
+    (user.role === "premium" || user.role === "seller") &&
     order.estado === 23 &&
     order.ubicacion === 21
   );
 };
 
 export const validateSendPdf = (user) =>
-  user.role === "premium" || user.role === "saler";
+  user.role === "premium" || user.role === "seller";
 
 export const validateSerieMatchProduct = async (product, serie) => {
   const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);
