@@ -188,7 +188,7 @@ export default function UserDetail() {
               >
                 <option value={userUpdate.role}>{userUpdate.role}</option>
                 <option value="technical">Tecnico</option>
-                <option value="saler">Vendedor</option>
+                <option value="seller">Vendedor</option>
                 <option value="premium">Premium</option>
                 <option value="user">User</option>
               </select>

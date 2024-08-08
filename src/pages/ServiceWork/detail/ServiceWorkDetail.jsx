@@ -143,7 +143,7 @@ export default function ServiceWorkDetail() {
             </p>
             <div className="d-flex justify-content-center align-items-center gap-2">
               <strong className="fs-3">{order.nrocompro}</strong>
-              {validateUserRole(user, "premium", "saler") && (
+              {validateUserRole(user, "premium", "seller") && (
                 <NavLink to={`/servicework/edit/${order.nrocompro}`}>
                   <PencilSquareIcon className="icon" />
                 </NavLink>

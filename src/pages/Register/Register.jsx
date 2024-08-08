@@ -126,7 +126,7 @@ export default function Register() {
             >
               <option value="">Role</option>
               <option value="technical">Tecnico</option>
-              <option value="saler">Vendedor</option>
+              <option value="seller">Vendedor</option>
               <option value="premium">Premium</option>
             </select>
 
