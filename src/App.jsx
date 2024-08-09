@@ -11,7 +11,7 @@ import UserContextProvider from "./context/userContext";
 import PageNotFount from "./components/PageNotFount";
 import Users from "./pages/Users/Users";
 import UserDetail from "./pages/Users/UserDetail";
-import OrderList from "./pages/OrderList/OrderList";
+import ProductRequest from "./pages/ProductRequest/ProductRequest";
 import Summaries from "./pages/Summaries/Summaries";
 import Alexis from "./pages/Alexis/Alexis";
 import Sales from "./pages/Alexis/Sales";
@@ -48,7 +48,7 @@ function App() {
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<UserDetail />} />
             <Route path="products" element={<Products />} />
-            <Route path="orderList" element={<OrderList />} />
+            <Route path="product-request" element={<ProductRequest />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/summaries" element={<Summaries />} />
 

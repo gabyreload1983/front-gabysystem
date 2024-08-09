@@ -1,6 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import { API_URL } from "../constants";
-import { getFromApi, patchToApi, postToApi, putToApi } from "./api";
+import {
+  deleteToApi,
+  getFromApi,
+  patchToApi,
+  postToApi,
+  putToApi,
+} from "./api";
 import { getJWT } from "./tools";
 import { SwalError, SwalSuccess } from "./alerts";
 
@@ -187,6 +193,31 @@ export const searchProduct = async ({ input, searchBy = "description" }) => {
   if (!response) return;
 
   return response.payload;
+};
+
+export const getProductRequest = async () => {
+  const response = await getFromApi(`${API_URL}/api/products/order-list`);
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const cleanProductRequestList = async () => {
+  const response = await deleteToApi(
+    `${API_URL}/api/products/clear-order-list`
+  );
+  if (!response) return;
+
+  return response;
+};
+
+export const removeProductRequest = async (code) => {
+  const response = await deleteToApi(
+    `${API_URL}/api/products/order-list/${code}`
+  );
+  if (!response) return;
+
+  return response;
 };
 
 // USERS
