@@ -1,10 +1,9 @@
-import ProductDetail from "./ProductDetail";
+import { formatPrice } from "../../utils/tools";
 
 export default function ProductsList({ products }) {
   return (
     <div className="table-responsive">
-      <h1>Lista de Productos</h1>
-      <table className="table">
+      <table className="table table-dark">
         <thead>
           <tr>
             <th scope="col">CODIGO</th>
@@ -17,7 +16,10 @@ export default function ProductsList({ products }) {
           {products.length > 0 &&
             products.map((product) => (
               <tr key={product.codigo}>
-                <ProductDetail product={product} />
+                <td>{product.codigo}</td>
+                <td>{product.descrip}</td>
+                <td>{product.stockd01 - product.reserd01}</td>
+                <td>${formatPrice(product.priceList1WithTax)}</td>
               </tr>
             ))}
         </tbody>

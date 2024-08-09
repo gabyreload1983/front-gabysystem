@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import SearchProduct from "../../components/SearchProduct";
+import { useState } from "react";
+import SearchProducts from "../../components/Products/SearchProducts";
 import ProductsList from "./ProductsList";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
 
-  const handleChangeProducts = (products) => {
+  const handleSearchPoducts = (products) => {
     setProducts(products);
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-12 col-md-6 col-lg-4">
-          <SearchProduct onChangeProducts={handleChangeProducts} />
+    <div className="container mt-3">
+      <div className="row p-3 bg-dark text-white rounded">
+        <div className="col-12 col-lg-4">
+          <SearchProducts handleSearchPoducts={handleSearchPoducts} />
         </div>
         <div className="col-12">
           <ProductsList products={products} />
