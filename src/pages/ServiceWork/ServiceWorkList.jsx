@@ -14,7 +14,7 @@ export default function ServiceWorkList({ serviceWorks }) {
   const { user } = useContext(UserContext);
   return (
     <div className="table-responsive">
-      <table className="table">
+      <table className="table table-sm">
         <thead>
           <tr className="table-light">
             <th>#</th>

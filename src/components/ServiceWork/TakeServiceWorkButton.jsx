@@ -13,7 +13,7 @@ export default function TakeServiceWorkButton({ nrocompro, codeTechnical }) {
     if (response.status === "success") navigate(`/servicework/my-works`);
   };
   return (
-    <button className="w-100 btn btn-success" onClick={handleOnClick}>
+    <button className="w-100 btn btn-success btn-sm" onClick={handleOnClick}>
       <span className="me-2">TOMAR</span>
       {loading && (
         <div
