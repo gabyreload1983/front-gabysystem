@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchProduct } from "../../../../utils/data";
+import { searchProduct } from "../../utils/data";
 
 export default function SearchProducts({ handleSearchPoducts }) {
   const [input, setInput] = useState("");

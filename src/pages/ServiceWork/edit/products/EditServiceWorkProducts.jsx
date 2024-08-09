@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../../../../components/Loading";
 import ServiceWorkInfo from "./ServiceWorkInfo";
-import SearchProducts from "./SearchProducts";
+import SearchProducts from "../../../../components/Products/SearchProducts";
 import ProductsList from "./ProductsList";
 import ProductsInServiceWork from "./ProductsInServiceWork";
 import Swal from "sweetalert2";
