@@ -1,6 +1,6 @@
 import { formatPrice } from "../../utils/tools";
 
-export default function ProductsList({ products, addProduct }) {
+export default function ProductsList({ products }) {
   return (
     <div className="table-responsive">
       <table className="table table-dark">
