@@ -2,9 +2,11 @@ import { useState } from "react";
 import { searchProduct } from "../../utils/data";
 
 export default function SearchProducts({ handleSearchPoducts }) {
+  const DESCRIPTION = "DESCRIPCION - EJ: SSD 240";
+  const CODIGO = "CODIGO - EJ: 801563";
   const [input, setInput] = useState("");
   const [searchBy, setSearchBy] = useState("description");
-  const [placeholder, setPlaceholder] = useState("EJ: SSD 240");
+  const [placeholder, setPlaceholder] = useState(DESCRIPTION);
 
   const handleInputChange = (event) => {
     const input = event.target.value;
@@ -21,9 +23,11 @@ export default function SearchProducts({ handleSearchPoducts }) {
         if (prev === "code") return "description";
       });
       setPlaceholder((prev) => {
-        if (prev === "EJ: SSD 240") return "EJ: 801563";
-        if (prev === "EJ: 801563") return "EJ: SSD 240";
+        if (prev === DESCRIPTION) return CODIGO;
+        if (prev === CODIGO) return DESCRIPTION;
       });
+      handleSearchPoducts([]);
+      setInput("");
     }
   };
 
