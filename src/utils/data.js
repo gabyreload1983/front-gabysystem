@@ -220,6 +220,13 @@ export const removeProductRequest = async (code) => {
   return response;
 };
 
+export const getRmaProducts = async () => {
+  const response = await searchProduct({ input: "ssd" });
+  if (!response) return;
+
+  return response;
+};
+
 // USERS
 export const getUser = () => {
   const jwt = getJWT();

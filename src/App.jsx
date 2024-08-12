@@ -35,6 +35,7 @@ import CreateServiceWork from "./pages/ServiceWork/create/CreateServiceWork";
 import EditServiceWork from "./pages/ServiceWork/edit/EditServiceWork";
 import CustomerOrdersList from "./pages/Customers/CustomerOrdersList";
 import EditCustomerServiceWork from "./pages/ServiceWork/edit/customer/EditCustomerServiceWork";
+import Rma from "./pages/RMA/Rma";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="product-request" element={<ProductRequest />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/summaries" element={<Summaries />} />
+            <Route path="/rma" element={<Rma />} />
 
             <Route path="customers" element={<Customers />} />
             <Route

@@ -5,6 +5,7 @@ import {
   ListBulletIcon,
   NewspaperIcon,
 } from "@heroicons/react/24/outline";
+import { WrenchIcon } from "@heroicons/react/24/solid";
 
 export default function SideBarPremium() {
   const links = [
@@ -27,6 +28,12 @@ export default function SideBarPremium() {
       name: "Cuentas Corrientes",
       to: "summaries",
       icon: CurrencyDollarIcon,
+    },
+    ,
+    {
+      name: "RMA",
+      to: "rma",
+      icon: WrenchIcon,
     },
   ];
 
