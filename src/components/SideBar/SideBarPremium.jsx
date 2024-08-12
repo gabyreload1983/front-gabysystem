@@ -15,7 +15,7 @@ export default function SideBarPremium() {
     },
     {
       name: "Pedidos",
-      to: "orderList",
+      to: "product-request",
       icon: ListBulletIcon,
     },
     {
