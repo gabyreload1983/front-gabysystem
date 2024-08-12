@@ -193,6 +193,15 @@ export default function ServiceWorkDetail() {
                   Ubicacion {getOrderUbication(order.ubicacion)}
                 </span>
               </div>
+              {order.invoice && (
+                <div
+                  className={`${getOrderUbicationBackground(
+                    order.ubicacion
+                  )} col-12  m-0 px-0 py-1 col-lg rounded`}
+                >
+                  <span className="m-0">{order.invoice}</span>
+                </div>
+              )}
             </div>
             <div className="d-flex flex-column align-items-center justify-content-between rounded bg-light py-1 text-black">
               <p className="m-0 fs-5">{order.descart}</p>
