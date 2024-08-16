@@ -3,7 +3,7 @@ import { searchSerie } from "../../utils/data";
 import {
   formatDate,
   formatProductSerie,
-  isInvalidString,
+  isInvalidChar,
   validateWarranty,
 } from "../../utils/tools";
 
@@ -13,7 +13,7 @@ export default function SearchSerie() {
 
   const handleInputChange = (event) => {
     const { value } = event.target;
-    if (isInvalidString(value)) return;
+    if (isInvalidChar(value)) return;
 
     setSerie(value);
   };
