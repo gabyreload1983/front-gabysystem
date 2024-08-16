@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { searchSerie } from "../../utils/data";
-import { formatDate, validateWarranty } from "../../utils/tools";
+import {
+  formatDate,
+  formatProductSerie,
+  isInvalidString,
+  validateWarranty,
+} from "../../utils/tools";
 
 export default function SearchSerie() {
   const [serie, setSerie] = useState("");
@@ -8,6 +13,8 @@ export default function SearchSerie() {
 
   const handleInputChange = (event) => {
     const { value } = event.target;
+    if (isInvalidString(value)) return;
+
     setSerie(value);
   };
 
@@ -19,7 +26,8 @@ export default function SearchSerie() {
   const handleSearch = async () => {
     if (serie.length < 5) return;
     const response = await searchSerie({ serie });
-    setProduct(response);
+
+    setProduct(formatProductSerie(response));
   };
 
   return (
@@ -62,11 +70,9 @@ export default function SearchSerie() {
                 <td>{product.code}</td>
                 <td>{product.description}</td>
                 <td>{product.supplier}</td>
-                <td>{formatDate(product.purchase_date_s)}</td>
-                <td>{product.voucher_s}</td>
-                <td>
-                  {validateWarranty(product.purchase_date_s) ? "SI" : "NO"}
-                </td>
+                <td>{formatDate(product.purchase_date)}</td>
+                <td>{product.voucher}</td>
+                <td>{validateWarranty(product.purchase_date) ? "SI" : "NO"}</td>
               </tr>
             )}
           </tbody>

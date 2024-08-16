@@ -33,6 +33,8 @@ export const validateWarranty = (date) => {
 export const capitalize = (word) =>
   word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 
+export const isInvalidString = (str) => /[^a-zA-Z0-9-]/.test(str);
+
 export const isValidUrl = (string) => {
   try {
     new URL(string);
@@ -204,4 +206,12 @@ export const getSectorStatistics = ({ data, sector }) => {
   };
 
   return { dataPie, options };
+};
+
+export const formatProductSerie = (product) => {
+  product.voucher = product.voucher_c ? product.voucher_c : product.voucher_s;
+  product.purchase_date = product.purchase_date_c
+    ? product.purchase_date_c
+    : product.purchase_date_s;
+  return product;
 };
