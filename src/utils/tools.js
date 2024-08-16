@@ -21,6 +21,15 @@ export const formatPrice = (price) => {
     : p.slice(0, index).replaceAll(",", ".");
 };
 
+export const formatDate = (date) => moment(date).format("DD-MM-YYYY");
+
+export const validateWarranty = (date) => {
+  const result = moment()
+    .startOf("day")
+    .diff(moment(date).startOf("day"), "days");
+  return result < 365;
+};
+
 export const capitalize = (word) =>
   word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 

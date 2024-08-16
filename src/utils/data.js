@@ -195,6 +195,13 @@ export const searchProduct = async ({ input, searchBy = "description" }) => {
   return response.payload;
 };
 
+export const searchSerie = async ({ serie }) => {
+  const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
 export const getProductRequest = async () => {
   const response = await getFromApi(`${API_URL}/api/products/order-list`);
   if (!response) return;

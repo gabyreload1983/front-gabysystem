@@ -36,6 +36,7 @@ import EditServiceWork from "./pages/ServiceWork/edit/EditServiceWork";
 import CustomerOrdersList from "./pages/Customers/CustomerOrdersList";
 import EditCustomerServiceWork from "./pages/ServiceWork/edit/customer/EditCustomerServiceWork";
 import Rma from "./pages/RMA/Rma";
+import SearchSerie from "./components/Products/SearchSerie";
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
             <Route path="register" element={<Register />} />
             <Route path="users" element={<Users />} />
             <Route path="users/:id" element={<UserDetail />} />
+            <Route path="products/serie" element={<SearchSerie />} />
             <Route path="products" element={<Products />} />
             <Route path="product-request" element={<ProductRequest />} />
             <Route path="/profile" element={<Profile />} />
