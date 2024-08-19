@@ -1,7 +1,7 @@
 export default function CustomersList({ customers, onHandleCustomerSelected }) {
   return (
     <div className="table-responsive">
-      <table className="table table-hover">
+      <table className="table table-hover table-dark bg-dark">
         <thead>
           <tr className="table-success">
             <th scope="col">CODIGO</th>
