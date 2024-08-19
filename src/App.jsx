@@ -37,6 +37,8 @@ import CustomerOrdersList from "./pages/Customers/CustomerOrdersList";
 import EditCustomerServiceWork from "./pages/ServiceWork/edit/customer/EditCustomerServiceWork";
 import Rma from "./pages/RMA/Rma";
 import SearchSerie from "./components/Products/SearchSerie";
+import Subscribers from "./pages/Subscribers/Subscribers";
+import SubscriberDetail from "./pages/Subscribers/SubscriberDetail";
 
 function App() {
   return (
@@ -52,9 +54,11 @@ function App() {
             <Route path="products/serie" element={<SearchSerie />} />
             <Route path="products" element={<Products />} />
             <Route path="product-request" element={<ProductRequest />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/summaries" element={<Summaries />} />
-            <Route path="/rma" element={<Rma />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="summaries" element={<Summaries />} />
+            <Route path="rma" element={<Rma />} />
+            <Route path="subscribers/:id" element={<SubscriberDetail />} />
+            <Route path="subscribers" element={<Subscribers />} />
 
             <Route path="customers" element={<Customers />} />
             <Route
@@ -62,7 +66,7 @@ function App() {
               element={<CustomerOrdersList />}
             />
 
-            <Route path="/statistics" element={<LayoutStatistics />}>
+            <Route path="statistics" element={<LayoutStatistics />}>
               <Route
                 path="servicesworks"
                 element={<StatisticsServicesWorks />}

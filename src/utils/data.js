@@ -185,6 +185,12 @@ export const getCustomersByDescription = async (description) => {
   return response.payload;
 };
 
+export const getSubscribers = async () => {
+  const response = await getFromApi(`${API_URL}/api/customers/subscribers`);
+  if (!response) return;
+  return response.payload;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(
