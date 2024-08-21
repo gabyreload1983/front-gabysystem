@@ -16,7 +16,7 @@ export default function CustomerOrdersList() {
     setServiceWork(response);
     const responseCustomer = await getCustomer({ code: id });
     if (!response) return;
-    setCustomer(responseCustomer[0]);
+    setCustomer(responseCustomer);
   };
 
   const handleClick = ({ nrocompro }) => {

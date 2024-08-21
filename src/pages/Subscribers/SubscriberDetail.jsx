@@ -9,8 +9,8 @@ export default function SubscriberDetail() {
 
   const getData = async () => {
     const data = await getCustomer({ code: id });
-    if (!isSubscriber(data[0])) return;
-    setSubscriber(data[0]);
+    if (!isSubscriber(data)) return;
+    setSubscriber(data);
   };
 
   useEffect(() => {

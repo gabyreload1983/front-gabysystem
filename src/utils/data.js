@@ -164,7 +164,7 @@ export const sendServiceWorkPdf = async ({ nrocompro }) => {
 export const getCustomer = async ({ code }) => {
   const response = await getFromApi(`${API_URL}/api/customers/code/${code}`);
   if (!response) return;
-  return response.payload;
+  return response.payload[0];
 };
 
 export const getCustomers = async (description) => {
