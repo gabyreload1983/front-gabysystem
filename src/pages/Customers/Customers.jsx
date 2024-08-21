@@ -2,7 +2,7 @@ import { useState } from "react";
 import CustomersList from "./CustomersList";
 import { NavLink, useNavigate } from "react-router-dom";
 import Search from "../../components/Search";
-import { getCustomersByDescription } from "../../utils/data";
+import { getCustomersByDescription, getSubscribers } from "../../utils/data";
 
 export default function Customers() {
   const [customers, setCustomers] = useState([]);
@@ -12,6 +12,11 @@ export default function Customers() {
   const onSearch = async (description) => {
     const response = await getCustomersByDescription(description);
     setCustomers(response);
+  };
+
+  const handleSearchSubscribers = async () => {
+    const data = await getSubscribers();
+    setCustomers(data);
   };
 
   const onClean = () => {
@@ -31,9 +36,9 @@ export default function Customers() {
             onClean={onClean}
             searchDescription="Cliente"
           />
-          <NavLink className="btn btn-info" to="/subscribers">
+          <button className="btn btn-info" onClick={handleSearchSubscribers}>
             Abonados
-          </NavLink>
+          </button>
         </div>
         <div className="col-12">
           <CustomersList

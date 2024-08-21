@@ -9,6 +9,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/outline";
 import { capitalize } from "../../utils/tools";
+import { BuildingOffice2Icon } from "@heroicons/react/24/solid";
 
 export default function SideBarCommon() {
   const { user, logoutUserContext } = useContext(UserContext);
@@ -34,6 +35,11 @@ export default function SideBarCommon() {
       name: "Clientes",
       to: "customers",
       icon: UserGroupIcon,
+    },
+    {
+      name: "Abonados",
+      to: "subscribers",
+      icon: BuildingOffice2Icon,
     },
   ];
 

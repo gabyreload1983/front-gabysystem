@@ -215,3 +215,5 @@ export const formatProductSerie = (product) => {
     : product.purchase_date_s;
   return product;
 };
+
+export const isSubscriber = (subscriber) => subscriber.condicion === 30;
