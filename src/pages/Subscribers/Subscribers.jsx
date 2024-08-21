@@ -1,39 +1,42 @@
-import { useEffect, useState } from "react";
-import CustomersList from "../Customers/CustomersList";
-import { getSubscribers } from "../../utils/data";
-import { useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
+import {
+  ArrowPathRoundedSquareIcon,
+  ListBulletIcon,
+} from "@heroicons/react/24/solid";
+import { validateUserRole } from "../../utils/validation";
+import { useContext } from "react";
+import { UserContext } from "../../context/userContext";
 
 export default function Subscribers() {
-  const [subscribers, setSubscribers] = useState(null);
-  const navigate = useNavigate();
-
-  const handleSelected = (subscriber) => {
-    navigate(`/subscribers/${subscriber.codigo}`);
-  };
-
-  const getData = async () => {
-    const data = await getSubscribers();
-    setSubscribers(data);
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const { user } = useContext(UserContext);
 
   return (
-    <div className="container">
-      <h2 className="text-center py-3">
-        ABONADOS
-        <span className="ms-2 bg-info rounded-pill p-2">
-          {subscribers?.length}
-        </span>
-      </h2>
-      {subscribers && (
-        <CustomersList
-          customers={subscribers}
-          onHandleCustomerSelected={handleSelected}
-        />
-      )}
+    <div className="container-fluid">
+      <div className="row">
+        <div className="col-3">
+          <div className="d-flex flex-row text-white bg-dark m-2 rounded-2">
+            <NavLink
+              className="navLink d-flex flex-fill justify-content-center align-items-center gap-2 p-2"
+              to="list"
+            >
+              <ListBulletIcon className="icon" />
+              LISTA
+            </NavLink>
+            {validateUserRole(user, "premium") && (
+              <NavLink
+                className="navLink d-flex flex-fill justify-content-center align-items-center gap-2 p-2"
+                to="add-remove"
+              >
+                <ArrowPathRoundedSquareIcon className="icon" />
+                AGREGAR / QUITAR
+              </NavLink>
+            )}
+          </div>
+        </div>
+        <div className="col-12">
+          <Outlet />
+        </div>
+      </div>
     </div>
   );
 }

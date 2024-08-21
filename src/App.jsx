@@ -39,6 +39,8 @@ import Rma from "./pages/RMA/Rma";
 import SearchSerie from "./components/Products/SearchSerie";
 import Subscribers from "./pages/Subscribers/Subscribers";
 import SubscriberDetail from "./pages/Subscribers/SubscriberDetail";
+import SubscriberList from "./pages/Subscribers/SubscriberList";
+import SubscriberAddRemove from "./pages/Subscribers/SubscriberAddRemove";
 
 function App() {
   return (
@@ -57,8 +59,12 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="summaries" element={<Summaries />} />
             <Route path="rma" element={<Rma />} />
-            <Route path="subscribers/:id" element={<SubscriberDetail />} />
-            <Route path="subscribers" element={<Subscribers />} />
+
+            <Route path="subscribers" element={<Subscribers />}>
+              <Route path="detail/:id" element={<SubscriberDetail />} />
+              <Route path="list" element={<SubscriberList />} />
+              <Route path="add-remove" element={<SubscriberAddRemove />} />
+            </Route>
 
             <Route path="customers" element={<Customers />} />
             <Route

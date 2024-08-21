@@ -191,6 +191,14 @@ export const getSubscribers = async () => {
   return response.payload;
 };
 
+export const addSubscriber = async () => {
+  console.log("ADD");
+};
+
+export const removeSubscriber = async () => {
+  console.log("REMOVE");
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(

@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { getCustomer } from "../../utils/data";
 import { useEffect, useState } from "react";
+import { isSubscriber } from "../../utils/tools";
 
 export default function SubscriberDetail() {
   const { id } = useParams();
@@ -8,6 +9,7 @@ export default function SubscriberDetail() {
 
   const getData = async () => {
     const data = await getCustomer({ code: id });
+    if (!isSubscriber(data[0])) return;
     setSubscriber(data[0]);
   };
 
@@ -22,8 +24,8 @@ export default function SubscriberDetail() {
           <h2 className="text-center">
             {subscriber.codigo} - {subscriber.nombre}
           </h2>
-          <p>Equipos:</p>
-          <p>Servidores:</p>
+          <p>Servidores: 2</p>
+          <p>Equipos: 10</p>
         </div>
       )}
     </div>

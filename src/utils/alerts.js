@@ -55,6 +55,7 @@ export const SwalWaiting = async (message) => {
 
 export const SwalQuestion = async (questionMessage = "Confirmar??") => {
   const response = await Swal.fire({
+    icon: "question",
     text: `${questionMessage}?`,
     showCancelButton: true,
     confirmButtonText: "Aceptar",
