@@ -31,6 +31,7 @@ import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
 import { SwalQuestion, SwalToast } from "../../../utils/alerts";
 import {
+  formatDate,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderState,
@@ -132,7 +133,7 @@ export default function ServiceWorkDetail() {
     <>
       {order && (
         <div className="row justify-content-center px-3 text-white mt-3">
-          <div className="col-12 col-lg-8 border text-center rounded p-2 bg-dark">
+          <div className="col-12 border text-center rounded p-2 bg-dark">
             {loading && <Loading />}
             <p
               className={`${getOrderTierBackground(
@@ -165,11 +166,11 @@ export default function ServiceWorkDetail() {
                 Tecnico: {order.tecnico}
               </p>
             </div>
-            <div className="row text-center gap-3 p-0 m-0 mb-3">
+            <div className="row gap-3 p-0 m-0 mb-3">
               <div
                 className={`${getOrderStateBackground(
                   order.estado
-                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+                )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
                   Estado {getOrderState(order.estado)}
@@ -178,7 +179,7 @@ export default function ServiceWorkDetail() {
               <div
                 className={`${getOrderDiagnosisBackground(
                   order.diag
-                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+                )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
                   Diagnostico {getOrderDiagnosis(order.diag)}
@@ -187,17 +188,22 @@ export default function ServiceWorkDetail() {
               <div
                 className={`${getOrderUbicationBackground(
                   order.ubicacion
-                )} col-12  m-0 px-0 py-1 col-lg rounded`}
+                )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
-                  Ubicacion {getOrderUbication(order.ubicacion)}
+                  {getOrderUbication(order.ubicacion)}
+                  {getOrderUbication(order.ubicacion) === "ENTREGADO" && (
+                    <p className="m-0">
+                      {formatDate(order.egresado)} - {order.opcional}
+                    </p>
+                  )}
                 </span>
               </div>
               {order.invoice && (
                 <div
                   className={`${getOrderUbicationBackground(
                     order.ubicacion
-                  )} col-12  m-0 px-0 py-1 col-lg rounded`}
+                  )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
                 >
                   <span className="m-0">{order.invoice}</span>
                 </div>
