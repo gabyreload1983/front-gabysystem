@@ -13,14 +13,14 @@ export default function Subscribers() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <div className="col-3">
+        <div className="col-12 col-lg-8">
           <div className="d-flex flex-row text-white bg-dark m-2 rounded-2">
             <NavLink
               className="navLink d-flex flex-fill justify-content-center align-items-center gap-2 p-2"
               to="list"
             >
               <ListBulletIcon className="icon" />
-              LISTA
+              <p className="d-none d-xl-block m-0">LISTA</p>
             </NavLink>
             {validateUserRole(user, "premium") && (
               <NavLink
@@ -28,7 +28,7 @@ export default function Subscribers() {
                 to="add-remove"
               >
                 <ArrowPathRoundedSquareIcon className="icon" />
-                AGREGAR / QUITAR
+                <p className="d-none d-xl-block m-0">AGREGAR / QUITAR</p>
               </NavLink>
             )}
           </div>
