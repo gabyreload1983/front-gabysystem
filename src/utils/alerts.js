@@ -62,3 +62,29 @@ export const SwalQuestion = async (questionMessage = "Confirmar??") => {
   });
   return response.isConfirmed;
 };
+
+export const SwalActionConfirmWithText = async (
+  valueToCompare,
+  text,
+  inputLabel
+) => {
+  const { isConfirmed, value } = await Swal.fire({
+    icon: "warning",
+    title: "ATENCION!!!",
+    text,
+    input: "text",
+    inputLabel,
+    showCancelButton: true,
+    inputValidator: (value) => {
+      if (!value) {
+        return "Debe ingresar el valor solicitado!";
+      }
+      if (value !== valueToCompare) {
+        return "Valor incorrecto";
+      }
+    },
+    confirmButtonText: "Aceptar",
+  });
+
+  return isConfirmed;
+};

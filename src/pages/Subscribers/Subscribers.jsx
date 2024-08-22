@@ -1,8 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import {
-  ArrowPathRoundedSquareIcon,
-  ListBulletIcon,
-} from "@heroicons/react/24/solid";
+import { ListBulletIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { validateUserRole } from "../../utils/validation";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
@@ -25,10 +22,10 @@ export default function Subscribers() {
             {validateUserRole(user, "premium") && (
               <NavLink
                 className="navLink d-flex flex-fill justify-content-center align-items-center gap-2 p-2"
-                to="add-remove"
+                to="add"
               >
-                <ArrowPathRoundedSquareIcon className="icon" />
-                <p className="d-none d-xl-block m-0">AGREGAR / QUITAR</p>
+                <PlusCircleIcon className="icon" />
+                <p className="d-none d-xl-block m-0">AGREGAR</p>
               </NavLink>
             )}
           </div>

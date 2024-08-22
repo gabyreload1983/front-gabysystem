@@ -191,12 +191,23 @@ export const getSubscribers = async () => {
   return response.payload;
 };
 
-export const addSubscriber = async () => {
-  console.log("ADD");
+export const addSubscriber = async (code) => {
+  const response = await putToApi(`${API_URL}/api/customers/subscribers/add`, {
+    code,
+  });
+  if (!response) return;
+  return response;
 };
 
-export const removeSubscriber = async () => {
-  console.log("REMOVE");
+export const removeSubscriber = async (code) => {
+  const response = await putToApi(
+    `${API_URL}/api/customers/subscribers/remove`,
+    {
+      code,
+    }
+  );
+  if (!response) return;
+  return response;
 };
 
 // PRODUCTS

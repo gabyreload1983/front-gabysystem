@@ -40,7 +40,7 @@ import SearchSerie from "./components/Products/SearchSerie";
 import Subscribers from "./pages/Subscribers/Subscribers";
 import SubscriberDetail from "./pages/Subscribers/SubscriberDetail";
 import SubscriberList from "./pages/Subscribers/SubscriberList";
-import SubscriberAddRemove from "./pages/Subscribers/SubscriberAddRemove";
+import SubscriberAdd from "./pages/Subscribers/SubscriberAdd";
 
 function App() {
   return (
@@ -63,7 +63,7 @@ function App() {
             <Route path="subscribers" element={<Subscribers />}>
               <Route path="detail/:id" element={<SubscriberDetail />} />
               <Route path="list" element={<SubscriberList />} />
-              <Route path="add-remove" element={<SubscriberAddRemove />} />
+              <Route path="add" element={<SubscriberAdd />} />
             </Route>
 
             <Route path="customers" element={<Customers />} />
