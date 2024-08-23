@@ -1,16 +1,14 @@
 import { useState } from "react";
 import Search from "../../components/Search";
-import {
-  addSubscriber,
-  getCustomersByDescription,
-  removeSubscriber,
-} from "../../utils/data";
+import { addSubscriber, getCustomersByDescription } from "../../utils/data";
 import { isSubscriber } from "../../utils/tools";
-import { MinusCircleIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
-import { SwalQuestion } from "../../utils/alerts";
+import { CheckBadgeIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
+import { SwalQuestion, SwalToast } from "../../utils/alerts";
+import { useNavigate } from "react-router-dom";
 
-export default function SubscriberAddRemove() {
+export default function SubscriberAdd() {
   const [customers, setCustomers] = useState([]);
+  const navigate = useNavigate();
 
   const onSearch = async (description) => {
     const response = await getCustomersByDescription(description);
@@ -26,15 +24,15 @@ export default function SubscriberAddRemove() {
       `Agregar a ${customer.nombre} como ABONADO???`
     );
     if (!confirm) return;
-    addSubscriber();
+    const response = await addSubscriber(customer.codigo);
+    if (response?.status === "success") {
+      await SwalToast("Se grago abonado!", 500);
+      navigate(`/subscribers/detail/${customer.codigo}`);
+    }
   };
 
-  const handleRemove = async (customer) => {
-    const confirm = await SwalQuestion(
-      `QUITAR a ${customer.nombre} como ABONADO???`
-    );
-    if (!confirm) return;
-    removeSubscriber();
+  const handleCheck = async (customer) => {
+    navigate(`/subscribers/detail/${customer.codigo}`);
   };
 
   return (
@@ -71,10 +69,10 @@ export default function SubscriberAddRemove() {
                       <td>{customer.telefono}</td>
                       <td>
                         {isSubscriber(customer) ? (
-                          <MinusCircleIcon
-                            fill="red"
+                          <CheckBadgeIcon
+                            fill="blue"
                             className="icon cursor-pointer"
-                            onClick={() => handleRemove(customer)}
+                            onClick={() => handleCheck(customer)}
                           />
                         ) : (
                           <PlusCircleIcon
