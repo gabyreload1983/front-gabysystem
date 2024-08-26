@@ -28,7 +28,7 @@ export default function SubscriberDetail() {
     if (!confirm) return;
 
     const response = await removeSubscriber(subscriber.codigo);
-    if (response.status === "success") {
+    if (response?.status === "success") {
       await SwalToast("Se quito abondo!", 500);
       navigate("/subscribers/list");
     }

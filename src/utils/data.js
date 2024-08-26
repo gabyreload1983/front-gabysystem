@@ -185,8 +185,14 @@ export const getCustomersByDescription = async (description) => {
   return response.payload;
 };
 
-export const getSubscribers = async () => {
+export const getSubscribersFromUrbano = async () => {
   const response = await getFromApi(`${API_URL}/api/customers/subscribers`);
+  if (!response) return;
+  return response.payload;
+};
+
+export const getSubscribers = async () => {
+  const response = await getFromApi(`${API_URL}/api/subscribers`);
   if (!response) return;
   return response.payload;
 };
@@ -201,7 +207,7 @@ export const addSubscriber = async (code) => {
 
 export const removeSubscriber = async (code) => {
   const response = await putToApi(
-    `${API_URL}/api/customers/subscribers/remove`,
+    `${API_URL}/api/subscribers/remove-subscription`,
     {
       code,
     }
