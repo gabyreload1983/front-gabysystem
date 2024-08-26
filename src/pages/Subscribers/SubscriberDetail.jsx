@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getCustomer, removeSubscriber } from "../../utils/data";
 import { useContext, useEffect, useState } from "react";
 import { isSubscriber } from "../../utils/tools";
-import { MinusCircleIcon } from "@heroicons/react/24/solid";
 import { SwalActionConfirmWithText, SwalToast } from "../../utils/alerts";
 import { UserContext } from "../../context/userContext";
 import { validateUserRole } from "../../utils/validation";
