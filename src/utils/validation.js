@@ -93,10 +93,14 @@ export const validateSerieMatchProduct = async (product, serie) => {
   const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);
   if (!response) return;
 
-  if (response.payload.length) {
-    const productFind = response.payload[0];
-    if (product.codigo !== productFind.codigo) {
-      await SwalError(`El serie pertenece al producto ${productFind.codigo}`);
+  if (response?.payload) {
+    const productFind = response.payload;
+
+    if (product.codigo !== productFind.code) {
+      await SwalError(
+        `El serie pertenece al producto 
+        ${productFind.code} - ${productFind.description}`
+      );
       return false;
     }
   }
