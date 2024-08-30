@@ -197,6 +197,12 @@ export const getSubscribers = async () => {
   return response.payload;
 };
 
+export const getSubscriber = async ({ code }) => {
+  const response = await getFromApi(`${API_URL}/api/subscribers/${code}`);
+  if (!response) return;
+  return response.payload;
+};
+
 export const addSubscriber = async (code) => {
   const response = await postToApi(`${API_URL}/api/subscribers`, {
     code,
