@@ -1,8 +1,11 @@
 import { useState } from "react";
 import CustomersList from "./CustomersList";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Search from "../../components/Search";
-import { getCustomersByDescription, getSubscribers } from "../../utils/data";
+import {
+  getCustomersByDescription,
+  getSubscribersFromUrbano,
+} from "../../utils/data";
 
 export default function Customers() {
   const [customers, setCustomers] = useState([]);
@@ -15,7 +18,7 @@ export default function Customers() {
   };
 
   const handleSearchSubscribers = async () => {
-    const data = await getSubscribers();
+    const data = await getSubscribersFromUrbano();
     setCustomers(data);
   };
 

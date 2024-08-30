@@ -12,7 +12,7 @@ export default function SubscriberList() {
   };
 
   const handleCustomerSelected = async (subscriber) => {
-    navigate(`/subscribers/detail/${subscriber.codigo}`);
+    navigate(`/subscribers/detail/${subscriber.code}`);
   };
 
   useEffect(() => {
@@ -41,16 +41,16 @@ export default function SubscriberList() {
           {subscribers?.length > 0 &&
             subscribers.map((subscriber, index) => (
               <tr
-                key={subscriber.codigo}
+                key={subscriber.code}
                 onClick={() => handleCustomerSelected(subscriber)}
                 className="cursor-pointer"
               >
                 <td># {index + 1}</td>
-                <td>{subscriber.codigo}</td>
-                <td>{subscriber.nombre}</td>
+                <td>{subscriber.code}</td>
+                <td>{subscriber.name}</td>
                 <td>{subscriber.mail}</td>
-                <td>{subscriber.direccion}</td>
-                <td>{subscriber.telefono}</td>
+                <td>{subscriber.address}</td>
+                <td>{subscriber.phone}</td>
                 <td>{10}</td>
               </tr>
             ))}

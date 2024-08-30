@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getCustomer, removeSubscriber } from "../../utils/data";
+import { getCustomer, getSubscriber, removeSubscriber } from "../../utils/data";
 import { useContext, useEffect, useState } from "react";
 import { isSubscriber } from "../../utils/tools";
-import { MinusCircleIcon } from "@heroicons/react/24/solid";
 import { SwalActionConfirmWithText, SwalToast } from "../../utils/alerts";
 import { UserContext } from "../../context/userContext";
 import { validateUserRole } from "../../utils/validation";
@@ -14,22 +13,22 @@ export default function SubscriberDetail() {
   const navigate = useNavigate();
 
   const getData = async () => {
-    const data = await getCustomer({ code: id });
-    if (!isSubscriber(data)) return;
+    const data = await getSubscriber({ code: id });
+    if (!data) return;
     setSubscriber(data);
   };
 
   const handleRemove = async (subscriber) => {
     const confirm = await SwalActionConfirmWithText(
-      subscriber.codigo,
+      subscriber.code,
       "Esta seguro de quitar el abono???",
       "Ingrese el codigo de cliente para confirmar"
     );
 
     if (!confirm) return;
 
-    const response = await removeSubscriber(subscriber.codigo);
-    if (response.status === "success") {
+    const response = await removeSubscriber(subscriber.code);
+    if (response?.status === "success") {
       await SwalToast("Se quito abondo!", 500);
       navigate("/subscribers/list");
     }
@@ -44,7 +43,7 @@ export default function SubscriberDetail() {
       {subscriber && (
         <div className="row bg-dark text-white mt-2">
           <h2 className="text-center">
-            {subscriber.codigo} - {subscriber.nombre}
+            {subscriber.code} - {subscriber.name}
           </h2>
           <p>Servidores: 2</p>
           <p>Equipos: 10</p>
