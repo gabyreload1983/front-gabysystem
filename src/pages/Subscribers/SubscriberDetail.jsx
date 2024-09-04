@@ -1,16 +1,16 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { getCustomer, getSubscriber, removeSubscriber } from "../../utils/data";
-import { useContext, useEffect, useState } from "react";
-import { isSubscriber } from "../../utils/tools";
-import { SwalActionConfirmWithText, SwalToast } from "../../utils/alerts";
-import { UserContext } from "../../context/userContext";
-import { validateUserRole } from "../../utils/validation";
+import { NavLink, useParams } from "react-router-dom";
+import { getSubscriber } from "../../utils/data";
+import { useEffect, useState } from "react";
+import SubscriberEquipmentCard from "../../components/Subscriber/SubscriberEquipmentCard";
+import {
+  filterEquipmentType,
+  getQuantityOfEquipmentType,
+} from "../../utils/tools";
 
 export default function SubscriberDetail() {
-  const { user } = useContext(UserContext);
   const { id } = useParams();
   const [subscriber, setSubscriber] = useState(null);
-  const navigate = useNavigate();
+  const [equipments, setEquipments] = useState([]);
 
   const getData = async () => {
     const data = await getSubscriber({ code: id });
@@ -18,20 +18,9 @@ export default function SubscriberDetail() {
     setSubscriber(data);
   };
 
-  const handleRemove = async (subscriber) => {
-    const confirm = await SwalActionConfirmWithText(
-      subscriber.code,
-      "Esta seguro de quitar el abono???",
-      "Ingrese el codigo de cliente para confirmar"
-    );
-
-    if (!confirm) return;
-
-    const response = await removeSubscriber(subscriber.code);
-    if (response?.status === "success") {
-      await SwalToast("Se quito abondo!", 500);
-      navigate("/subscribers/list");
-    }
+  const handleFilterEquipmentType = (type) => {
+    const filterEquipments = filterEquipmentType(subscriber, type);
+    setEquipments(filterEquipments);
   };
 
   useEffect(() => {
@@ -41,21 +30,71 @@ export default function SubscriberDetail() {
   return (
     <div className="container">
       {subscriber && (
-        <div className="row bg-dark text-white mt-2">
-          <h2 className="text-center">
-            {subscriber.code} - {subscriber.name}
-          </h2>
-          <p>Servidores: 2</p>
-          <p>Equipos: 10</p>
-          <div className="col-12 my-3 text-end">
-            {validateUserRole(user, "premium") && (
-              <button
-                onClick={() => handleRemove(subscriber)}
-                className="btn btn-danger"
+        <div className="row bg-dark text-white mt-2 p-3">
+          <div className="col-12">
+            <h2 className="text-center">
+              {subscriber.code} - {subscriber.name}
+              <NavLink
+                to={`/subscribers/edit/${subscriber.code}`}
+                className="btn btn-info btn-sm ms-2"
               >
-                QUITAR
+                EDITAR
+              </NavLink>
+            </h2>
+          </div>
+          <div className="col-12">
+            <h3>TOTAL DE EQUIPOS: {subscriber.equipments.length}</h3>
+          </div>
+          <div className="col-12">
+            <div class="btn-group mb-3" role="group">
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={() => handleFilterEquipmentType("SERVER")}
+              >
+                SERVIDORES
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {getQuantityOfEquipmentType(subscriber, "SERVER")}
+                </span>
               </button>
-            )}
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={() => handleFilterEquipmentType("PC")}
+              >
+                PC ESCRITORIO
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {getQuantityOfEquipmentType(subscriber, "PC")}
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={() => handleFilterEquipmentType("NOTEBOOK")}
+              >
+                NOTEBOOKS
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {getQuantityOfEquipmentType(subscriber, "NOTEBOOK")}
+                </span>
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                onClick={() => handleFilterEquipmentType("PRINTER")}
+              >
+                IMPRESORAS
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {getQuantityOfEquipmentType(subscriber, "PRINTER")}
+                </span>
+              </button>
+            </div>
+            {equipments.length > 0 &&
+              equipments.map((equipment) => (
+                <SubscriberEquipmentCard
+                  key={equipment.mac}
+                  equipment={equipment}
+                />
+              ))}
           </div>
         </div>
       )}
