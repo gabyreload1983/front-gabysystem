@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { getSubscribers } from "../../utils/data";
 import { useEffect, useState } from "react";
+import { getSubscribers } from "../../../utils/data";
 
 export default function SubscriberList() {
   const [subscribers, setSubscribers] = useState(null);

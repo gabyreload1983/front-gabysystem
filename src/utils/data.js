@@ -211,13 +211,21 @@ export const addSubscriber = async (code) => {
   return response;
 };
 
-export const removeSubscriber = async (code) => {
+export const cancelSubscription = async (code) => {
   const response = await putToApi(
     `${API_URL}/api/subscribers/remove-subscription`,
     {
       code,
     }
   );
+  if (!response) return;
+  return response;
+};
+
+export const updateSubscriber = async (code, subscriberUpdate) => {
+  const response = await putToApi(`${API_URL}/api/subscribers/${code}`, {
+    subscriberUpdate,
+  });
   if (!response) return;
   return response;
 };

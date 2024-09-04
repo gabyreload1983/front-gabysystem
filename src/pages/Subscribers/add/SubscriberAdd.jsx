@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Search from "../../components/Search";
-import { addSubscriber, getCustomersByDescription } from "../../utils/data";
-import { isSubscriber } from "../../utils/tools";
+import Search from "../../../components/Search";
+import { addSubscriber, getCustomersByDescription } from "../../../utils/data";
+import { isSubscriber } from "../../../utils/tools";
 import { CheckBadgeIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
-import { SwalQuestion, SwalToast } from "../../utils/alerts";
+import { SwalQuestion, SwalToast } from "../../../utils/alerts";
 import { useNavigate } from "react-router-dom";
 
 export default function SubscriberAdd() {
