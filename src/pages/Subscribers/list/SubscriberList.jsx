@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { getSubscribers } from "../../utils/data";
 import { useEffect, useState } from "react";
+import { getSubscribers } from "../../../utils/data";
 
 export default function SubscriberList() {
   const [subscribers, setSubscribers] = useState(null);
@@ -48,10 +48,10 @@ export default function SubscriberList() {
                 <td># {index + 1}</td>
                 <td>{subscriber.code}</td>
                 <td>{subscriber.name}</td>
-                <td>{subscriber.mail}</td>
+                <td>{subscriber.email}</td>
                 <td>{subscriber.address}</td>
                 <td>{subscriber.phone}</td>
-                <td>{10}</td>
+                <td>{subscriber.equipments?.length}</td>
               </tr>
             ))}
         </tbody>

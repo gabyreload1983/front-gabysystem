@@ -217,3 +217,12 @@ export const formatProductSerie = (product) => {
 };
 
 export const isSubscriber = (subscriber) => subscriber.condicion === 30;
+
+export const filterEquipmentType = (subscriber, type) =>
+  subscriber.equipments.filter(
+    (equipment) => equipment.equipment_type === type
+  );
+
+export const getQuantityOfEquipmentType = (subscriber, type) =>
+  subscriber.equipments.filter((equipment) => equipment.equipment_type === type)
+    .length;

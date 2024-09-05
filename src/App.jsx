@@ -38,9 +38,10 @@ import EditCustomerServiceWork from "./pages/ServiceWork/edit/customer/EditCusto
 import Rma from "./pages/RMA/Rma";
 import SearchSerie from "./components/Products/SearchSerie";
 import Subscribers from "./pages/Subscribers/Subscribers";
-import SubscriberDetail from "./pages/Subscribers/SubscriberDetail";
-import SubscriberList from "./pages/Subscribers/SubscriberList";
-import SubscriberAdd from "./pages/Subscribers/SubscriberAdd";
+import SubscriberDetail from "./pages/Subscribers/detail/SubscriberDetail";
+import SubscriberList from "./pages/Subscribers/list/SubscriberList";
+import SubscriberAdd from "./pages/Subscribers/add/SubscriberAdd";
+import SubscriberAddEquipment from "./pages/Subscribers/edit/add/SubscriberAddEquipment";
 
 function App() {
   return (
@@ -61,6 +62,10 @@ function App() {
             <Route path="rma" element={<Rma />} />
 
             <Route path="subscribers" element={<Subscribers />}>
+              <Route
+                path="edit/add-equipment/:id"
+                element={<SubscriberAddEquipment />}
+              />
               <Route path="detail/:id" element={<SubscriberDetail />} />
               <Route path="list" element={<SubscriberList />} />
               <Route path="add" element={<SubscriberAdd />} />
