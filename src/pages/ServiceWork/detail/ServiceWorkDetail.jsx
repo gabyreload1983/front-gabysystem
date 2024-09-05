@@ -32,6 +32,7 @@ import SendWhatsapp from "../../../components/SendWhatsapp";
 import { SwalQuestion, SwalToast } from "../../../utils/alerts";
 import {
   formatDate,
+  getinvoicesBalanceBackground,
   getOrderDiagnosis,
   getOrderDiagnosisBackground,
   getOrderState,
@@ -201,8 +202,8 @@ export default function ServiceWorkDetail() {
               </div>
               {order.invoice && (
                 <div
-                  className={`${getOrderUbicationBackground(
-                    order.ubicacion
+                  className={`${getinvoicesBalanceBackground(
+                    order.balance
                   )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
                 >
                   <span className="m-0">{order.invoice}</span>
