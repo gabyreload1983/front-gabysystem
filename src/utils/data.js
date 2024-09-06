@@ -14,7 +14,6 @@ import { SwalError, SwalSuccess } from "./alerts";
 export const getServiceWork = async ({ nrocompro }) => {
   const path = `${API_URL}/api/orders/${nrocompro}`;
   const data = await getFromApi(path);
-  console.log(data);
 
   if (!data) return;
   return data.payload;
