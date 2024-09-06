@@ -128,6 +128,9 @@ export const getOrderUbicationBackground = (ubication) => {
   if (ubication === 22) return "bg-success";
 };
 
+export const getinvoicesBalanceBackground = (balance) =>
+  balance > 1 ? "bg-danger" : "bg-success";
+
 export const isTurno = (falla) => falla.toLowerCase().includes("turno");
 
 export const getStatisticsRepairPending = ({ data }) => {
