@@ -23,13 +23,14 @@ import {
   closeServiceWork,
   getServiceWork,
   saveServiceWork,
+  sendServiceWorkPdf,
   serviceWorkPutFree,
   serviceWorkPutOut,
 } from "../../../utils/data";
 import Diagnosis from "../../../components/ServiceWork/Diagnosis";
 import Fail from "../../../components/ServiceWork/Fail";
 import SendWhatsapp from "../../../components/SendWhatsapp";
-import { SwalQuestion, SwalToast } from "../../../utils/alerts";
+import { SwalQuestion, SwalSuccess, SwalToast } from "../../../utils/alerts";
 import {
   formatDate,
   getinvoicesBalanceBackground,
@@ -45,19 +46,19 @@ import {
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
-  const [order, setOrder] = useState(null);
+  const [serviceWork, setServiceWork] = useState(null);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const getData = async () => {
     const data = await getServiceWork({ nrocompro: id });
-    setOrder(data);
+    setServiceWork(data);
   };
 
   const serviceWorkOut = async (nrocompro) => {
     const confirm = await SwalQuestion(
-      `Queres dar salida a la orden ${order.nrocompro}?`
+      `Queres dar salida a la orden ${serviceWork.nrocompro}?`
     );
     if (!confirm) return;
 
@@ -76,13 +77,13 @@ export default function ServiceWorkDetail() {
 
   const serviceWorkFree = async (nrocompro) => {
     const confirm = await SwalQuestion(
-      `Queres liberar la orden ${order.nrocompro}?`
+      `Queres liberar la orden ${serviceWork.nrocompro}?`
     );
     if (!confirm) return;
 
     setLoading(true);
 
-    const response = await serviceWorkPutFree(order, user);
+    const response = await serviceWorkPutFree(serviceWork, user);
 
     setLoading(false);
     if (response.status === "success") {
@@ -93,12 +94,12 @@ export default function ServiceWorkDetail() {
 
   const handleSaveServiceWork = async (diagnosis) => {
     const response = await saveServiceWork({
-      nrocompro: order.nrocompro,
+      nrocompro: serviceWork.nrocompro,
       diagnosis,
     });
 
     if (!response) return;
-    SwalToast(`Orden ${order.nrocompro} actualizada!`, 1000);
+    SwalToast(`Orden ${serviceWork.nrocompro} actualizada!`, 1000);
   };
 
   const handleCloseServiceWork = async ({
@@ -111,19 +112,28 @@ export default function ServiceWorkDetail() {
       diagnosisStatus,
       notification,
       cost,
-      order,
+      order: serviceWork,
       user,
     });
     setLoading(false);
     if (!response) return;
     if (response.status === "success") {
-      SwalToast(`Se cerro orden ${order.nrocompro}!`, 1000);
+      SwalToast(`Se cerro orden ${serviceWork.nrocompro}!`, 1000);
       getData();
     }
   };
 
   const handleOnChange = (diagnosis) => {
-    setOrder((prev) => ({ ...prev, diagnostico: diagnosis }));
+    setServiceWork((prev) => ({ ...prev, diagnostico: diagnosis }));
+  };
+
+  const handleSendPdf = async () => {
+    const response = await sendServiceWorkPdf({
+      nrocompro: serviceWork.nrocompro,
+    });
+    if (!response) return;
+    SwalSuccess("Se envio orden!");
+    getData();
   };
 
   useEffect(() => {
@@ -132,129 +142,138 @@ export default function ServiceWorkDetail() {
 
   return (
     <>
-      {order && (
+      {serviceWork && (
         <div className="row justify-content-center px-3 text-white mt-3">
           <div className="col-12 border text-center rounded p-2 bg-dark">
             {loading && <Loading />}
             <p
               className={`${getOrderTierBackground(
-                order.prioridad
+                serviceWork.prioridad
               )} m-0 rounded px-2 py-1 text-center text-xs text-gray-950`}
             >
-              Tier {getOrderTier(order.prioridad)}
+              Tier {getOrderTier(serviceWork.prioridad)}
             </p>
             <div className="d-flex justify-content-center align-items-center gap-2">
-              <strong className="fs-3">{order.nrocompro}</strong>
+              <strong className="fs-3">{serviceWork.nrocompro}</strong>
               {validateUserRole(user, "premium", "seller") && (
-                <NavLink to={`/servicework/edit/${order.nrocompro}`}>
+                <NavLink to={`/servicework/edit/${serviceWork.nrocompro}`}>
                   <PencilSquareIcon className="icon" />
                 </NavLink>
               )}
             </div>
             <p className="fs-3 fw-semibold m-0">
-              {order.codigo} - {order.nombre}
+              {serviceWork.codigo} - {serviceWork.nombre}
             </p>
             <div className="d-flex justify-content-center align-items-center gap-3 mb-3">
-              <p className="m-0">Fecha: {order.ingresado.slice(0, 10)}</p>
-              <p className="m-0">Telefono: {order.telefono}</p>
-              <SendWhatsapp celphone={order.telefono} />
+              <p className="m-0">Fecha: {serviceWork.ingresado.slice(0, 10)}</p>
+              <p className="m-0">Telefono: {serviceWork.telefono}</p>
+              <SendWhatsapp celphone={serviceWork.telefono} />
             </div>
             <div className="d-flex justify-content-center gap-3 mb-3">
               <p className="m-0 bg-secondary px-3 rounded">
-                Vendedor: {order.operador}
+                Vendedor: {serviceWork.operador}
               </p>
               <p className="m-0 bg-secondary px-3 rounded">
-                Tecnico: {order.tecnico}
+                Tecnico: {serviceWork.tecnico}
               </p>
             </div>
             <div className="row gap-3 p-0 m-0 mb-3">
               <div
                 className={`${getOrderStateBackground(
-                  order.estado
+                  serviceWork.estado
                 )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
-                  Estado {getOrderState(order.estado)}
+                  Estado {getOrderState(serviceWork.estado)}
                 </span>
               </div>
               <div
                 className={`${getOrderDiagnosisBackground(
-                  order.diag
+                  serviceWork.diag
                 )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
-                  Diagnostico {getOrderDiagnosis(order.diag)}
+                  Diagnostico {getOrderDiagnosis(serviceWork.diag)}
                 </span>
               </div>
               <div
                 className={`${getOrderUbicationBackground(
-                  order.ubicacion
+                  serviceWork.ubicacion
                 )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
               >
                 <span className="m-0">
-                  {getOrderUbication(order.ubicacion)}
-                  {getOrderUbication(order.ubicacion) === "ENTREGADO" && (
+                  {getOrderUbication(serviceWork.ubicacion)}
+                  {getOrderUbication(serviceWork.ubicacion) === "ENTREGADO" && (
                     <p className="m-0">
-                      {formatDate(order.egresado)} - {order.opcional}
+                      {formatDate(serviceWork.egresado)} -{" "}
+                      {serviceWork.opcional}
                     </p>
                   )}
                 </span>
               </div>
-              {order.invoice && (
+              {serviceWork.invoice && (
                 <div
                   className={`${getinvoicesBalanceBackground(
-                    order.balance
+                    serviceWork.balance
                   )} col-12 col-lg rounded d-flex justify-content-center align-items-center`}
                 >
-                  <span className="m-0">{order.invoice}</span>
+                  <span className="m-0">{serviceWork.invoice}</span>
                 </div>
               )}
             </div>
             <div className="d-flex flex-column align-items-center justify-content-between rounded bg-light py-1 text-black">
-              <p className="m-0 fs-5">{order.descart}</p>
-              <p className="m-0">{order.accesorios}</p>
+              <p className="m-0 fs-5">{serviceWork.descart}</p>
+              <p className="m-0">{serviceWork.accesorios}</p>
             </div>
 
-            <Fail fail={order.falla} />
-            {validateEditServiceWork(user, order) ? (
+            <Fail fail={serviceWork.falla} />
+            {validateEditServiceWork(user, serviceWork) ? (
               <TechnicalEdit
-                serviceWork={order}
+                serviceWork={serviceWork}
                 handleSaveServiceWork={handleSaveServiceWork}
                 handleCloseServiceWork={handleCloseServiceWork}
                 handleOnChange={handleOnChange}
               />
             ) : (
-              <Diagnosis diagnosis={order.diagnostico} />
+              <Diagnosis diagnosis={serviceWork.diagnostico} />
             )}
             <div className="col-12 p-2">
-              <ServiceWorkProducts order={order} />
+              <ServiceWorkProducts order={serviceWork} />
             </div>
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
-              <ButtonPdf nrocompro={order.nrocompro} />
-              <ButtonPdf nrocompro={order.nrocompro} customer={true} />
-              {validateSendPdf(user) && <SendPdf nrocompro={order.nrocompro} />}
+              <ButtonPdf nrocompro={serviceWork.nrocompro} />
+              <ButtonPdf nrocompro={serviceWork.nrocompro} customer={true} />
+              {validateSendPdf(user) && (
+                <SendPdf
+                  serviceWork={serviceWork}
+                  handleSendPdf={handleSendPdf}
+                />
+              )}
             </div>
             <div className="col-12 p-2 d-flex gap-2">
-              {validateTakeServiceWork(user, order) && (
+              {validateTakeServiceWork(user, serviceWork) && (
                 <TakeServiceWorkButton
-                  nrocompro={order.nrocompro}
+                  nrocompro={serviceWork.nrocompro}
                   codeTechnical={user.code_technical}
                 />
               )}
-              {validateAddingProducts(user, order) && (
+              {validateAddingProducts(user, serviceWork) && (
                 <NavLink
-                  to={`/servicework/edit/products/${order.nrocompro}`}
+                  to={`/servicework/edit/products/${serviceWork.nrocompro}`}
                   className="w-100 btn btn-info"
                 >
                   AGREGAR ARTICULOS
                 </NavLink>
               )}
-              {validateServiceWorkOut(user, order) && (
-                <ServiceWorkOut order={order} serviceWorkOut={serviceWorkOut} />
+              {validateServiceWorkOut(user, serviceWork) && (
+                <ServiceWorkOut
+                  order={serviceWork}
+                  serviceWorkOut={serviceWorkOut}
+                />
               )}
-              {validateFreeServiceWork(user, order) && (
+              {validateFreeServiceWork(user, serviceWork) && (
                 <ServiceWorkFree
-                  order={order}
+                  order={serviceWork}
                   serviceWorkFree={serviceWorkFree}
                 />
               )}

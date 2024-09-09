@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { sendServiceWorkPdf } from "../../utils/data";
 
-export default function SendPdf({ nrocompro }) {
+export default function SendPdf({ serviceWork, handleSendPdf }) {
   const [loading, setLoading] = useState(false);
 
   const sendPdf = async () => {
     setLoading(true);
-    await sendServiceWorkPdf({ nrocompro });
+    await handleSendPdf();
     setLoading(false);
   };
+
   return (
-    <button onClick={sendPdf} className="btn btn-success">
+    <button
+      onClick={sendPdf}
+      className={`btn btn-${serviceWork.nroenvio ? "success" : "warning"}`}
+      disabled={loading}
+    >
       {loading ? (
         <>
           <span>Enviando... </span>
@@ -20,7 +24,13 @@ export default function SendPdf({ nrocompro }) {
           ></div>
         </>
       ) : (
-        <span>Enviar Orden</span>
+        <>
+          {serviceWork.nroenvio ? (
+            <span>Renviar Orden</span>
+          ) : (
+            <span>Enviar Orden</span>
+          )}
+        </>
       )}
     </button>
   );

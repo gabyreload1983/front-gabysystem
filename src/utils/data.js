@@ -151,13 +151,7 @@ export const createPdfServiceWork = async ({ nrocompro, customer = false }) => {
 
 export const sendServiceWorkPdf = async ({ nrocompro }) => {
   const path = `${API_URL}/api/orders/send/customer-pdf`;
-  const response = await postToApi(path, { nrocompro });
-  if (response.status === "success") {
-    SwalSuccess(response.message);
-  }
-  if (response.status === "error") {
-    SwalError(response.message);
-  }
+  return await postToApi(path, { nrocompro });
 };
 
 // CUSTOMERS
