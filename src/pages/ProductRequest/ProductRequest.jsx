@@ -7,16 +7,21 @@ import {
   getProductRequest,
   removeProductRequest,
 } from "../../utils/data";
+import { sortCodeString, sortItems } from "../../utils/tools";
+import { TABLE_HEADER_PRODUCTS_REQUEST } from "../../constants";
 
 export default function ProductRequest() {
   const [loader, setLoader] = useState(false);
   const [products, setProducts] = useState([]);
+  const [tableHeader, setTableHeaders] = useState(
+    TABLE_HEADER_PRODUCTS_REQUEST
+  );
 
   const getData = async () => {
     setLoader(true);
     const data = await getProductRequest();
     setLoader(false);
-    setProducts(data);
+    setProducts(sortItems(data, "fecha", false));
   };
 
   const handleClean = async () => {
@@ -36,6 +41,28 @@ export default function ProductRequest() {
     SwalToast("Item borrado!", 500);
   };
 
+  const handleSelected = (code) => {
+    const index = tableHeader.findIndex((th) => th.code === code);
+    const newTableHeader = tableHeader.map((th) => {
+      if (th.code === code) {
+        th.selected = true;
+        th.order = !th.order;
+        return th;
+      }
+      th.selected = false;
+      return th;
+    });
+
+    setTableHeaders([...newTableHeader]);
+
+    if (code === "codiart")
+      return setProducts(
+        sortCodeString(products, code, !tableHeader[index].order)
+      );
+
+    setProducts(sortItems(products, code, !tableHeader[index].order));
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -49,7 +76,12 @@ export default function ProductRequest() {
           Limpiar Lista
         </button>
       </div>
-      <ProductRequestList products={products} onHandleRemove={handleRemove} />
+      <ProductRequestList
+        products={products}
+        onHandleRemove={handleRemove}
+        tableHeader={tableHeader}
+        onHandleSelected={handleSelected}
+      />
     </div>
   );
 }

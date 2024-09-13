@@ -43,3 +43,62 @@ export const serviceWorkTemplate = {
   accesories: "",
   priority: "",
 };
+
+export const TABLE_HEADER_PRODUCTS_REQUEST = [
+  {
+    id: 1,
+    name: "FECHA",
+    code: "fecha",
+    styles: "cursor-pointer d-none d-lg-table-cell",
+    selected: true,
+    order: true,
+  },
+  {
+    id: 2,
+    name: "CODIGO",
+    code: "codiart",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 3,
+    name: "DESCRIPCION",
+    code: "descart",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 4,
+    name: "SOLICITO",
+    code: "soliciton",
+    styles: "cursor-pointer d-none d-lg-table-cell",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 5,
+    name: "CLIENTE",
+    code: "nombre",
+    styles: "cursor-pointer d-none d-lg-table-cell",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 6,
+    name: "CANTIDAD",
+    code: "cantidad",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 7,
+    name: "",
+    code: "",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+];
