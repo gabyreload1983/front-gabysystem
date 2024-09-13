@@ -1,18 +1,37 @@
+import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
 import moment from "moment";
 
-export default function ProductRequestList({ products, onHandleRemove }) {
+export default function ProductRequestList({
+  products,
+  onHandleRemove,
+  tableHeader,
+  onHandleSelected,
+}) {
   return (
     <div className="table-responsive">
       <table className="table table-sm table-dark bg-dark">
         <thead>
           <tr>
-            <th className="d-none d-lg-table-cell">FECHA</th>
-            <th>CODIGO</th>
-            <th>DESCRIPCION</th>
-            <th className="d-none d-lg-table-cell">SOLICITO</th>
-            <th className="d-none d-lg-table-cell">CLIENTE</th>
-            <th>CANTIDAD</th>
-            <th></th>
+            {tableHeader.map((th) => {
+              if (!th.name) return <th key={th.id}></th>;
+
+              const icon = th.order ? (
+                <ArrowUpIcon className="iconTable" />
+              ) : (
+                <ArrowDownIcon className="iconTable" />
+              );
+
+              return (
+                <th
+                  key={th.id}
+                  className={th.styles}
+                  onClick={() => onHandleSelected(th.code)}
+                >
+                  {th.name}
+                  {th.selected && icon}
+                </th>
+              );
+            })}
           </tr>
         </thead>
         <tbody>

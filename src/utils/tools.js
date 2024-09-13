@@ -229,3 +229,30 @@ export const filterEquipmentType = (subscriber, type) =>
 export const getQuantityOfEquipmentType = (subscriber, type) =>
   subscriber.equipments.filter((equipment) => equipment.equipment_type === type)
     .length;
+
+export const sortCodeString = (items, sortBy, order) => {
+  const compareAsc = (a, b) => a[sortBy] - b[sortBy];
+  const compareDesc = (a, b) => b[sortBy] - a[sortBy];
+
+  if (order) {
+    return items.toSorted(compareAsc);
+  }
+  return items.toSorted(compareDesc);
+};
+
+export const sortItems = (items, sortBy, order) => {
+  function compareDates(a, b) {
+    if (a[sortBy] === null) a[sortBy] = "";
+    if (b[sortBy] === null) b[sortBy] = "";
+
+    if (a[sortBy] < b[sortBy]) {
+      return order ? -1 : 1;
+    }
+    if (a[sortBy] > b[sortBy]) {
+      return order ? 1 : -1;
+    }
+    return 0;
+  }
+
+  return items.toSorted(compareDates);
+};
