@@ -1,3 +1,5 @@
+import SendWhatsapp from "../../components/SendWhatsapp";
+
 export default function CustomersList({ customers, onHandleCustomerSelected }) {
   return (
     <div className="table-responsive">
@@ -14,16 +16,25 @@ export default function CustomersList({ customers, onHandleCustomerSelected }) {
         <tbody>
           {customers?.length > 0 &&
             customers.map((customer) => (
-              <tr
-                key={customer.codigo}
-                onClick={() => onHandleCustomerSelected(customer)}
-                className="cursor-pointer"
-              >
-                <td>{customer.codigo}</td>
-                <td>{customer.nombre}</td>
+              <tr key={customer.codigo}>
+                <td
+                  onClick={() => onHandleCustomerSelected(customer)}
+                  className="cursor-pointer"
+                >
+                  {customer.codigo}
+                </td>
+                <td
+                  onClick={() => onHandleCustomerSelected(customer)}
+                  className="cursor-pointer"
+                >
+                  {customer.nombre}
+                </td>
                 <td>{customer.mail}</td>
                 <td>{customer.direccion}</td>
-                <td>{customer.telefono}</td>
+                <td className="d-flex">
+                  <SendWhatsapp celphone={customer.telefono} />
+                  <span>{customer.telefono}</span>
+                </td>
               </tr>
             ))}
         </tbody>
