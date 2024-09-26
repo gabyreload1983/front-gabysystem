@@ -32,7 +32,7 @@ export default function SearchProducts({ handleSearchPoducts }) {
   };
 
   const handleSearch = async () => {
-    if (input.length < 3) return;
+    if (input.length < 2) return;
     const response = await searchProduct({ input, searchBy });
     handleSearchPoducts(response);
   };
