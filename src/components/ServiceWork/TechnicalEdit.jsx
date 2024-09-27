@@ -25,10 +25,10 @@ export default function TechnicalEdit({
       let notification = false;
 
       const notificationResponse = await Swal.fire({
-        text: `Enviar notificacion por email?`,
+        text: `Enviar notificacion por email y whatsapp?`,
         showCancelButton: true,
-        cancelButtonText: "Cerrar Sin Notificacion",
-        confirmButtonText: "Cerrar y Enviar Email",
+        cancelButtonText: "Cerrar Sin Notificaciones",
+        confirmButtonText: "Cerrar y Enviar Notificaciones",
         allowOutsideClick: false,
         allowEscapeKey: false,
       });
