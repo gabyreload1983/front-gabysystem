@@ -1,13 +1,9 @@
 FROM node:alpine3.18 as builder
 
-ARG VITE_API_URL 
-
 WORKDIR /app
 COPY package.json .
 RUN npm install
 COPY . .
-
-RUN echo "VITE_API_URL=${VITE_API_URL}" >> .env.production
 
 RUN npm run build
 
