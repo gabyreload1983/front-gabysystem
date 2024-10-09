@@ -80,10 +80,15 @@ export const closeServiceWork = async ({
   return response;
 };
 
-export const takeServiceWork = async ({ nrocompro, codeTechnical }) =>
+export const takeServiceWork = async ({
+  nrocompro,
+  codeTechnical,
+  notification,
+}) =>
   await putToApi(`${API_URL}/api/orders/take`, {
     nrocompro: `${nrocompro}`,
     code_technical: `${codeTechnical}`,
+    notification,
   });
 
 export const updateServideWorkCustomer = async ({ nrocompro, customerId }) => {
