@@ -59,6 +59,7 @@ export const SwalQuestion = async (questionMessage = "Confirmar??") => {
     text: `${questionMessage}?`,
     showCancelButton: true,
     confirmButtonText: "Aceptar",
+    confirmButtonColor: "#ffc107",
   });
   return response.isConfirmed;
 };
