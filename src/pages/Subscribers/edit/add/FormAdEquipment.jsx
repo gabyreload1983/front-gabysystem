@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { isValidMacAddress } from "../../../../utils/validation";
+import { SwalError } from "../../../../utils/alerts";
 
 export default function FormAdEquipment({ onHandleAddEquipment }) {
   const [equipmentForm, setEquipmentForm] = useState({
@@ -15,6 +17,11 @@ export default function FormAdEquipment({ onHandleAddEquipment }) {
     for (const [key, value] of form) {
       newEquipment[key] = value;
     }
+
+    if (!isValidMacAddress(newEquipment.mac)) {
+      return SwalError("Formato de MAC invalido. Ej. 08-00-27-85-E9-9E");
+    }
+
     const response = await onHandleAddEquipment(newEquipment);
     if (response)
       setEquipmentForm({

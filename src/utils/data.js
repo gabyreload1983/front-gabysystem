@@ -229,6 +229,15 @@ export const updateSubscriber = async (code, subscriberUpdate) => {
   return response;
 };
 
+export const addEquipment = async (code, newEquipment) => {
+  const response = await putToApi(`${API_URL}/api/subscribers/add-equipment`, {
+    code,
+    newEquipment,
+  });
+  if (!response) return;
+  return response;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(

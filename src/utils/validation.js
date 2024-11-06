@@ -106,3 +106,17 @@ export const validateSerieMatchProduct = async (product, serie) => {
   }
   return true;
 };
+
+export const MACExists = (subscriber, newEquipment) => {
+  const index = subscriber.equipments.findIndex(
+    (equipment) =>
+      equipment.mac.toUpperCase() === newEquipment.mac.toUpperCase()
+  );
+
+  return index === -1 ? false : true;
+};
+
+export const isValidMacAddress = (mac) => {
+  const macRegex = /^([0-9A-Fa-f]{2}-){5}[0-9A-Fa-f]{2}$/;
+  return macRegex.test(mac);
+};
