@@ -1,5 +1,9 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { cancelSubscription, getSubscriber } from "../../../utils/data";
+import {
+  cancelSubscription,
+  getSubscriber,
+  removeEquipment,
+} from "../../../utils/data";
 import { useContext, useEffect, useState } from "react";
 import SubscriberEquipmentCard from "../../../components/Subscriber/SubscriberEquipmentCard";
 import {
@@ -42,6 +46,13 @@ export default function SubscriberDetail() {
       await SwalToast("Se cancelo abondo!", 500);
       navigate("/subscribers/list");
     }
+  };
+
+  const handleRemoveEquipment = async (equipment, subscriberCode) => {
+    const res = await removeEquipment(equipment, subscriberCode);
+    console.log(equipment);
+    await SwalToast("Se quito equipo!", 500);
+    getData();
   };
 
   useEffect(() => {
@@ -126,6 +137,8 @@ export default function SubscriberDetail() {
                 <SubscriberEquipmentCard
                   key={equipment.mac}
                   equipment={equipment}
+                  subscriberCode={subscriber.code}
+                  onHandleRemoveEquipment={handleRemoveEquipment}
                 />
               ))}
           </div>

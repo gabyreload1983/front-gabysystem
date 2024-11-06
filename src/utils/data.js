@@ -238,6 +238,18 @@ export const addEquipment = async (code, newEquipment) => {
   return response;
 };
 
+export const removeEquipment = async (equipmentToRemove, subscriberCode) => {
+  const response = await putToApi(
+    `${API_URL}/api/subscribers/remove-equipment`,
+    {
+      equipmentToRemove,
+      subscriberCode,
+    }
+  );
+  if (!response) return;
+  return response;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(
