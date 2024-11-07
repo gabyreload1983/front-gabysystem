@@ -3,7 +3,7 @@ import { isValidUUID } from "../../../../utils/validation";
 import { SwalError } from "../../../../utils/alerts";
 import { formatUUID } from "../../../../utils/tools";
 
-export default function FormAdEquipment({ onHandleAddEquipment }) {
+export default function FormAddEquipment({ onHandleAddEquipment }) {
   const [equipmentForm, setEquipmentForm] = useState({
     uuid: "",
     equipment_type: "",

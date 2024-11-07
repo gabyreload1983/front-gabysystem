@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { addEquipment, getSubscriber } from "../../../../utils/data";
 import { SwalError, SwalToast } from "../../../../utils/alerts";
-import FormAdEquipment from "./FormAdEquipment";
+import FormAddEquipment from "./FormAddEquipment";
 import { UUIDExists } from "../../../../utils/validation";
 
 export default function SubscriberAddEquipment() {
@@ -40,7 +40,7 @@ export default function SubscriberAddEquipment() {
             {subscriber.code} - {subscriber.name}
           </h2>
           <div className="col-12 col-md-6">
-            <FormAdEquipment onHandleAddEquipment={handleAddEquipment} />
+            <FormAddEquipment onHandleAddEquipment={handleAddEquipment} />
           </div>
         </div>
       )}
