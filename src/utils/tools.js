@@ -260,4 +260,4 @@ export const sortItems = (items, sortBy, order) => {
   return items.toSorted(compareDates);
 };
 
-export const formatMac = (mac) => mac.replaceAll(":", "-");
+export const formatUUID = (uuid) => uuid.toUpperCase();

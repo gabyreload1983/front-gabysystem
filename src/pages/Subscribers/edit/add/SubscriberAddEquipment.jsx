@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { addEquipment, getSubscriber } from "../../../../utils/data";
 import { SwalError, SwalToast } from "../../../../utils/alerts";
 import FormAdEquipment from "./FormAdEquipment";
-import { MACExists } from "../../../../utils/validation";
+import { UUIDExists } from "../../../../utils/validation";
 
 export default function SubscriberAddEquipment() {
   const { id } = useParams();
@@ -16,8 +16,8 @@ export default function SubscriberAddEquipment() {
   };
 
   const handleAddEquipment = async (newEquipment) => {
-    if (MACExists(subscriber, newEquipment)) {
-      await SwalError("La mac ya existe!!!");
+    if (UUIDExists(subscriber, newEquipment)) {
+      await SwalError("La UUID ya existe!!!");
       return false;
     }
 

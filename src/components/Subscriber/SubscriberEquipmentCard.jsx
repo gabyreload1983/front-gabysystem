@@ -15,7 +15,7 @@ export default function SubscriberEquipmentCard({
   };
   return (
     <div className="bg-secondary rounded p-3 mb-3 d-flex flex-column">
-      <p>MAC: {equipment.mac}</p>
+      <p>UUID: {equipment.uuid}</p>
       <p>TIPO: {equipment.equipment_type}</p>
       <p>NOMBRE: {equipment.name}</p>
       <p>OBSERVACION: {equipment.observation}</p>

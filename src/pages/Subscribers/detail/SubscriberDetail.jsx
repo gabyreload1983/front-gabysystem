@@ -158,7 +158,7 @@ export default function SubscriberDetail() {
             {equipments.length > 0 &&
               equipments.map((equipment) => (
                 <SubscriberEquipmentCard
-                  key={equipment.mac}
+                  key={equipment.uuid}
                   equipment={equipment}
                   subscriberCode={subscriber.code}
                   onHandleRemoveEquipment={handleRemoveEquipment}

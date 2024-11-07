@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { isValidMacAddress } from "../../../../utils/validation";
+import { isValidUUID } from "../../../../utils/validation";
 import { SwalError } from "../../../../utils/alerts";
-import { formatMac } from "../../../../utils/tools";
+import { formatUUID } from "../../../../utils/tools";
 
 export default function FormAdEquipment({ onHandleAddEquipment }) {
   const [equipmentForm, setEquipmentForm] = useState({
-    mac: "",
+    uuid: "",
     equipment_type: "",
     name: "",
     observation: "",
@@ -19,16 +19,18 @@ export default function FormAdEquipment({ onHandleAddEquipment }) {
       newEquipment[key] = value;
     }
 
-    newEquipment.mac = formatMac(newEquipment.mac);
+    newEquipment.uuid = formatUUID(newEquipment.uuid);
 
-    if (!isValidMacAddress(newEquipment.mac)) {
-      return SwalError("Formato de MAC invalido. Ej. 08-00-27-85-E9-9E");
+    if (!isValidUUID(newEquipment.uuid)) {
+      return SwalError(
+        "Formato de UUID invalido. Ej. 6A933A0-B8EA-11DC-8EE2-1C872C5869D6"
+      );
     }
 
     const response = await onHandleAddEquipment(newEquipment);
     if (response)
       setEquipmentForm({
-        mac: "",
+        uuid: "",
         equipment_type: "",
         name: "",
         observation: "",
@@ -52,15 +54,15 @@ export default function FormAdEquipment({ onHandleAddEquipment }) {
       <div className="form-floating mb-3">
         <input
           className="form-control form-control-sm"
-          id="mac"
+          id="uuid"
           type="text"
           placeholder="Nombre"
-          name="mac"
+          name="uuid"
           required
-          value={equipmentForm["mac"]}
+          value={equipmentForm["uuid"]}
           onChange={handleChange}
         />
-        <label htmlFor="mac">MAC</label>
+        <label htmlFor="uuid">UUID</label>
       </div>
 
       <div className="form-floating mb-3">
