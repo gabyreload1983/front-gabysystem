@@ -18,6 +18,7 @@ export default function SubscriberDetail() {
   const { id } = useParams();
   const [subscriber, setSubscriber] = useState(null);
   const [equipments, setEquipments] = useState([]);
+  const [active, setActive] = useState("ALL");
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
@@ -25,11 +26,13 @@ export default function SubscriberDetail() {
     const data = await getSubscriber({ code: id });
     if (!data || !data.status) return;
     setSubscriber(data);
+    setEquipments(data.equipments);
   };
 
   const handleFilterEquipmentType = (type) => {
     const filterEquipments = filterEquipmentType(subscriber, type);
     setEquipments(filterEquipments);
+    setActive(type);
   };
 
   const handleCancelSubscription = async (subscriber) => {
@@ -49,10 +52,10 @@ export default function SubscriberDetail() {
   };
 
   const handleRemoveEquipment = async (equipment, subscriberCode) => {
-    const res = await removeEquipment(equipment, subscriberCode);
-    console.log(equipment);
+    await removeEquipment(equipment, subscriberCode);
+    await getData();
+
     await SwalToast("Se quito equipo!", 500);
-    getData();
   };
 
   useEffect(() => {
@@ -93,7 +96,9 @@ export default function SubscriberDetail() {
             <div className="btn-group mb-3" role="group">
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "SERVER" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("SERVER")}
               >
                 SERVIDORES
@@ -103,7 +108,9 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "PC" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("PC")}
               >
                 PC ESCRITORIO
@@ -113,7 +120,9 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "NOTEBOOK" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("NOTEBOOK")}
               >
                 NOTEBOOKS
@@ -123,12 +132,26 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "PRINTER" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("PRINTER")}
               >
                 IMPRESORAS
                 <span className="pill bg-primary ms-1 p-1 rounded text-white">
                   {getQuantityOfEquipmentType(subscriber, "PRINTER")}
+                </span>
+              </button>
+              <button
+                type="button"
+                className={`btn ${
+                  active === "ALL" ? "btn-primary" : "btn-outline-primary"
+                }`}
+                onClick={() => handleFilterEquipmentType("ALL")}
+              >
+                TODOS
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {subscriber.equipments.length}
                 </span>
               </button>
             </div>
