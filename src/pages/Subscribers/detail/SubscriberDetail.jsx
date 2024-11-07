@@ -51,13 +51,6 @@ export default function SubscriberDetail() {
     }
   };
 
-  const handleRemoveEquipment = async (equipment, subscriberCode) => {
-    await removeEquipment(equipment, subscriberCode);
-    await getData();
-
-    await SwalToast("Se quito equipo!", 500);
-  };
-
   useEffect(() => {
     getData();
   }, []);
@@ -71,7 +64,7 @@ export default function SubscriberDetail() {
               {subscriber.code} - {subscriber.name}
             </h2>
             <div className="row">
-              <div className="col-12">
+              <div className="col-12 d-flex">
                 <NavLink
                   to={`/subscribers/edit/${subscriber.code}/add-equipment`}
                   className="btn btn-success btn-sm ms-2"
@@ -80,7 +73,7 @@ export default function SubscriberDetail() {
                 </NavLink>
                 {validateUserRole(user, "premium") && (
                   <button
-                    className="btn btn-danger btn-sm ms-2"
+                    className="btn btn-danger btn-sm ms-auto"
                     onClick={() => handleCancelSubscription(subscriber)}
                   >
                     CANCELAR ABONO
@@ -161,7 +154,6 @@ export default function SubscriberDetail() {
                   key={equipment.uuid}
                   equipment={equipment}
                   subscriberCode={subscriber.code}
-                  onHandleRemoveEquipment={handleRemoveEquipment}
                 />
               ))}
           </div>

@@ -238,20 +238,27 @@ export const addEquipment = async (code, newEquipment) => {
   return response;
 };
 
-export const removeEquipment = async (equipmentToRemove, subscriberCode) => {
+export const removeEquipment = async ({ equipmentToRemove }) => {
   const response = await putToApi(
     `${API_URL}/api/subscribers/remove-equipment`,
     {
       equipmentToRemove,
-      subscriberCode,
     }
   );
   if (!response) return;
   return response;
 };
 
-export const editEquipment = async () => {
-  return true;
+export const editEquipment = async (updatedEquipment) => {
+  const response = await putToApi(
+    `${API_URL}/api/subscribers/update-equipment`,
+    {
+      updatedEquipment,
+    }
+  );
+  if (!response) return;
+
+  return response;
 };
 
 // PRODUCTS

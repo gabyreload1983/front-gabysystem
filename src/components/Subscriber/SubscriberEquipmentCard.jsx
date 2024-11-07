@@ -1,29 +1,18 @@
-import { SwalQuestion } from "../../utils/alerts";
 import { NavLink } from "react-router-dom";
 
-export default function SubscriberEquipmentCard({
-  equipment,
-  subscriberCode,
-  onHandleRemoveEquipment,
-}) {
-  const handleRemoveEquipment = async () => {
-    const answer = await SwalQuestion(
-      "Seguro que quieres eliminar este equipo del abono???"
-    );
-    if (answer) {
-      onHandleRemoveEquipment(equipment, subscriberCode);
-    }
-  };
+export default function SubscriberEquipmentCard({ equipment, subscriberCode }) {
   return (
     <div className="bg-secondary rounded p-3 mb-3 d-flex flex-column">
       <p>UUID: {equipment.uuid}</p>
       <p>TIPO: {equipment.equipment_type}</p>
       <p>NOMBRE: {equipment.name}</p>
       <p>OBSERVACION: {equipment.observation}</p>
-      <button onClick={handleRemoveEquipment} className="btn btn-danger btn-sm">
-        X
-      </button>
-      <NavLink to={`edit-equipment/${equipment.uuid}`}>Editar</NavLink>
+      <NavLink
+        className="btn btn-warning btn-sm mb-2"
+        to={`edit-equipment/${equipment.uuid}`}
+      >
+        Editar
+      </NavLink>
     </div>
   );
 }
