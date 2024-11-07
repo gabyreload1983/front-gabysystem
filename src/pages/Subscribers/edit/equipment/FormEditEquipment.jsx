@@ -99,6 +99,7 @@ export default function FormEditEquipment() {
             required
             className="form-select form-select-sm mb-3"
             onChange={handleChange}
+            value={equipmentForm.equipment_type}
           >
             <option value="PC">PC ESCRITORIO</option>
             <option value="NOTEBOOK">NOTEBOOK</option>
