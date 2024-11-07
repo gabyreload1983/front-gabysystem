@@ -1,4 +1,5 @@
 import { SwalQuestion } from "../../utils/alerts";
+import { NavLink } from "react-router-dom";
 
 export default function SubscriberEquipmentCard({
   equipment,
@@ -22,6 +23,7 @@ export default function SubscriberEquipmentCard({
       <button onClick={handleRemoveEquipment} className="btn btn-danger btn-sm">
         X
       </button>
+      <NavLink to={`edit-equipment/${equipment.uuid}`}>Editar</NavLink>
     </div>
   );
 }

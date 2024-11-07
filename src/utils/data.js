@@ -250,6 +250,10 @@ export const removeEquipment = async (equipmentToRemove, subscriberCode) => {
   return response;
 };
 
+export const editEquipment = async () => {
+  return true;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(

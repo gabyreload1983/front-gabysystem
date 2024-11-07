@@ -42,6 +42,7 @@ import SubscriberDetail from "./pages/Subscribers/detail/SubscriberDetail";
 import SubscriberList from "./pages/Subscribers/list/SubscriberList";
 import SubscriberAdd from "./pages/Subscribers/add/SubscriberAdd";
 import SubscriberAddEquipment from "./pages/Subscribers/edit/add/SubscriberAddEquipment";
+import FormEditEquipment from "./pages/Subscribers/edit/equipment/FormEditEquipment";
 
 function App() {
   return (
@@ -63,8 +64,12 @@ function App() {
 
             <Route path="subscribers" element={<Subscribers />}>
               <Route
-                path="edit/add-equipment/:id"
+                path="edit/:id/add-equipment"
                 element={<SubscriberAddEquipment />}
+              />
+              <Route
+                path="detail/:id/edit-equipment/:uuid"
+                element={<FormEditEquipment />}
               />
               <Route path="detail/:id" element={<SubscriberDetail />} />
               <Route path="list" element={<SubscriberList />} />

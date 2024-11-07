@@ -73,7 +73,7 @@ export default function SubscriberDetail() {
             <div className="row">
               <div className="col-12">
                 <NavLink
-                  to={`/subscribers/edit/add-equipment/${subscriber.code}/`}
+                  to={`/subscribers/edit/${subscriber.code}/add-equipment`}
                   className="btn btn-success btn-sm ms-2"
                 >
                   AGREGAR EQUIPO
