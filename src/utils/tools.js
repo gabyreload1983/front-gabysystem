@@ -221,10 +221,13 @@ export const formatProductSerie = (product) => {
 
 export const isSubscriber = (subscriber) => subscriber.condicion === 30;
 
-export const filterEquipmentType = (subscriber, type) =>
-  subscriber.equipments.filter(
+export const filterEquipmentType = (subscriber, type) => {
+  if (type === "ALL") return subscriber.equipments;
+
+  return subscriber.equipments.filter(
     (equipment) => equipment.equipment_type === type
   );
+};
 
 export const getQuantityOfEquipmentType = (subscriber, type) =>
   subscriber.equipments.filter((equipment) => equipment.equipment_type === type)
@@ -256,3 +259,5 @@ export const sortItems = (items, sortBy, order) => {
 
   return items.toSorted(compareDates);
 };
+
+export const formatUUID = (uuid) => uuid.toUpperCase();

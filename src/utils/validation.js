@@ -106,3 +106,18 @@ export const validateSerieMatchProduct = async (product, serie) => {
   }
   return true;
 };
+
+export const UUIDExists = (subscriber, newEquipment) => {
+  const index = subscriber.equipments.findIndex(
+    (equipment) =>
+      equipment.uuid.toUpperCase() === newEquipment.uuid.toUpperCase()
+  );
+
+  return index === -1 ? false : true;
+};
+
+export const isValidUUID = (uuid) => {
+  const uuidRegex =
+    /^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$/i;
+  return uuidRegex.test(uuid);
+};

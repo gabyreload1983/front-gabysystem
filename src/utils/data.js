@@ -229,6 +229,38 @@ export const updateSubscriber = async (code, subscriberUpdate) => {
   return response;
 };
 
+export const addEquipment = async (code, newEquipment) => {
+  const response = await putToApi(`${API_URL}/api/subscribers/add-equipment`, {
+    code,
+    newEquipment,
+  });
+  if (!response) return;
+  return response;
+};
+
+export const removeEquipment = async ({ equipmentToRemove }) => {
+  const response = await putToApi(
+    `${API_URL}/api/subscribers/remove-equipment`,
+    {
+      equipmentToRemove,
+    }
+  );
+  if (!response) return;
+  return response;
+};
+
+export const editEquipment = async (updatedEquipment) => {
+  const response = await putToApi(
+    `${API_URL}/api/subscribers/update-equipment`,
+    {
+      updatedEquipment,
+    }
+  );
+  if (!response) return;
+
+  return response;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(

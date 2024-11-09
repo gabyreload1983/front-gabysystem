@@ -1,5 +1,9 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { cancelSubscription, getSubscriber } from "../../../utils/data";
+import {
+  cancelSubscription,
+  getSubscriber,
+  removeEquipment,
+} from "../../../utils/data";
 import { useContext, useEffect, useState } from "react";
 import SubscriberEquipmentCard from "../../../components/Subscriber/SubscriberEquipmentCard";
 import {
@@ -14,6 +18,7 @@ export default function SubscriberDetail() {
   const { id } = useParams();
   const [subscriber, setSubscriber] = useState(null);
   const [equipments, setEquipments] = useState([]);
+  const [active, setActive] = useState("ALL");
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
 
@@ -21,11 +26,13 @@ export default function SubscriberDetail() {
     const data = await getSubscriber({ code: id });
     if (!data || !data.status) return;
     setSubscriber(data);
+    setEquipments(data.equipments);
   };
 
   const handleFilterEquipmentType = (type) => {
     const filterEquipments = filterEquipmentType(subscriber, type);
     setEquipments(filterEquipments);
+    setActive(type);
   };
 
   const handleCancelSubscription = async (subscriber) => {
@@ -57,16 +64,18 @@ export default function SubscriberDetail() {
               {subscriber.code} - {subscriber.name}
             </h2>
             <div className="row">
-              <div className="col-12">
-                <NavLink
-                  to={`/subscribers/edit/add-equipment/${subscriber.code}/`}
-                  className="btn btn-success btn-sm ms-2"
-                >
-                  AGREGAR EQUIPO
-                </NavLink>
+              <div className="col-12 d-flex">
+                {validateUserRole(user, "premium") && (
+                  <NavLink
+                    to={`/subscribers/edit/${subscriber.code}/add-equipment`}
+                    className="btn btn-success btn-sm ms-2"
+                  >
+                    AGREGAR EQUIPO
+                  </NavLink>
+                )}
                 {validateUserRole(user, "premium") && (
                   <button
-                    className="btn btn-danger btn-sm ms-2"
+                    className="btn btn-danger btn-sm ms-auto"
                     onClick={() => handleCancelSubscription(subscriber)}
                   >
                     CANCELAR ABONO
@@ -82,7 +91,9 @@ export default function SubscriberDetail() {
             <div className="btn-group mb-3" role="group">
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "SERVER" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("SERVER")}
               >
                 SERVIDORES
@@ -92,7 +103,9 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "PC" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("PC")}
               >
                 PC ESCRITORIO
@@ -102,7 +115,9 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "NOTEBOOK" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("NOTEBOOK")}
               >
                 NOTEBOOKS
@@ -112,7 +127,9 @@ export default function SubscriberDetail() {
               </button>
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className={`btn ${
+                  active === "PRINTER" ? "btn-primary" : "btn-outline-primary"
+                }`}
                 onClick={() => handleFilterEquipmentType("PRINTER")}
               >
                 IMPRESORAS
@@ -120,12 +137,25 @@ export default function SubscriberDetail() {
                   {getQuantityOfEquipmentType(subscriber, "PRINTER")}
                 </span>
               </button>
+              <button
+                type="button"
+                className={`btn ${
+                  active === "ALL" ? "btn-primary" : "btn-outline-primary"
+                }`}
+                onClick={() => handleFilterEquipmentType("ALL")}
+              >
+                TODOS
+                <span className="pill bg-primary ms-1 p-1 rounded text-white">
+                  {subscriber.equipments.length}
+                </span>
+              </button>
             </div>
             {equipments.length > 0 &&
               equipments.map((equipment) => (
                 <SubscriberEquipmentCard
-                  key={equipment.mac}
+                  key={equipment.uuid}
                   equipment={equipment}
+                  subscriberCode={subscriber.code}
                 />
               ))}
           </div>

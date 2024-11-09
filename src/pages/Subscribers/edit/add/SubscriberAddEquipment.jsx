@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getSubscriber, updateSubscriber } from "../../../../utils/data";
+import { addEquipment, getSubscriber } from "../../../../utils/data";
 import { SwalError, SwalToast } from "../../../../utils/alerts";
-import FormAdEquipment from "./FormAdEquipment";
+import FormAddEquipment from "./FormAddEquipment";
+import { UUIDExists } from "../../../../utils/validation";
 
 export default function SubscriberAddEquipment() {
   const { id } = useParams();
@@ -15,18 +16,14 @@ export default function SubscriberAddEquipment() {
   };
 
   const handleAddEquipment = async (newEquipment) => {
-    const index = subscriber.equipments.findIndex(
-      (equipment) => equipment.mac === newEquipment.mac
-    );
-    if (index !== -1) {
-      await SwalError("La mac ya existe");
+    if (UUIDExists(subscriber, newEquipment)) {
+      await SwalError("La UUID ya existe!!!");
       return false;
     }
 
-    const equipmentsUpdate = [...subscriber.equipments, newEquipment];
-    const subscriberUpdate = { ...subscriber, equipments: equipmentsUpdate };
-    const response = await updateSubscriber(id, subscriberUpdate);
+    const response = await addEquipment(id, newEquipment);
     if (!response) return;
+    await getData();
     SwalToast("Se agrego equipo!", 700);
     return true;
   };
@@ -43,7 +40,7 @@ export default function SubscriberAddEquipment() {
             {subscriber.code} - {subscriber.name}
           </h2>
           <div className="col-12 col-md-6">
-            <FormAdEquipment onHandleAddEquipment={handleAddEquipment} />
+            <FormAddEquipment onHandleAddEquipment={handleAddEquipment} />
           </div>
         </div>
       )}
