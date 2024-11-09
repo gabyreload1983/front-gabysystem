@@ -65,12 +65,14 @@ export default function SubscriberDetail() {
             </h2>
             <div className="row">
               <div className="col-12 d-flex">
-                <NavLink
-                  to={`/subscribers/edit/${subscriber.code}/add-equipment`}
-                  className="btn btn-success btn-sm ms-2"
-                >
-                  AGREGAR EQUIPO
-                </NavLink>
+                {validateUserRole(user, "premium") && (
+                  <NavLink
+                    to={`/subscribers/edit/${subscriber.code}/add-equipment`}
+                    className="btn btn-success btn-sm ms-2"
+                  >
+                    AGREGAR EQUIPO
+                  </NavLink>
+                )}
                 {validateUserRole(user, "premium") && (
                   <button
                     className="btn btn-danger btn-sm ms-auto"
