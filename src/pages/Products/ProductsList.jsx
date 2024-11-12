@@ -1,4 +1,4 @@
-import { formatPrice } from "../../utils/tools";
+import { formatPrice, getStock } from "../../utils/tools";
 
 export default function ProductsList({ products }) {
   return (
@@ -18,7 +18,7 @@ export default function ProductsList({ products }) {
               <tr key={product.codigo}>
                 <td>{product.codigo}</td>
                 <td>{product.descrip}</td>
-                <td>{product.stockd01 - product.reserd01}</td>
+                <td>{getStock(product)}</td>
                 <td>${formatPrice(product.priceList1WithTax)}</td>
               </tr>
             ))}

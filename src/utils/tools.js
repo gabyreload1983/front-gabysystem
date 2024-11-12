@@ -219,6 +219,11 @@ export const formatProductSerie = (product) => {
   return product;
 };
 
+export const filterProductsByStock = (products, stock) =>
+  stock ? products.filter((p) => p.stockd01 - p.reserd01 > 0) : products;
+
+export const getStock = (product) => product.stockd01 - product.reserd01;
+
 export const isSubscriber = (subscriber) => subscriber.condicion === 30;
 
 export const filterEquipmentType = (subscriber, type) => {
