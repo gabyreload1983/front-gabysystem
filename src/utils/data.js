@@ -310,6 +310,15 @@ export const getRmaProducts = async () => {
   return response;
 };
 
+// REPLACEMENTS
+
+export const getReplacements = async () => {
+  const response = await getFromApi(`${API_URL}/api/replacements`);
+  if (!response) return;
+
+  return response.payload;
+};
+
 // USERS
 export const getUser = () => {
   const jwt = getJWT();

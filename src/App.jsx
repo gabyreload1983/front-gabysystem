@@ -43,6 +43,7 @@ import SubscriberList from "./pages/Subscribers/list/SubscriberList";
 import SubscriberAdd from "./pages/Subscribers/add/SubscriberAdd";
 import SubscriberAddEquipment from "./pages/Subscribers/edit/add/SubscriberAddEquipment";
 import FormEditEquipment from "./pages/Subscribers/edit/equipment/FormEditEquipment";
+import Replacements from "./pages/Replacements/Replacements";
 
 function App() {
   return (
@@ -61,6 +62,7 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="summaries" element={<Summaries />} />
             <Route path="rma" element={<Rma />} />
+            <Route path="replacements" element={<Replacements />} />
 
             <Route path="subscribers" element={<Subscribers />}>
               <Route
