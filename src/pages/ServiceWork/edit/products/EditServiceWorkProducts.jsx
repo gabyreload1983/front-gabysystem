@@ -14,7 +14,10 @@ import {
   SwalSuccess,
   SwalWaiting,
 } from "../../../../utils/alerts";
-import { formatSerialNumber } from "../../../../utils/tools";
+import {
+  filterProductsByStock,
+  formatSerialNumber,
+} from "../../../../utils/tools";
 import {
   getServiceWork,
   updateProductsInSeriveWork,
@@ -101,7 +104,7 @@ export default function EditServiceWorkProducts() {
   };
 
   const handleSearchPoducts = (products) => {
-    setProducts(products);
+    setProducts(filterProductsByStock(products, true));
   };
 
   const handleConfirm = async () => {
