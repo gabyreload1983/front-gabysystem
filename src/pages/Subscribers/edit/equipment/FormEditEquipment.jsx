@@ -63,7 +63,6 @@ export default function FormEditEquipment() {
     );
     if (answer) {
       const res = await removeEquipment({ equipmentToRemove: equipmentForm });
-      console.log(res);
       navigate(`/subscribers/detail/${id}`);
     }
   };

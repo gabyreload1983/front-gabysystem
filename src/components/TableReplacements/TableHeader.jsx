@@ -6,7 +6,7 @@ export default function TableHeader({ columns, sortDataBy, sortData }) {
 
   const handleClick = (col) => {
     setSelected(col.code);
-    sortDataBy(col);
+    sortDataBy(col.code);
   };
   return (
     <thead>
