@@ -4,6 +4,7 @@ import { UserContext } from "../../context/userContext";
 import { useContext, useEffect, useState } from "react";
 import { getReplacements } from "../../utils/data";
 import Table from "../../components/TableReplacements/Table";
+import { sortArrayBy } from "../../utils/tools";
 
 export default function Replacements() {
   const { user } = useContext(UserContext);
@@ -17,7 +18,7 @@ export default function Replacements() {
   const getData = async () => {
     const data = await getReplacements();
 
-    setReplacements(data);
+    setReplacements(sortArrayBy(data, sortData.code, sortData.sort));
   };
 
   useEffect(() => {
@@ -41,18 +42,9 @@ export default function Replacements() {
   ];
 
   const sortDataBy = (column) => {
-    function compareDates(a, b) {
-      if (a[column.code] < b[column.code]) {
-        return sortData.sort ? -1 : 1;
-      }
-      if (a[column.code] > b[column.code]) {
-        return sortData.sort ? 1 : -1;
-      }
-      return 0;
-    }
-    setReplacements((prev) => prev.sort(compareDates));
+    setReplacements(sortArrayBy(replacements, column, !sortData.sort));
 
-    setSortData((prev) => ({ ...column, sort: !prev.sort }));
+    setSortData((prev) => ({ ...prev, sort: !prev.sort }));
   };
 
   return (

@@ -266,3 +266,10 @@ export const sortItems = (items, sortBy, order) => {
 };
 
 export const formatUUID = (uuid) => uuid.toUpperCase();
+
+export const sortArrayBy = (array, field, desc) =>
+  array.slice().sort((a, b) => {
+    if (a[field] < b[field]) return desc ? 1 : -1;
+    if (a[field] > b[field]) return desc ? -1 : 1;
+    return 0;
+  });
