@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import moment from "moment";
+import { NavLink } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
 import { useContext, useEffect, useState } from "react";
 import { getReplacements } from "../../utils/data";
@@ -51,7 +50,9 @@ export default function Replacements() {
     <div className="container-fluid">
       <div className="row gap-3">
         <div className="d-flex justify-content-end mt-3">
-          <button className="btn btn-success">Agregar</button>
+          <NavLink className="btn btn-success" to="add">
+            Agregar
+          </NavLink>
         </div>
 
         <div className="col">

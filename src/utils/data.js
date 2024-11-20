@@ -344,6 +344,15 @@ export const getReplacements = async () => {
   return response.payload;
 };
 
+export const AddNewReplacement = async (replacement) => {
+  const response = await postToApi(`${API_URL}/api/replacements`, {
+    replacement,
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+};
+
 // USERS
 export const getUser = () => {
   const jwt = getJWT();
