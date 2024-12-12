@@ -1,6 +1,11 @@
 import { capitalize } from "../../utils/tools";
 
-export default function Form({ inputs, onHandleSubmit }) {
+export default function Form({
+  inputs,
+  onHandleChange,
+  onHandleSubmit,
+  textButton = "Aceptar",
+}) {
   return (
     <form className="row bg-dark p-3" onSubmit={onHandleSubmit}>
       {inputs &&
@@ -14,12 +19,14 @@ export default function Form({ inputs, onHandleSubmit }) {
                 placeholder={item.code}
                 name={item.code}
                 required={item.required}
+                value={item.value}
+                onChange={onHandleChange}
               />
               <label htmlFor={item.code}>{capitalize(item.name)}</label>
             </div>
           </div>
         ))}
-      <button className="btn btn-success">Agregar</button>
+      <button className="btn btn-success">{textButton}</button>
     </form>
   );
 }

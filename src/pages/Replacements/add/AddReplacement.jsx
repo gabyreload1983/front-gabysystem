@@ -1,17 +1,22 @@
+import { useState } from "react";
 import Form from "../../../components/Form/Form";
 import { AddNewReplacement } from "../../../utils/data";
+import { SwalToast } from "../../../utils/alerts";
+import { NavLink } from "react-router-dom";
+import { replacementInputs } from "../../../constants";
 
 export default function AddReplacement() {
-  const inputs = [
-    { name: "orden", code: "orderNumber", required: false },
-    { name: "tecnico", code: "technical_code", required: true },
-    { name: "descripcion", code: "description", required: true },
-    { name: "proveedor", code: "supplier", required: false },
-    { name: "costo", code: "cost", required: false },
-    { name: "demora", code: "delay", required: false },
-    { name: "envio", code: "shipmment", required: false },
-    { name: "link", code: "linkSupplier", required: false },
-  ];
+  const [inputs, setInputs] = useState(replacementInputs);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setInputs((prevInputs) =>
+      prevInputs.map((input) =>
+        input.code === name ? { ...input, value } : input
+      )
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,13 +27,24 @@ export default function AddReplacement() {
     }
 
     const res = await AddNewReplacement(newReplacement);
-    console.log(res);
+    if (res) {
+      SwalToast("Se agrego repuesto", 800);
+      setInputs([...replacementInputs]);
+    }
   };
 
   return (
-    <div className="container">
-      <h2>Form AddReplacement</h2>
-      <Form inputs={inputs} onHandleSubmit={handleSubmit} />
+    <div className="container p-2">
+      <NavLink className="btn btn-info" to="/replacements">
+        Volver
+      </NavLink>
+      <h2 className="text-center">Agregar Repuesto</h2>
+      <Form
+        inputs={inputs}
+        onHandleChange={handleChange}
+        onHandleSubmit={handleSubmit}
+        textButton="Agregar"
+      />
     </div>
   );
 }
