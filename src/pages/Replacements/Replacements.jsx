@@ -38,6 +38,7 @@ export default function Replacements() {
     { name: "confirmacion", code: "customerConfirmation", sort: false },
     { name: "estado", code: "status", sort: false },
     { name: "link", code: "linkSupplier", sort: false },
+    { name: "", code: "_id", sort: false },
   ];
 
   const sortDataBy = (column) => {

@@ -1,7 +1,15 @@
 import moment from "moment";
 import { formatPrice } from "../../utils/tools";
+import { PencilIcon } from "@heroicons/react/24/solid";
+import { useNavigate } from "react-router-dom";
 
 export default function TableBody({ data }) {
+  const navigate = useNavigate();
+
+  const handleClick = (id) => {
+    navigate(`/replacements/edit/${id}`);
+  };
+
   return (
     <tbody>
       {data.map((item, index) => (
@@ -32,6 +40,12 @@ export default function TableBody({ data }) {
             >
               Link
             </a>
+          </td>
+          <td className="d-none d-lg-table-cell">
+            <PencilIcon
+              onClick={() => handleClick(item._id)}
+              className="iconTable cursor-pointer"
+            />{" "}
           </td>
         </tr>
       ))}
