@@ -26,7 +26,9 @@ export default function Form({
             </div>
           </div>
         ))}
-      <button className="btn btn-success">{textButton}</button>
+      <div className="col-12">
+        <button className="btn btn-success w-100">{textButton}</button>
+      </div>
     </form>
   );
 }

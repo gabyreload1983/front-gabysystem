@@ -38,7 +38,7 @@ export default function SideBarPremium() {
     },
     {
       name: "Repuestos",
-      to: "replacements",
+      to: "replacements/list",
       icon: WrenchScrewdriverIcon,
     },
   ];
