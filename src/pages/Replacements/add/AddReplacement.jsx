@@ -35,7 +35,7 @@ export default function AddReplacement() {
 
   return (
     <div className="container p-2">
-      <NavLink className="btn btn-info" to="/replacements">
+      <NavLink className="btn btn-info" to="/replacements/list">
         Volver
       </NavLink>
       <h2 className="text-center">Agregar Repuesto</h2>

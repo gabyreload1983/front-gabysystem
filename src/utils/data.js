@@ -344,6 +344,20 @@ export const getReplacements = async () => {
   return response.payload;
 };
 
+export const getReplacement = async (id) => {
+  const response = await getFromApi(`${API_URL}/api/replacements/${id}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const deleteReplacement = async (id) => {
+  const response = await deleteToApi(`${API_URL}/api/replacements/${id}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
 export const AddNewReplacement = async (replacement) => {
   const response = await postToApi(`${API_URL}/api/replacements`, {
     replacement,
