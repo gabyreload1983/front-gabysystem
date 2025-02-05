@@ -146,7 +146,8 @@ export const replacementInputsEdit = [
   {
     name: "Confirmacion Cliente",
     code: "customerConfirmation",
-    value: "",
+    value: false,
     required: false,
   },
+  { name: "Notas", code: "notes", value: "", required: false },
 ];

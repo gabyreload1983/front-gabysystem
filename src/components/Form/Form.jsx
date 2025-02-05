@@ -1,5 +1,15 @@
 import { capitalize } from "../../utils/tools";
 
+function getInputType(value) {
+  if (typeof value === "number") {
+    return "number";
+  } else if (typeof value === "boolean") {
+    return "checkbox";
+  } else {
+    return "text";
+  }
+}
+
 export default function Form({
   inputs,
   onHandleChange,
@@ -15,7 +25,7 @@ export default function Form({
               <input
                 className="form-control form-control-sm"
                 id={item.code}
-                type="text"
+                type={getInputType(item.value)}
                 placeholder={item.code}
                 name={item.code}
                 required={item.required}

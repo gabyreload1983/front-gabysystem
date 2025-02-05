@@ -358,6 +358,15 @@ export const deleteReplacement = async (id) => {
   return response.payload;
 };
 
+export const updateReplacement = async (id, replacementUpdated) => {
+  const response = await putToApi(`${API_URL}/api/replacements/${id}`, {
+    replacementUpdated,
+  });
+  if (!response) return;
+
+  return response.payload;
+};
+
 export const AddNewReplacement = async (replacement) => {
   const response = await postToApi(`${API_URL}/api/replacements`, {
     replacement,

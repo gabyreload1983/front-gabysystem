@@ -1,7 +1,11 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import Form from "../../../components/Form/Form";
 import { useEffect, useState } from "react";
-import { deleteReplacement, getReplacement } from "../../../utils/data";
+import {
+  deleteReplacement,
+  getReplacement,
+  updateReplacement,
+} from "../../../utils/data";
 import { replacementInputsEdit } from "../../../constants";
 import { SwalActionConfirmWithText, SwalToast } from "../../../utils/alerts";
 
@@ -15,7 +19,7 @@ export default function EditReplacement() {
 
     setReplacement(
       replacementInputsEdit.map((item) => {
-        item.value = data[item.code] || "";
+        item.value = data[item.code];
         return item;
       })
     );
@@ -34,11 +38,11 @@ export default function EditReplacement() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    const newReplacement = {};
+    const replacementUpdated = {};
     for (const [key, value] of form) {
-      newReplacement[key] = value;
+      replacementUpdated[key] = value;
     }
-
+    await updateReplacement(id, replacementUpdated);
     await SwalToast("Se actualizo repuesto!!!", 800);
   };
 
