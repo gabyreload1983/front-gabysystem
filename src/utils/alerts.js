@@ -89,3 +89,32 @@ export const SwalActionConfirmWithText = async (
 
   return isConfirmed;
 };
+
+export const SwalActionInputsRequestProduct = async () => {
+  const { value: formValues } = await Swal.fire({
+    title: "Pedir Producto",
+    html: `
+        <div class="mb-3">
+          <label class="form-label" for="quantity">Cantidad</label>
+          <input id="quantity" type="number" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="customerCode">Codigo de Cliente</label>
+          <input id="customerCode" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="observation">Observacion</label>
+          <input id="observation" class="form-control">
+        </div>
+    `,
+    focusConfirm: false,
+    preConfirm: () => {
+      return {
+        quantity: document.getElementById("quantity").value,
+        customerCode: document.getElementById("customerCode").value,
+        observation: document.getElementById("observation").value,
+      };
+    },
+  });
+  return formValues;
+};

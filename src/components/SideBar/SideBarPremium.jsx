@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import {
   ChartBarIcon,
   CurrencyDollarIcon,
-  ListBulletIcon,
   NewspaperIcon,
 } from "@heroicons/react/24/outline";
 import { WrenchIcon } from "@heroicons/react/24/solid";
@@ -14,11 +13,7 @@ export default function SideBarPremium() {
       to: "statistics",
       icon: ChartBarIcon,
     },
-    {
-      name: "Pedidos",
-      to: "product-request",
-      icon: ListBulletIcon,
-    },
+
     {
       name: "Alexis",
       to: "alexis",
