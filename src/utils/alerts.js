@@ -96,7 +96,7 @@ export const SwalActionInputsRequestProduct = async () => {
     html: `
         <div class="mb-3">
           <label class="form-label" for="quantity">Cantidad</label>
-          <input id="quantity" type="number" class="form-control">
+          <input id="quantity" type="number" min=1 max=100 value=1 class="form-control">
         </div>
         <div class="mb-3">
           <label class="form-label" for="customerCode">Codigo de Cliente</label>

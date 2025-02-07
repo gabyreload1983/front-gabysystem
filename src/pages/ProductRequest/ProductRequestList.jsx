@@ -53,7 +53,7 @@ export default function ProductRequestList({
                 <td className="d-none d-lg-table-cell">{product.observa}</td>
 
                 <td>
-                  {validateUserRole(user, "premium") && (
+                  {validateUserRole(user, "premium", "seller") && (
                     <button
                       onClick={() => onHandleRemove(product.codiart)}
                       className="btn btn-outline-danger btn-sm"
