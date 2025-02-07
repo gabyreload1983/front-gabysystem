@@ -69,8 +69,18 @@ export const TABLE_HEADER_PRODUCTS_REQUEST = [
     selected: false,
     order: false,
   },
+
   {
     id: 4,
+    name: "CANTIDAD",
+    code: "cantidad",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+
+  {
+    id: 5,
     name: "SOLICITO",
     code: "soliciton",
     styles: "cursor-pointer d-none d-lg-table-cell",
@@ -78,7 +88,7 @@ export const TABLE_HEADER_PRODUCTS_REQUEST = [
     order: false,
   },
   {
-    id: 5,
+    id: 6,
     name: "CLIENTE",
     code: "nombre",
     styles: "cursor-pointer d-none d-lg-table-cell",
@@ -86,15 +96,16 @@ export const TABLE_HEADER_PRODUCTS_REQUEST = [
     order: false,
   },
   {
-    id: 6,
-    name: "CANTIDAD",
-    code: "cantidad",
-    styles: "cursor-pointer",
+    id: 7,
+    name: "OBSERVACION",
+    code: "observation",
+    styles: "cursor-pointer d-none d-lg-table-cell",
     selected: false,
     order: false,
   },
+
   {
-    id: 7,
+    id: 8,
     name: "",
     code: "",
     styles: "cursor-pointer",

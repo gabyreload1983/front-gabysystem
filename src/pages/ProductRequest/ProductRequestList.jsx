@@ -1,5 +1,8 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@heroicons/react/16/solid";
 import moment from "moment";
+import { UserContext } from "../../context/userContext";
+import { useContext } from "react";
+import { validateUserRole } from "../../utils/validation";
 
 export default function ProductRequestList({
   products,
@@ -7,6 +10,7 @@ export default function ProductRequestList({
   tableHeader,
   onHandleSelected,
 }) {
+  const { user } = useContext(UserContext);
   return (
     <div className="table-responsive">
       <table className="table table-sm table-dark bg-dark">
@@ -43,16 +47,20 @@ export default function ProductRequestList({
                 </td>
                 <td>{product.codiart}</td>
                 <td>{product.descart}</td>
+                <td>{Number(product.cantidad).toFixed()}</td>
                 <td className="d-none d-lg-table-cell">{product.soliciton}</td>
                 <td className="d-none d-lg-table-cell">{product.nombre}</td>
-                <td>{Number(product.cantidad).toFixed()}</td>
+                <td className="d-none d-lg-table-cell">{product.observa}</td>
+
                 <td>
-                  <button
-                    onClick={() => onHandleRemove(product.codiart)}
-                    className="btn btn-outline-danger btn-sm"
-                  >
-                    x
-                  </button>
+                  {validateUserRole(user, "premium", "seller") && (
+                    <button
+                      onClick={() => onHandleRemove(product.codiart)}
+                      className="btn btn-outline-danger btn-sm"
+                    >
+                      x
+                    </button>
+                  )}
                 </td>
               </tr>
             ))}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { SwalQuestion, SwalToast } from "../../utils/alerts";
 import ProductRequestList from "./ProductRequestList";
@@ -9,6 +9,8 @@ import {
 } from "../../utils/data";
 import { sortCodeString, sortItems } from "../../utils/tools";
 import { TABLE_HEADER_PRODUCTS_REQUEST } from "../../constants";
+import { validateUserRole } from "../../utils/validation";
+import { UserContext } from "../../context/userContext";
 
 export default function ProductRequest() {
   const [loader, setLoader] = useState(false);
@@ -16,6 +18,7 @@ export default function ProductRequest() {
   const [tableHeader, setTableHeaders] = useState(
     TABLE_HEADER_PRODUCTS_REQUEST
   );
+  const { user } = useContext(UserContext);
 
   const getData = async () => {
     setLoader(true);
@@ -72,9 +75,11 @@ export default function ProductRequest() {
       {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
       <div className="d-flex justify-content-around my-2 align-items-center">
         <h1 className="m-0">Productos Pedidos: {products.length}</h1>
-        <button onClick={handleClean} className="btn btn-outline-warning">
-          Limpiar Lista
-        </button>
+        {validateUserRole(user, "premium") && (
+          <button onClick={handleClean} className="btn btn-outline-warning">
+            Limpiar Lista
+          </button>
+        )}
       </div>
       <ProductRequestList
         products={products}

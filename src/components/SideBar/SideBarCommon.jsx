@@ -7,6 +7,7 @@ import {
   CubeIcon,
   UserCircleIcon,
   UserGroupIcon,
+  ListBulletIcon,
 } from "@heroicons/react/24/outline";
 import { capitalize } from "../../utils/tools";
 import { BuildingOffice2Icon } from "@heroicons/react/24/solid";
@@ -30,6 +31,11 @@ export default function SideBarCommon() {
       name: "Productos",
       to: "products",
       icon: CubeIcon,
+    },
+    {
+      name: "Pedidos",
+      to: "product-request",
+      icon: ListBulletIcon,
     },
     {
       name: "Clientes",

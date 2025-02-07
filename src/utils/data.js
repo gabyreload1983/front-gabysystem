@@ -310,6 +310,22 @@ export const getRmaProducts = async () => {
   return response;
 };
 
+export const requestProduct = async (
+  product,
+  quantity,
+  customerCode,
+  observation
+) => {
+  const response = await postToApi(`${API_URL}/api/products/request`, {
+    productCode: product.codigo,
+    quantity,
+    customerCode,
+    observation,
+  });
+  if (!response) return;
+  return response;
+};
+
 // USERS
 export const getUser = () => {
   const jwt = getJWT();
