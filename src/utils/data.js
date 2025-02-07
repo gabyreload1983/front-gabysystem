@@ -317,7 +317,7 @@ export const requestProduct = async (
   observation
 ) => {
   const response = await postToApi(`${API_URL}/api/products/request`, {
-    code: product.codigo,
+    productCode: product.codigo,
     quantity,
     customerCode,
     observation,
