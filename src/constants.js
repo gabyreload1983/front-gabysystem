@@ -103,9 +103,16 @@ export const TABLE_HEADER_PRODUCTS_REQUEST = [
     selected: false,
     order: false,
   },
-
   {
     id: 8,
+    name: "",
+    code: "",
+    styles: "cursor-pointer",
+    selected: false,
+    order: false,
+  },
+  {
+    id: 9,
     name: "",
     code: "",
     styles: "cursor-pointer",

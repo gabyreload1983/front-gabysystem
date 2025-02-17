@@ -3,6 +3,7 @@ import { BarLoader } from "react-spinners";
 import { SwalQuestion, SwalToast } from "../../utils/alerts";
 import ProductRequestList from "./ProductRequestList";
 import {
+  boughtProductRequest,
   cleanProductRequestList,
   getProductRequest,
   removeProductRequest,
@@ -42,6 +43,13 @@ export default function ProductRequest() {
     if (!response) return;
     await getData();
     SwalToast("Item borrado!", 500);
+  };
+
+  const handleBought = async (code) => {
+    const response = await boughtProductRequest(code);
+    if (!response) return;
+    await getData();
+    SwalToast(`Producto ${code} pedido!`, 1000);
   };
 
   const handleSelected = (code) => {
@@ -84,6 +92,7 @@ export default function ProductRequest() {
       <ProductRequestList
         products={products}
         onHandleRemove={handleRemove}
+        onHandleBought={handleBought}
         tableHeader={tableHeader}
         onHandleSelected={handleSelected}
       />
