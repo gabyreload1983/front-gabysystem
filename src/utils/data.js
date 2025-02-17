@@ -303,11 +303,9 @@ export const removeProductRequest = async (code) => {
   return response;
 };
 
-export const boughtProductRequest = async (code) => {
-  console.log("boughtProductRequest", code);
-  return true;
+export const boughtProductRequest = async (productCode) => {
   const response = await postToApi(`${API_URL}/api/products/request/bought`, {
-    code,
+    productCode,
   });
   if (!response) return;
 
