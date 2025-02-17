@@ -7,6 +7,7 @@ import { validateUserRole } from "../../utils/validation";
 export default function ProductRequestList({
   products,
   onHandleRemove,
+  onHandleBought,
   tableHeader,
   onHandleSelected,
 }) {
@@ -41,7 +42,10 @@ export default function ProductRequestList({
         <tbody>
           {products.length > 0 &&
             products.map((product, index) => (
-              <tr key={`${product.codiart}-${index}`}>
+              <tr
+                key={`${product.codiart}-${index}`}
+                className={`${product.status === "B" ? "table-success" : ""}`}
+              >
                 <td className="d-none d-lg-table-cell">
                   {moment(product.fecha).format("DD/MM/YYYY")}
                 </td>
@@ -57,10 +61,23 @@ export default function ProductRequestList({
                     <button
                       onClick={() => onHandleRemove(product.codiart)}
                       className="btn btn-outline-danger btn-sm"
+                      title="Borrar"
                     >
                       x
                     </button>
                   )}
+                </td>
+                <td>
+                  {validateUserRole(user, "premium") &&
+                    product.status !== "B" && (
+                      <button
+                        onClick={() => onHandleBought(product.codiart)}
+                        className="btn btn-outline-success btn-sm"
+                        title="Marcar como pedido"
+                      >
+                        ✓
+                      </button>
+                    )}
                 </td>
               </tr>
             ))}

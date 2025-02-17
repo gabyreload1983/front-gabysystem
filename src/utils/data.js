@@ -303,6 +303,15 @@ export const removeProductRequest = async (code) => {
   return response;
 };
 
+export const boughtProductRequest = async (productCode) => {
+  const response = await postToApi(`${API_URL}/api/products/request/bought`, {
+    productCode,
+  });
+  if (!response) return;
+
+  return response;
+};
+
 export const getRmaProducts = async () => {
   const response = await searchProduct({ input: "ssd" });
   if (!response) return;
