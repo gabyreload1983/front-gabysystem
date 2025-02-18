@@ -35,6 +35,7 @@ export default function SubscriberList() {
             <th scope="col">DIRECCION</th>
             <th scope="col">TELEFONO</th>
             <th scope="col">EQUIPOS</th>
+            <th scope="col">SERVIDORES</th>
           </tr>
         </thead>
         <tbody>
@@ -51,7 +52,8 @@ export default function SubscriberList() {
                 <td>{subscriber.email}</td>
                 <td>{subscriber.address}</td>
                 <td>{subscriber.phone}</td>
-                <td>{subscriber.equipments?.length}</td>
+                <td>{subscriber.totalEquipments}</td>
+                <td>{subscriber.totalServers}</td>
               </tr>
             ))}
         </tbody>

@@ -57,12 +57,15 @@ export default function SubscriberDetail() {
   }, []);
 
   return (
-    <div className="container">
+    <section className="container bg-dark text-white mt-2 p-3">
       {subscriber && (
-        <div className="row bg-dark text-white mt-2 p-3">
-          <div className="col-12 mb-3">
-            <h2 className="text-center">
-              {subscriber.code} - {subscriber.name}
+        <>
+          <h2 className="text-center">
+            {subscriber.code} - {subscriber.name}
+          </h2>
+          <article className="d-flex flex-column border p-3 rounded col-12 col-md-6 mb-3">
+            <h3>
+              CONTRATO
               {validateUserRole(user, "premium") && (
                 <NavLink
                   className="ms-2"
@@ -71,32 +74,32 @@ export default function SubscriberDetail() {
                   <PencilSquareIcon className="icon" />
                 </NavLink>
               )}
-            </h2>
-            <div className="row">
-              <div className="col-12 d-flex">
-                {validateUserRole(user, "premium") && (
-                  <NavLink
-                    to={`/subscribers/edit/${subscriber.code}/add-equipment`}
-                    className="btn btn-success btn-sm ms-2"
-                  >
-                    AGREGAR EQUIPO
-                  </NavLink>
-                )}
-                {validateUserRole(user, "premium") && (
-                  <button
-                    className="btn btn-danger btn-sm ms-auto"
-                    onClick={() => handleCancelSubscription(subscriber)}
-                  >
-                    CANCELAR ABONO
-                  </button>
-                )}
+            </h3>
+            <p>EQUIPOS: {subscriber.totalEquipments}</p>
+            <p>SERVIDORES: {subscriber.totalServers}</p>
+
+            {validateUserRole(user, "premium") && (
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => handleCancelSubscription(subscriber)}
+              >
+                CANCELAR ABONO
+              </button>
+            )}
+          </article>
+
+          <article className="border p-3 rounded col-12">
+            <h4>RELEVAMIENTO</h4>
+            {validateUserRole(user, "premium") && (
+              <div className="mb-3">
+                <NavLink
+                  to={`/subscribers/edit/${subscriber.code}/add-equipment`}
+                  className="btn btn-success btn-sm ms-2"
+                >
+                  AGREGAR EQUIPO
+                </NavLink>
               </div>
-            </div>
-          </div>
-          <div className="col-12">
-            <h3>TOTAL DE EQUIPOS: {subscriber.equipments.length}</h3>
-          </div>
-          <div className="col-12">
+            )}
             <div className="btn-group mb-3" role="group">
               <button
                 type="button"
@@ -159,6 +162,7 @@ export default function SubscriberDetail() {
                 </span>
               </button>
             </div>
+
             {equipments.length > 0 &&
               equipments.map((equipment) => (
                 <SubscriberEquipmentCard
@@ -167,9 +171,9 @@ export default function SubscriberDetail() {
                   subscriberCode={subscriber.code}
                 />
               ))}
-          </div>
-        </div>
+          </article>
+        </>
       )}
-    </div>
+    </section>
   );
 }
