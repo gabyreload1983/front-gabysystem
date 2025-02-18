@@ -13,6 +13,7 @@ import {
 import { SwalActionConfirmWithText, SwalToast } from "../../../utils/alerts";
 import { validateUserRole } from "../../../utils/validation";
 import { UserContext } from "../../../context/userContext";
+import { PencilSquareIcon } from "@heroicons/react/16/solid";
 
 export default function SubscriberDetail() {
   const { id } = useParams();
@@ -62,6 +63,14 @@ export default function SubscriberDetail() {
           <div className="col-12 mb-3">
             <h2 className="text-center">
               {subscriber.code} - {subscriber.name}
+              {validateUserRole(user, "premium") && (
+                <NavLink
+                  className="ms-2"
+                  to={`/subscribers/edit/${subscriber.code}`}
+                >
+                  <PencilSquareIcon className="icon" />
+                </NavLink>
+              )}
             </h2>
             <div className="row">
               <div className="col-12 d-flex">

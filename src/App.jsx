@@ -43,6 +43,7 @@ import SubscriberList from "./pages/Subscribers/list/SubscriberList";
 import SubscriberAdd from "./pages/Subscribers/add/SubscriberAdd";
 import SubscriberAddEquipment from "./pages/Subscribers/edit/add/SubscriberAddEquipment";
 import FormEditEquipment from "./pages/Subscribers/edit/equipment/FormEditEquipment";
+import UpdateSubscriber from "./pages/Subscribers/edit/UpdateSubscriber";
 
 function App() {
   return (
@@ -63,6 +64,7 @@ function App() {
             <Route path="rma" element={<Rma />} />
 
             <Route path="subscribers" element={<Subscribers />}>
+              <Route path="edit/:id" element={<UpdateSubscriber />} />
               <Route
                 path="edit/:id/add-equipment"
                 element={<SubscriberAddEquipment />}
