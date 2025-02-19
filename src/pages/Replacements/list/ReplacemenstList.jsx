@@ -28,17 +28,16 @@ export default function ReplacemenstList() {
     { name: "#", code: "position", sort: false },
     { name: "fecha", code: "createdAt", sort: true },
     { name: "orden", code: "orderNumber", sort: false },
-    { name: "tecnico", code: "technical_code", sort: false },
+    { name: "solicito", code: "requests", sort: false },
     { name: "descripcion", code: "description", sort: false },
     { name: "prov.", code: "supplier", sort: false },
     { name: "costo", code: "cost", sort: false },
-    { name: "precio", code: "finalPrice", sort: false },
+    { name: "precio f.", code: "finalPrice", sort: false },
     { name: "demora", code: "delay", sort: false },
-    { name: "envio", code: "shipmment", sort: false },
     { name: "confirmacion", code: "customerConfirmation", sort: false },
     { name: "estado", code: "status", sort: false },
     { name: "link", code: "linkSupplier", sort: false },
-    { name: "", code: "_id", sort: false },
+    { name: "editar", code: "edit", sort: false },
   ];
 
   const sortDataBy = (column) => {

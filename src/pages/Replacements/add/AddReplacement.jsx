@@ -1,23 +1,9 @@
-import { useState } from "react";
-import Form from "../../../components/Form/Form";
 import { AddNewReplacement } from "../../../utils/data";
 import { SwalToast } from "../../../utils/alerts";
 import { NavLink } from "react-router-dom";
-import { replacementInputs } from "../../../constants";
+import FormAddReplacement from "./FormAddReplacement";
 
 export default function AddReplacement() {
-  const [inputs, setInputs] = useState(replacementInputs);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-
-    setInputs((prevInputs) =>
-      prevInputs.map((input) =>
-        input.code === name ? { ...input, value } : input
-      )
-    );
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
@@ -26,10 +12,13 @@ export default function AddReplacement() {
       newReplacement[key] = value;
     }
 
+    newReplacement["customerConfirmation"] =
+      newReplacement["customerConfirmation"] === "yes";
+
     const res = await AddNewReplacement(newReplacement);
     if (res) {
       SwalToast("Se agrego repuesto", 800);
-      setInputs([...replacementInputs]);
+      form.reset;
     }
   };
 
@@ -39,12 +28,7 @@ export default function AddReplacement() {
         Volver
       </NavLink>
       <h2 className="text-center">Agregar Repuesto</h2>
-      <Form
-        inputs={inputs}
-        onHandleChange={handleChange}
-        onHandleSubmit={handleSubmit}
-        textButton="Agregar"
-      />
+      <FormAddReplacement onHandleSubmit={handleSubmit} />
     </div>
   );
 }
