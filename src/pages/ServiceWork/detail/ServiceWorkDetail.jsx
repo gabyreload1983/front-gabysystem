@@ -43,6 +43,7 @@ import {
   getOrderUbication,
   getOrderUbicationBackground,
 } from "../../../utils/tools";
+import UploadImagesReplacement from "./UploadImagesReplacement";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -237,9 +238,15 @@ export default function ServiceWorkDetail() {
             ) : (
               <Diagnosis diagnosis={serviceWork.diagnostico} />
             )}
-            <div className="col-12 p-2">
+            <div className="col-12 p-2 border rounded mb-2">
               <ServiceWorkProducts order={serviceWork} />
             </div>
+            <div className="col-12 p-2 border rounded mb-2">
+              <UploadImagesReplacement replacement={{ _id: 803030 }} />
+              <UploadImagesReplacement replacement={{ _id: 803031 }} />
+              <UploadImagesReplacement replacement={{ _id: 803032 }} />
+            </div>
+
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
               <ButtonPdf nrocompro={serviceWork.nrocompro} />
               <ButtonPdf nrocompro={serviceWork.nrocompro} customer={true} />
