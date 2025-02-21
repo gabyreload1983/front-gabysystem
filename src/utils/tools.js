@@ -21,7 +21,10 @@ export const formatPrice = (price) => {
     : p.slice(0, index).replaceAll(",", ".");
 };
 
-export const formatDate = (date) => moment(date).format("DD-MM-YYYY");
+export const formatDate = (date) => {
+  if (!date) return null;
+  return moment(date).format("DD-MM-YYYY");
+};
 
 export const validateWarranty = (date) => {
   const result = moment()
@@ -57,6 +60,13 @@ export const getTotalOrder = (order) => {
   const total = order.products.reduce((acc, val) => {
     return (acc += Number(val.priceList1WithTax));
   }, Number(order.costo));
+  return formatPrice(total);
+};
+
+export const getTotalReplacements = (replacements) => {
+  const total = replacements.reduce((acc, val) => {
+    return (acc += Number(val.finalPrice));
+  }, 0);
   return formatPrice(total);
 };
 

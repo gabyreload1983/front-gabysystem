@@ -21,6 +21,7 @@ import {
 import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import {
   closeServiceWork,
+  getReplacementsByServiceWork,
   getServiceWork,
   saveServiceWork,
   sendServiceWorkPdf,
@@ -43,18 +44,21 @@ import {
   getOrderUbication,
   getOrderUbicationBackground,
 } from "../../../utils/tools";
-import UploadImagesReplacement from "./UploadImagesReplacement";
+import ServiceWorkReplacements from "./ServiceWorkReplacements";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [serviceWork, setServiceWork] = useState(null);
+  const [replacements, setReplacements] = useState(null);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const getData = async () => {
-    const data = await getServiceWork({ nrocompro: id });
-    setServiceWork(data);
+    const dataServiceWork = await getServiceWork({ nrocompro: id });
+    setServiceWork(dataServiceWork);
+    const dataReplacements = await getReplacementsByServiceWork(id);
+    setReplacements(dataReplacements);
   };
 
   const serviceWorkOut = async (nrocompro) => {
@@ -242,9 +246,7 @@ export default function ServiceWorkDetail() {
               <ServiceWorkProducts order={serviceWork} />
             </div>
             <div className="col-12 p-2 border rounded mb-2">
-              <UploadImagesReplacement replacement={{ _id: 803030 }} />
-              <UploadImagesReplacement replacement={{ _id: 803031 }} />
-              <UploadImagesReplacement replacement={{ _id: 803032 }} />
+              <ServiceWorkReplacements replacements={replacements} />
             </div>
 
             <div className="col-12 p-2 d-flex justify-content-end gap-2">

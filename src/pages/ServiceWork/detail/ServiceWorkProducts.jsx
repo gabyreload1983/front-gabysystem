@@ -3,6 +3,7 @@ import { formatPrice, getTotalOrder } from "../../../utils/tools";
 export default function ServiceWorkProducts({ order }) {
   return (
     <div className="table-responsive">
+      <h2>Detalle Orden</h2>
       <table className="table table-dark">
         <thead>
           <tr>

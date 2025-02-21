@@ -75,12 +75,10 @@ export default function FormAddReplacement({ onHandleSubmit }) {
         <div className="form-floating mb-3">
           <input
             className="form-control form-control-sm"
-            type="number"
-            name="delay"
-            defaultValue={0}
-            min={0}
+            type="date"
+            name="deliveryDate"
           />
-          <label htmlFor="delay">Demora</label>
+          <label htmlFor="deliveryDate">Llega dia</label>
         </div>
       </div>
 

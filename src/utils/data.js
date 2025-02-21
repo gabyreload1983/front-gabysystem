@@ -351,6 +351,15 @@ export const getReplacement = async (id) => {
   return response.payload;
 };
 
+export const getReplacementsByServiceWork = async (id) => {
+  const response = await getFromApi(
+    `${API_URL}/api/replacements/service-work/${id}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
 export const deleteReplacement = async (id) => {
   const response = await deleteToApi(`${API_URL}/api/replacements/${id}`);
   if (!response) return;
