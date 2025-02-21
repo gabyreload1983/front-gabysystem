@@ -376,7 +376,7 @@ export const updateReplacement = async (id, replacementUpdated) => {
   return response.payload;
 };
 
-export const AddNewReplacement = async (replacement) => {
+export const addNewReplacement = async (replacement) => {
   const response = await postToApi(`${API_URL}/api/replacements`, {
     replacement,
   });

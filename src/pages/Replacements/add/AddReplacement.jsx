@@ -1,4 +1,4 @@
-import { AddNewReplacement } from "../../../utils/data";
+import { addNewReplacement } from "../../../utils/data";
 import { SwalToast } from "../../../utils/alerts";
 import { NavLink } from "react-router-dom";
 import FormAddReplacement from "./FormAddReplacement";
@@ -15,7 +15,7 @@ export default function AddReplacement() {
     newReplacement["customerConfirmation"] =
       newReplacement["customerConfirmation"] === "yes";
 
-    const res = await AddNewReplacement(newReplacement);
+    const res = await addNewReplacement(newReplacement);
     if (res) {
       SwalToast("Se agrego repuesto", 800);
       form.reset;
