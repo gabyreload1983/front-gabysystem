@@ -4,10 +4,20 @@ import {
   formatPrice,
   getTotalReplacements,
 } from "../../../utils/tools";
+import { useState } from "react";
 
-export default function ServiceWorkReplacements({ replacements }) {
+export default function ServiceWorkReplacements({
+  replacements,
+  onHandleAddReplacement,
+}) {
+  const [show, setShow] = useState(false);
+
   const handleEdit = async () => {};
-  console.log(replacements);
+  const handleRequestReplacement = async () => {
+    const description = document.getElementById("description").value;
+    await onHandleAddReplacement(description);
+    setShow(false);
+  };
 
   return (
     <div className="table-responsive">
@@ -63,7 +73,63 @@ export default function ServiceWorkReplacements({ replacements }) {
           </tfoot>
         </table>
       )}
-      <button className="btn btn-sm btn-success">Pedir Repuesto</button>
+
+      <button
+        type="button"
+        className="btn btn-sm btn-success"
+        onClick={() => setShow(true)}
+      >
+        Pedir Repuesto
+      </button>
+
+      {show && (
+        <div
+          className="text-black modal fade show d-block"
+          tabIndex="-1"
+          role="dialog"
+        >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Pedir Repuesto</h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShow(false)}
+                ></button>
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label htmlFor="description" className="form-label">
+                    REPUESTO
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                  />
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => setShow(false)}
+                >
+                  Cerrar
+                </button>
+                <button
+                  onClick={handleRequestReplacement}
+                  type="button"
+                  className="btn btn-primary"
+                >
+                  Solicitar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

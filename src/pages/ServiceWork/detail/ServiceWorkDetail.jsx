@@ -20,6 +20,7 @@ import {
 } from "../../../utils/validation";
 import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import {
+  addNewReplacement,
   closeServiceWork,
   getReplacementsByServiceWork,
   getServiceWork,
@@ -141,6 +142,17 @@ export default function ServiceWorkDetail() {
     getData();
   };
 
+  const handleAddReplacement = async (description) => {
+    const replacement = {
+      description,
+      orderNumber: id,
+      requests: user.code_technical,
+    };
+    const response = await addNewReplacement(replacement);
+    if (!response) return;
+    getData();
+  };
+
   useEffect(() => {
     getData();
   }, [id]);
@@ -246,7 +258,10 @@ export default function ServiceWorkDetail() {
               <ServiceWorkProducts order={serviceWork} />
             </div>
             <div className="col-12 p-2 border rounded mb-2">
-              <ServiceWorkReplacements replacements={replacements} />
+              <ServiceWorkReplacements
+                replacements={replacements}
+                onHandleAddReplacement={handleAddReplacement}
+              />
             </div>
 
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
