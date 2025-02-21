@@ -48,6 +48,7 @@ import Replacements from "./pages/Replacements/Replacements";
 import AddReplacement from "./pages/Replacements/add/AddReplacement";
 import EditReplacement from "./pages/Replacements/edit/EditReplacement";
 import ReplacemenstList from "./pages/Replacements/list/ReplacemenstList";
+import ReplacementTechEdit from "./pages/ServiceWork/detail/ReplacementTechEdit";
 
 function App() {
   return (
@@ -127,6 +128,10 @@ function App() {
               <Route
                 path="edit/:id/customer"
                 element={<EditCustomerServiceWork />}
+              />
+              <Route
+                path="replacement/edit/:id"
+                element={<ReplacementTechEdit />}
               />
             </Route>
 

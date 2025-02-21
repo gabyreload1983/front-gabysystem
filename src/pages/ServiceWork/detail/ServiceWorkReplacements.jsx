@@ -5,14 +5,18 @@ import {
   getTotalReplacements,
 } from "../../../utils/tools";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ServiceWorkReplacements({
   replacements,
   onHandleAddReplacement,
 }) {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
-  const handleEdit = async () => {};
+  const handleEdit = async (id) => {
+    navigate(`/servicework/replacement/edit/${id}`);
+  };
   const handleRequestReplacement = async () => {
     const description = document.getElementById("description").value;
     await onHandleAddReplacement(description);
