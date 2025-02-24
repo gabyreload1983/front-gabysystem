@@ -2,6 +2,7 @@ import { PencilIcon } from "@heroicons/react/16/solid";
 import {
   formatDate,
   formatPrice,
+  getReplacementStatus,
   getTotalReplacements,
 } from "../../../utils/tools";
 import { useState } from "react";
@@ -47,7 +48,7 @@ export default function ServiceWorkReplacements({
                     ${formatPrice(replacement.finalPrice)}
                   </td>
                   <td className="d-none d-md-table-cell">
-                    {replacement.status}
+                    {getReplacementStatus(replacement.status)}
                   </td>
                   <td className="d-none d-md-table-cell">
                     {formatDate(replacement.deliveryDate)}

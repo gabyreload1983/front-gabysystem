@@ -1,5 +1,5 @@
 import moment from "moment";
-import { formatPrice } from "../../utils/tools";
+import { formatPrice, getReplacementStatus } from "../../utils/tools";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 
@@ -30,7 +30,9 @@ export default function TableBody({ data }) {
           <td className="d-none d-lg-table-cell">
             {item.customerConfirmation ? "SI" : "NO"}
           </td>
-          <td className="d-none d-lg-table-cell">{item.status}</td>
+          <td className="d-none d-lg-table-cell">
+            {getReplacementStatus(item.status)}
+          </td>
           <td className="d-none d-lg-table-cell">
             <a
               href={item.linkSupplier}

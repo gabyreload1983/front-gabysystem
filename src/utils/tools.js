@@ -70,6 +70,11 @@ export const getTotalReplacements = (replacements) => {
   return formatPrice(total);
 };
 
+export const getReplacementStatus = (status) => {
+  if (status === "pending") return "pendiente";
+  return status;
+};
+
 export const translateInvoiceState = (invoiceState) => {
   const translate = { pay: "Pago", pending: "Pendinte", toFree: "A liberar" };
 
