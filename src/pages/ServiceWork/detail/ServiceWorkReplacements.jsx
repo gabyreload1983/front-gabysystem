@@ -15,7 +15,7 @@ export default function ServiceWorkReplacements({
   const [show, setShow] = useState(false);
 
   const handleEdit = async (id) => {
-    navigate(`/servicework/replacement/edit/${id}`);
+    navigate(`replacement/${id}`);
   };
   const handleRequestReplacement = async () => {
     const description = document.getElementById("description").value;

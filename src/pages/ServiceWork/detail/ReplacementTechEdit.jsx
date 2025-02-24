@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import { getReplacement, updateReplacement } from "../../../utils/data";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import UploadImagesReplacement from "./UploadImagesReplacement";
 import { SwalToast } from "../../../utils/alerts";
 
 export default function ReplacementTechEdit() {
-  const { id } = useParams();
+  const { sid, rid } = useParams();
   const [replacement, setReplacement] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const response = await updateReplacement(id, replacement);
+    const response = await updateReplacement(rid, replacement);
     if (!response) return;
     SwalToast("Se actualizo repuesto!");
     getData();
@@ -25,7 +25,7 @@ export default function ReplacementTechEdit() {
   };
 
   const getData = async () => {
-    const dataReplacement = await getReplacement(id);
+    const dataReplacement = await getReplacement(rid);
     setReplacement(dataReplacement);
   };
 
@@ -36,6 +36,12 @@ export default function ReplacementTechEdit() {
   return (
     <>
       <div className="container">
+        <NavLink
+          className="btn btn-info mb-2"
+          to={`/servicework/detail/${sid}`}
+        >
+          Volver
+        </NavLink>
         {replacement && (
           <form className="row bg-dark p-3" onSubmit={handleSubmit}>
             <div className="col-12">

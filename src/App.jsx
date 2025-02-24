@@ -113,7 +113,13 @@ function App() {
             </Route>
 
             <Route path="servicework" element={<LayoutServiceWork />}>
+              <Route
+                path="detail/:sid/replacement/:rid"
+                element={<ReplacementTechEdit />}
+              />
+
               <Route path="detail/:id" element={<ServiceWorkDetail />} />
+
               <Route
                 path="edit/products/:id"
                 element={<EditServiceWorkProducts />}
@@ -128,10 +134,6 @@ function App() {
               <Route
                 path="edit/:id/customer"
                 element={<EditCustomerServiceWork />}
-              />
-              <Route
-                path="replacement/edit/:id"
-                element={<ReplacementTechEdit />}
               />
             </Route>
 
