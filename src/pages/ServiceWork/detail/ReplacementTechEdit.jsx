@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import { getReplacement, updateReplacement } from "../../../utils/data";
 import { NavLink, useParams } from "react-router-dom";
 import UploadImagesReplacement from "./UploadImagesReplacement";
-import { SwalToast } from "../../../utils/alerts";
+import { SwalError, SwalSuccess, SwalToast } from "../../../utils/alerts";
 import ReplacementImages from "../../Replacements/edit/ReplacementImages";
+import { API_URL } from "../../../constants";
 
 export default function ReplacementTechEdit() {
   const { sid, rid } = useParams();
@@ -23,6 +24,21 @@ export default function ReplacementTechEdit() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleUpload = async (formData) => {
+    const response = await fetch(
+      `${API_URL}/api/replacements/images/${replacement._id}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response) return SwalError("Error subiendo fotos");
+
+    await SwalSuccess("Se subieron las fotos con exito!!");
+    getData();
   };
 
   const getData = async () => {
@@ -105,7 +121,7 @@ export default function ReplacementTechEdit() {
           {replacement && (
             <>
               <div className="col-12 col-md-6">
-                <UploadImagesReplacement replacement={replacement} />
+                <UploadImagesReplacement onHandleUpload={handleUpload} />
               </div>
               <div className="col-12">
                 <ReplacementImages replacement={replacement} />
