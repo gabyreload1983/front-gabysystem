@@ -26,6 +26,11 @@ export const formatDate = (date) => {
   return moment(date).format("DD-MM-YYYY");
 };
 
+export const formatDateForInput = (date) => {
+  if (!date) return "";
+  return moment(date).format("YYYY-MM-DD");
+};
+
 export const validateWarranty = (date) => {
   const result = moment()
     .startOf("day")
