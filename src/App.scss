@@ -140,3 +140,10 @@ textarea {
   border: unset;
   border-radius: 5px;
 }
+
+.img-replacement {
+  width: 100%;
+  height: 300px;
+  object-fit: contain;
+  object-position: center;
+}
