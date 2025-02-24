@@ -1,13 +1,29 @@
 import { useEffect, useState } from "react";
-import { getReplacement } from "../../../utils/data";
+import { getReplacement, updateReplacement } from "../../../utils/data";
 import { useParams } from "react-router-dom";
 import UploadImagesReplacement from "./UploadImagesReplacement";
+import { SwalToast } from "../../../utils/alerts";
 
 export default function ReplacementTechEdit() {
   const { id } = useParams();
   const [replacement, setReplacement] = useState(null);
 
-  const handleSubmit = async () => {};
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const response = await updateReplacement(id, replacement);
+    if (!response) return;
+    SwalToast("Se actualizo repuesto!");
+    getData();
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setReplacement((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const getData = async () => {
     const dataReplacement = await getReplacement(id);
     setReplacement(dataReplacement);
@@ -28,8 +44,9 @@ export default function ReplacementTechEdit() {
                   className="form-control form-control-sm"
                   type="text"
                   name="description"
-                  defaultValue={replacement.description}
+                  value={replacement.description}
                   required
+                  onChange={handleChange}
                 />
                 <label htmlFor="description">Descripcion</label>
               </div>
@@ -40,6 +57,7 @@ export default function ReplacementTechEdit() {
                 <select
                   name="customerConfirmation"
                   className="form-select form-select-sm mb-3"
+                  onChange={handleChange}
                 >
                   {replacement.customerConfirmation ? (
                     <>
@@ -65,7 +83,8 @@ export default function ReplacementTechEdit() {
                   className="form-control form-control-sm"
                   type="text"
                   name="notes"
-                  defaultValue={replacement.notes}
+                  value={replacement.notes}
+                  onChange={handleChange}
                 />
                 <label htmlFor="notes">Notas</label>
               </div>
