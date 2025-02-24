@@ -35,9 +35,24 @@ export default function UploadImagesReplacement({ replacement }) {
     SwalSuccess("Se subieron las fotos con exito!!");
   };
   return (
-    <div className="border rounded">
+    <>
+      <div className="border rounded mb-3 input-group">
+        <input
+          className="form-control"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleChange}
+        />
+        <button class="btn btn-success" onClick={handleUpload}>
+          Subir Imágenes
+        </button>
+      </div>
+
+      {/* <div className="border rounded">
       <input type="file" accept="image/*" multiple onChange={handleChange} />
       <button onClick={handleUpload}>Subir Imágenes</button>
-    </div>
+    </div> */}
+    </>
   );
 }

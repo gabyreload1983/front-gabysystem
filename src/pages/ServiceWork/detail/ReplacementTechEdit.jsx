@@ -3,6 +3,7 @@ import { getReplacement, updateReplacement } from "../../../utils/data";
 import { NavLink, useParams } from "react-router-dom";
 import UploadImagesReplacement from "./UploadImagesReplacement";
 import { SwalToast } from "../../../utils/alerts";
+import ReplacementImages from "../../Replacements/edit/ReplacementImages";
 
 export default function ReplacementTechEdit() {
   const { sid, rid } = useParams();
@@ -100,12 +101,17 @@ export default function ReplacementTechEdit() {
             </div>
           </form>
         )}
-        <div className="row">
-          <div className="col">
-            {replacement && (
-              <UploadImagesReplacement replacement={replacement} />
-            )}
-          </div>
+        <div className="row mt-3">
+          {replacement && (
+            <>
+              <div className="col-12 col-md-6">
+                <UploadImagesReplacement replacement={replacement} />
+              </div>
+              <div className="col-12">
+                <ReplacementImages replacement={replacement} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

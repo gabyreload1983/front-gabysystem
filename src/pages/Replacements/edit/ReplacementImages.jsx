@@ -6,7 +6,7 @@ export default function ReplacementImages({ replacement }) {
   return (
     <div className="row border rounded">
       {replacement.images.map((image) => (
-        <div key={replacement._id} className="col-12 col-md-6 col-lg-4 p-3">
+        <div key={image} className="col-12 col-md-6 col-lg-4 p-3">
           <img
             className="img-fluid img-replacement"
             src={`${API_URL}/replacements/${replacement._id}/${image}`}
