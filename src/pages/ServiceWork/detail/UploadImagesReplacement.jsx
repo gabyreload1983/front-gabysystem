@@ -31,7 +31,7 @@ export default function UploadImagesReplacement({ onHandleUpload }) {
         multiple
         onChange={handleChange}
       />
-      <button class="btn btn-success" onClick={handleUpload}>
+      <button className="btn btn-success" onClick={handleUpload}>
         Subir Imágenes
       </button>
     </div>

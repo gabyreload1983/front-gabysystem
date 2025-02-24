@@ -5,9 +5,16 @@ import {
   getReplacement,
   updateReplacement,
 } from "../../../utils/data";
-import { SwalActionConfirmWithText, SwalToast } from "../../../utils/alerts";
+import {
+  SwalActionConfirmWithText,
+  SwalError,
+  SwalSuccess,
+  SwalToast,
+} from "../../../utils/alerts";
 import { formatDateForInput } from "../../../utils/tools";
 import ReplacementImages from "./ReplacementImages";
+import UploadImagesReplacement from "../../ServiceWork/detail/UploadImagesReplacement";
+import { API_URL } from "../../../constants";
 
 export default function EditReplacement() {
   const { id } = useParams();
@@ -49,6 +56,20 @@ export default function EditReplacement() {
       await SwalToast(`Se borro el repuesto!!!`, 800);
       navigate("/replacements/list");
     }
+  };
+  const handleUpload = async (formData) => {
+    const response = await fetch(
+      `${API_URL}/api/replacements/images/${replacement._id}`,
+      {
+        method: "POST",
+        body: formData,
+      }
+    );
+
+    if (!response) return SwalError("Error subiendo fotos");
+
+    await SwalSuccess("Se subieron las fotos con exito!!");
+    getData();
   };
 
   useEffect(() => {
@@ -234,7 +255,18 @@ export default function EditReplacement() {
           </form>
         )}
       </div>
-      {replacement && <ReplacementImages replacement={replacement} />}
+      <div className="row mt-3">
+        {replacement && (
+          <>
+            <div className="col-12 col-md-6">
+              <UploadImagesReplacement onHandleUpload={handleUpload} />
+            </div>
+            <div className="col-12">
+              <ReplacementImages replacement={replacement} />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 }
