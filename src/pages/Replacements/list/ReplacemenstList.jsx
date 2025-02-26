@@ -33,9 +33,9 @@ export default function ReplacemenstList() {
     { name: "prov.", code: "supplier", sort: false },
     { name: "costo", code: "cost", sort: false },
     { name: "precio f.", code: "finalPrice", sort: false },
-    { name: "demora", code: "delay", sort: false },
     { name: "confirmacion", code: "customerConfirmation", sort: false },
     { name: "estado", code: "status", sort: false },
+    { name: "Llega", code: "deliveryDate", sort: true },
     { name: "link", code: "linkSupplier", sort: false },
     { name: "editar", code: "edit", sort: false },
   ];

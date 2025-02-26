@@ -42,7 +42,7 @@ export default function ServiceWorkReplacements({
           <tbody>
             {replacements.map((replacement) => {
               return (
-                <tr key={replacement._id}>
+                <tr key={replacement._id} title={`NOTAS: ${replacement.notes}`}>
                   <td>{replacement.description}</td>
                   <td className="custom-td text-end">
                     ${formatPrice(replacement.finalPrice)}
@@ -54,7 +54,7 @@ export default function ServiceWorkReplacements({
                     {formatDate(replacement.deliveryDate)}
                   </td>
                   <td className="d-none d-lg-table-cell">
-                    {replacement.customerConfirmation ? "SI" : "NO"}
+                    {replacement.customerConfirmation}
                   </td>
                   <td>
                     <PencilIcon

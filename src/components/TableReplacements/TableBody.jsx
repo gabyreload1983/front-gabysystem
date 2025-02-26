@@ -1,5 +1,8 @@
-import moment from "moment";
-import { formatPrice, getReplacementStatus } from "../../utils/tools";
+import {
+  formatDate,
+  formatPrice,
+  getReplacementStatus,
+} from "../../utils/tools";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { useNavigate } from "react-router-dom";
 
@@ -16,7 +19,7 @@ export default function TableBody({ data }) {
         <tr key={item._id} className="table-dark" title={`NOTA: ${item.notes}`}>
           <td>{index + 1}</td>
           <td className="d-none d-lg-table-cell">
-            {moment(item.createdAt).format("DD-MM-YYYY")}
+            {formatDate(item.createdAt)}
           </td>
           <td className="d-none d-lg-table-cell">{item.orderNumber}</td>
           <td className="d-none d-lg-table-cell">{item.requests}</td>
@@ -26,21 +29,25 @@ export default function TableBody({ data }) {
           <td className="d-none d-lg-table-cell">
             ${formatPrice(item.finalPrice)}
           </td>
-          <td className="d-none d-lg-table-cell">{item.delay}</td>
           <td className="d-none d-lg-table-cell">
-            {item.customerConfirmation ? "SI" : "NO"}
+            {item.customerConfirmation}
           </td>
           <td className="d-none d-lg-table-cell">
             {getReplacementStatus(item.status)}
           </td>
           <td className="d-none d-lg-table-cell">
-            <a
-              href={item.linkSupplier}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Link
-            </a>
+            {formatDate(item.deliveryDate)}
+          </td>
+          <td className="d-none d-lg-table-cell">
+            {item.linkSupplier && (
+              <a
+                href={item.linkSupplier}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Link
+              </a>
+            )}
           </td>
           <td className="d-none d-lg-table-cell">
             <PencilIcon

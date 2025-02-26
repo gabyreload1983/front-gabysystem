@@ -11,7 +11,11 @@ import {
   SwalSuccess,
   SwalToast,
 } from "../../../utils/alerts";
-import { formatDateForInput } from "../../../utils/tools";
+import {
+  calculeteFinalPrice,
+  formatDateForInput,
+  getReplacementStatus,
+} from "../../../utils/tools";
 import ReplacementImages from "./ReplacementImages";
 import UploadImagesReplacement from "../../ServiceWork/detail/UploadImagesReplacement";
 import { API_URL } from "../../../constants";
@@ -29,6 +33,22 @@ export default function EditReplacement() {
 
   const handleChange = (event) => {
     let { name, value } = event.target;
+    if (name === "cost") {
+      const finalPrice = calculeteFinalPrice(value, replacement.deliveryCost);
+      return setReplacement((prev) => ({
+        ...prev,
+        finalPrice,
+        [name]: value,
+      }));
+    }
+    if (name === "deliveryCost") {
+      const finalPrice = calculeteFinalPrice(replacement.cost, value);
+      return setReplacement((prev) => ({
+        ...prev,
+        finalPrice,
+        [name]: value,
+      }));
+    }
     setReplacement((prev) => ({
       ...prev,
       [name]: value,
@@ -132,18 +152,6 @@ export default function EditReplacement() {
               <div className="form-floating mb-3">
                 <input
                   className="form-control form-control-sm"
-                  type="text"
-                  name="supplier"
-                  value={replacement.supplier}
-                  onChange={handleChange}
-                />
-                <label htmlFor="supplier">Proveedor</label>
-              </div>
-            </div>
-            <div className="col-12 col-lg-4">
-              <div className="form-floating mb-3">
-                <input
-                  className="form-control form-control-sm"
                   type="number"
                   name="cost"
                   value={replacement.cost}
@@ -153,6 +161,20 @@ export default function EditReplacement() {
                 <label htmlFor="cost">Costo</label>
               </div>
             </div>
+            <div className="col-12 col-lg-4">
+              <div className="form-floating mb-3">
+                <input
+                  className="form-control form-control-sm"
+                  type="number"
+                  name="deliveryCost"
+                  value={replacement.deliveryCost}
+                  min={0}
+                  onChange={handleChange}
+                />
+                <label htmlFor="deliveryCost">Costo Envio</label>
+              </div>
+            </div>
+
             <div className="col-12 col-lg-4">
               <div className="form-floating mb-3">
                 <input
@@ -170,6 +192,18 @@ export default function EditReplacement() {
               <div className="form-floating mb-3">
                 <input
                   className="form-control form-control-sm"
+                  type="text"
+                  name="supplier"
+                  value={replacement.supplier}
+                  onChange={handleChange}
+                />
+                <label htmlFor="supplier">Proveedor</label>
+              </div>
+            </div>
+            <div className="col-12 col-lg-4">
+              <div className="form-floating mb-3">
+                <input
+                  className="form-control form-control-sm"
                   type="date"
                   name="deliveryDate"
                   value={formatDateForInput(replacement.deliveryDate)}
@@ -181,26 +215,21 @@ export default function EditReplacement() {
 
             <div className="col-12 col-lg-4">
               <div className="form-floating mb-3">
-                <select
+                <datalist id="customerConfirmation">
+                  <option value="Confirmo"></option>
+                  <option value="No lo quiere"></option>
+                  <option value="Esperando Confirmacion"></option>
+                  <option value="Orden Cerrada"></option>
+                </datalist>
+                <input
+                  className="form-control form-control-sm"
+                  list="customerConfirmation"
                   name="customerConfirmation"
-                  className="form-select form-select-sm mb-3"
                   onChange={handleChange}
-                >
-                  {replacement.customerConfirmation ? (
-                    <>
-                      <option value="yes">SI</option>
-                      <option value="no">NO</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="no">NO</option>
-                      <option value="yes">SI</option>
-                    </>
-                  )}
-                </select>
-                <label htmlFor="customerConfirmation">
-                  Confirmacion Cliente
-                </label>
+                  value={replacement.customerConfirmation}
+                />
+
+                <label htmlFor="status">Confirmacion Cliente</label>
               </div>
             </div>
             <div className="col-12 col-lg-4">
@@ -219,7 +248,7 @@ export default function EditReplacement() {
                   list="status"
                   name="status"
                   onChange={handleChange}
-                  value={replacement.status}
+                  value={getReplacementStatus(replacement.status)}
                 />
 
                 <label htmlFor="status">Estado</label>

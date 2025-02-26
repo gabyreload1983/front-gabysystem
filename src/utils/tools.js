@@ -293,3 +293,6 @@ export const sortArrayBy = (array, field, desc) =>
     if (a[field] > b[field]) return desc ? -1 : 1;
     return 0;
   });
+
+export const calculeteFinalPrice = (cost, deliveryCost, revenue = 1.3) =>
+  Number(cost) * revenue + Number(deliveryCost);

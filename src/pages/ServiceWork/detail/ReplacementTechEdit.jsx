@@ -77,26 +77,22 @@ export default function ReplacementTechEdit() {
 
             <div className="col-12">
               <div className="form-floating mb-3">
-                <select
+                <datalist id="customerConfirmation">
+                  <option value="Confirmo"></option>
+                  <option value="No lo quiere"></option>
+                  <option value="Esperando Confirmacion"></option>
+                  <option value="Orden Cerrada"></option>
+                  <option value="No"></option>
+                </datalist>
+                <input
+                  className="form-control form-control-sm"
+                  list="customerConfirmation"
                   name="customerConfirmation"
-                  className="form-select form-select-sm mb-3"
                   onChange={handleChange}
-                >
-                  {replacement.customerConfirmation ? (
-                    <>
-                      <option value="yes">SI</option>
-                      <option value="no">NO</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="no">NO</option>
-                      <option value="yes">SI</option>
-                    </>
-                  )}
-                </select>
-                <label htmlFor="customerConfirmation">
-                  Confirmacion Cliente
-                </label>
+                  value={replacement.customerConfirmation}
+                />
+
+                <label htmlFor="status">Confirmacion Cliente</label>
               </div>
             </div>
 
