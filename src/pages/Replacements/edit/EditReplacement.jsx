@@ -16,6 +16,7 @@ import {
 import {
   calculeteFinalPrice,
   formatDateForInput,
+  getJWT,
   getReplacementStatus,
 } from "../../../utils/tools";
 import ReplacementImages from "./ReplacementImages";
@@ -56,6 +57,7 @@ export default function EditReplacement() {
       [name]: value,
     }));
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
@@ -63,7 +65,8 @@ export default function EditReplacement() {
     for (const [key, value] of form) {
       replacementUpdated[key] = value;
     }
-    await updateReplacement(id, replacementUpdated);
+    const response = await updateReplacement(id, replacementUpdated);
+    if (!response) return;
     await SwalToast("Se actualizo repuesto!!!", 800);
   };
 
@@ -75,6 +78,7 @@ export default function EditReplacement() {
     );
     if (res) {
       const response = await deleteReplacement(id);
+      if (!response) return;
       await SwalToast(`Se borro el repuesto!!!`, 800);
       navigate("/replacements/list");
     }
@@ -110,10 +114,13 @@ export default function EditReplacement() {
       {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`,
+        },
       }
     );
 
-    if (!response) return SwalError("Error subiendo fotos");
+    if (!response.ok) return SwalError("Error subiendo fotos");
 
     await SwalSuccess("Se subieron las fotos con exito!!");
     getData();
