@@ -5,6 +5,7 @@ import UploadImagesReplacement from "./UploadImagesReplacement";
 import { SwalError, SwalSuccess, SwalToast } from "../../../utils/alerts";
 import ReplacementImages from "../../Replacements/edit/ReplacementImages";
 import { API_URL } from "../../../constants";
+import { getJWT } from "../../../utils/tools";
 
 export default function ReplacementTechEdit() {
   const { sid, rid } = useParams();
@@ -32,10 +33,13 @@ export default function ReplacementTechEdit() {
       {
         method: "POST",
         body: formData,
+        headers: {
+          Authorization: `Bearer ${getJWT()}`,
+        },
       }
     );
 
-    if (!response) return SwalError("Error subiendo fotos");
+    if (!response.ok) return SwalError("Error subiendo fotos");
 
     await SwalSuccess("Se subieron las fotos con exito!!");
     getData();
