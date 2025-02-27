@@ -8,6 +8,7 @@ import { sortArrayBy } from "../../../utils/tools";
 export default function ReplacemenstList() {
   const { user } = useContext(UserContext);
   const [replacements, setReplacements] = useState([]);
+  const [active, setActive] = useState("pending");
   const [sortData, setSortData] = useState({
     name: "fecha",
     code: "createdAt",
@@ -18,12 +19,14 @@ export default function ReplacemenstList() {
     const data = await getReplacements();
 
     setReplacements(sortArrayBy(data, sortData.code, sortData.sort));
+    setActive("pending");
   };
 
   const getReplacementsArchived = async () => {
     const data = await getReplacements(true);
 
     setReplacements(data);
+    setActive("archived");
   };
 
   useEffect(() => {
@@ -56,10 +59,20 @@ export default function ReplacemenstList() {
     <div className="row gap-3">
       <div className="d-flex justify-content-between gap-2 mt-3">
         <div className="d-flex gap-2">
-          <button className="btn btn-info" onClick={getData}>
+          <button
+            className={`btn btn-outline-info ${
+              active === "pending" ? "active" : ""
+            }`}
+            onClick={getData}
+          >
             Pendientes
           </button>
-          <button className="btn btn-warning" onClick={getReplacementsArchived}>
+          <button
+            className={`btn btn-outline-warning ${
+              active === "archived" ? "active" : ""
+            }`}
+            onClick={getReplacementsArchived}
+          >
             Archivados
           </button>
         </div>
