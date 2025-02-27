@@ -67,6 +67,14 @@ export const validateEditServiceWork = (user, order) => {
   );
 };
 
+export const validateAddReplacement = (user, order) => {
+  return (
+    (user.role === "technical" || user.role === "premium") &&
+    order.estado === 22 &&
+    order.tecnico === user.code_technical
+  );
+};
+
 export const validateTakeServiceWork = (user, order) => {
   return (
     (user.role === "technical" || user.role === "premium") &&

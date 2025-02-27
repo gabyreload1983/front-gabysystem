@@ -11,6 +11,7 @@ import SendPdf from "../../../components/ServiceWork/SendPdf";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
 import {
   validateAddingProducts,
+  validateAddReplacement,
   validateEditServiceWork,
   validateFreeServiceWork,
   validateSendPdf,
@@ -257,12 +258,14 @@ export default function ServiceWorkDetail() {
             <div className="col-12 p-2 border rounded mb-2">
               <ServiceWorkProducts order={serviceWork} />
             </div>
-            <div className="col-12 p-2 border rounded mb-2">
-              <ServiceWorkReplacements
-                replacements={replacements}
-                onHandleAddReplacement={handleAddReplacement}
-              />
-            </div>
+            {validateAddReplacement(user, serviceWork) && (
+              <div className="col-12 p-2 border rounded mb-2">
+                <ServiceWorkReplacements
+                  replacements={replacements}
+                  onHandleAddReplacement={handleAddReplacement}
+                />
+              </div>
+            )}
 
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
               <ButtonPdf nrocompro={serviceWork.nrocompro} />
