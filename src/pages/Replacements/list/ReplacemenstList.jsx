@@ -54,13 +54,15 @@ export default function ReplacemenstList() {
 
   return (
     <div className="row gap-3">
-      <div className="d-flex justify-content-end gap-2 mt-3">
-        <button className="btn btn-info" onClick={getData}>
-          Pendientes
-        </button>
-        <button className="btn btn-warning" onClick={getReplacementsArchived}>
-          Archivados
-        </button>
+      <div className="d-flex justify-content-between gap-2 mt-3">
+        <div className="d-flex gap-2">
+          <button className="btn btn-info" onClick={getData}>
+            Pendientes
+          </button>
+          <button className="btn btn-warning" onClick={getReplacementsArchived}>
+            Archivados
+          </button>
+        </div>
         <NavLink className="btn btn-success" to="/replacements/add">
           Agregar
         </NavLink>
