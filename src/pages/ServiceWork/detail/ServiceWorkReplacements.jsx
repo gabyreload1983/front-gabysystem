@@ -24,6 +24,12 @@ export default function ServiceWorkReplacements({
     setShow(false);
   };
 
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleRequestReplacement();
+    }
+  };
+
   return (
     <div className="table-responsive">
       <h2>Repuestos</h2>
@@ -112,6 +118,7 @@ export default function ServiceWorkReplacements({
                     type="text"
                     className="form-control"
                     id="description"
+                    onKeyDown={handleKeyDown}
                   />
                 </div>
               </div>
