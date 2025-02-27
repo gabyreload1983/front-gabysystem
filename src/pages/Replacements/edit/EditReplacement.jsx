@@ -85,8 +85,21 @@ export default function EditReplacement() {
       "Seguro que queres archivar este repuesto???"
     );
     if (res) {
-      const response = await archivedReplacement(id);
+      const response = await archivedReplacement(id, true);
+      if (!response) return;
       await SwalToast(`Se archivo el repuesto!!!`, 800);
+      navigate("/replacements/list");
+    }
+  };
+
+  const handleUnarchive = async (id) => {
+    const res = await SwalQuestion(
+      "Seguro que queres desarchivar este repuesto???"
+    );
+    if (res) {
+      const response = await archivedReplacement(id, false);
+      if (!response) return;
+      await SwalToast(`Se desarchivo el repuesto!!!`, 800);
       navigate("/replacements/list");
     }
   };
@@ -112,24 +125,32 @@ export default function EditReplacement() {
 
   return (
     <div className="container p-2">
-      <div className="d-flex justify-content-between">
+      <div className="d-flex justify-content-between mb-3">
         <NavLink className="btn btn-info" to="/replacements/list">
           Volver
         </NavLink>
         <div className="d-flex gap-2">
-          <button
-            onClick={() => handleArchived(id)}
-            className="btn btn-warning"
-          >
-            Archivar
-          </button>
+          {replacement && replacement.archived ? (
+            <button
+              onClick={() => handleUnarchive(id)}
+              className="btn btn-outline-warning"
+            >
+              Desarchivar
+            </button>
+          ) : (
+            <button
+              onClick={() => handleArchived(id)}
+              className="btn btn-warning"
+            >
+              Archivar
+            </button>
+          )}
           <button onClick={() => handleDelete(id)} className="btn btn-danger">
             Borrar
           </button>
         </div>
       </div>
       <div className="col-12 mb-5">
-        <h2 className="text-center">Actualizar</h2>
         {replacement && (
           <form className="row bg-dark p-3" onSubmit={handleSubmit}>
             <div className="col-12 col-lg-4">

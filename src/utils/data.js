@@ -369,8 +369,10 @@ export const deleteReplacement = async (id) => {
   return response.payload;
 };
 
-export const archivedReplacement = async (id) => {
-  const response = await putToApi(`${API_URL}/api/replacements/archived/${id}`);
+export const archivedReplacement = async (id, archived) => {
+  const response = await putToApi(
+    `${API_URL}/api/replacements/archived/${id}?archived=${archived}`
+  );
   if (!response) return;
 
   return response.payload;
