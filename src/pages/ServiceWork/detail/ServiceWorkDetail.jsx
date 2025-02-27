@@ -11,6 +11,7 @@ import SendPdf from "../../../components/ServiceWork/SendPdf";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
 import {
   validateAddingProducts,
+  validateAddReplacement,
   validateEditServiceWork,
   validateFreeServiceWork,
   validateSendPdf,
@@ -20,7 +21,9 @@ import {
 } from "../../../utils/validation";
 import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import {
+  addNewReplacement,
   closeServiceWork,
+  getReplacementsByServiceWork,
   getServiceWork,
   saveServiceWork,
   sendServiceWorkPdf,
@@ -43,17 +46,21 @@ import {
   getOrderUbication,
   getOrderUbicationBackground,
 } from "../../../utils/tools";
+import ServiceWorkReplacements from "./ServiceWorkReplacements";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
   const [serviceWork, setServiceWork] = useState(null);
+  const [replacements, setReplacements] = useState(null);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const getData = async () => {
-    const data = await getServiceWork({ nrocompro: id });
-    setServiceWork(data);
+    const dataServiceWork = await getServiceWork({ nrocompro: id });
+    setServiceWork(dataServiceWork);
+    const dataReplacements = await getReplacementsByServiceWork(id);
+    setReplacements(dataReplacements);
   };
 
   const serviceWorkOut = async (nrocompro) => {
@@ -133,6 +140,17 @@ export default function ServiceWorkDetail() {
     });
     if (!response) return;
     SwalSuccess("Se envio orden!");
+    getData();
+  };
+
+  const handleAddReplacement = async (description) => {
+    const replacement = {
+      description,
+      orderNumber: id,
+      requests: user.code_technical,
+    };
+    const response = await addNewReplacement(replacement);
+    if (!response) return;
     getData();
   };
 
@@ -237,9 +255,18 @@ export default function ServiceWorkDetail() {
             ) : (
               <Diagnosis diagnosis={serviceWork.diagnostico} />
             )}
-            <div className="col-12 p-2">
+            <div className="col-12 p-2 border rounded mb-2">
               <ServiceWorkProducts order={serviceWork} />
             </div>
+            {validateAddReplacement(user, serviceWork) && (
+              <div className="col-12 p-2 border rounded mb-2">
+                <ServiceWorkReplacements
+                  replacements={replacements}
+                  onHandleAddReplacement={handleAddReplacement}
+                />
+              </div>
+            )}
+
             <div className="col-12 p-2 d-flex justify-content-end gap-2">
               <ButtonPdf nrocompro={serviceWork.nrocompro} />
               <ButtonPdf nrocompro={serviceWork.nrocompro} customer={true} />

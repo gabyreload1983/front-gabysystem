@@ -3,6 +3,7 @@ import {
   ChartBarIcon,
   CurrencyDollarIcon,
   NewspaperIcon,
+  WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { WrenchIcon } from "@heroicons/react/24/solid";
 
@@ -29,6 +30,11 @@ export default function SideBarPremium() {
       name: "RMA",
       to: "rma",
       icon: WrenchIcon,
+    },
+    {
+      name: "Repuestos",
+      to: "replacements/list",
+      icon: WrenchScrewdriverIcon,
     },
   ];
 

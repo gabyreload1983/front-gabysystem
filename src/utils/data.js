@@ -335,6 +335,67 @@ export const requestProduct = async (
   return response;
 };
 
+// REPLACEMENTS
+
+export const getReplacements = async (archived = false) => {
+  const response = await getFromApi(
+    `${API_URL}/api/replacements?archived=${archived}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const getReplacement = async (id) => {
+  const response = await getFromApi(`${API_URL}/api/replacements/${id}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const getReplacementsByServiceWork = async (id) => {
+  const response = await getFromApi(
+    `${API_URL}/api/replacements/service-work/${id}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const deleteReplacement = async (id) => {
+  const response = await deleteToApi(`${API_URL}/api/replacements/${id}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const archivedReplacement = async (id, archived) => {
+  const response = await putToApi(
+    `${API_URL}/api/replacements/archived/${id}?archived=${archived}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const updateReplacement = async (id, replacementUpdated) => {
+  const response = await putToApi(`${API_URL}/api/replacements/${id}`, {
+    replacementUpdated,
+  });
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const addNewReplacement = async (replacement) => {
+  const response = await postToApi(`${API_URL}/api/replacements`, {
+    replacement,
+  });
+  if (response?.status === "success") {
+    return response.payload;
+  }
+};
+
 // USERS
 export const getUser = () => {
   const jwt = getJWT();

@@ -44,6 +44,11 @@ import SubscriberAdd from "./pages/Subscribers/add/SubscriberAdd";
 import SubscriberAddEquipment from "./pages/Subscribers/edit/add/SubscriberAddEquipment";
 import FormEditEquipment from "./pages/Subscribers/edit/equipment/FormEditEquipment";
 import UpdateSubscriber from "./pages/Subscribers/edit/UpdateSubscriber";
+import Replacements from "./pages/Replacements/Replacements";
+import AddReplacement from "./pages/Replacements/add/AddReplacement";
+import EditReplacement from "./pages/Replacements/edit/EditReplacement";
+import ReplacemenstList from "./pages/Replacements/list/ReplacemenstList";
+import ReplacementTechEdit from "./pages/ServiceWork/detail/ReplacementTechEdit";
 
 function App() {
   return (
@@ -62,6 +67,12 @@ function App() {
             <Route path="profile" element={<Profile />} />
             <Route path="summaries" element={<Summaries />} />
             <Route path="rma" element={<Rma />} />
+
+            <Route path="replacements" element={<Replacements />}>
+              <Route path="edit/:id" element={<EditReplacement />} />
+              <Route path="list" element={<ReplacemenstList />} />
+              <Route path="add" element={<AddReplacement />} />
+            </Route>
 
             <Route path="subscribers" element={<Subscribers />}>
               <Route path="edit/:id" element={<UpdateSubscriber />} />
@@ -102,7 +113,13 @@ function App() {
             </Route>
 
             <Route path="servicework" element={<LayoutServiceWork />}>
+              <Route
+                path="detail/:sid/replacement/:rid"
+                element={<ReplacementTechEdit />}
+              />
+
               <Route path="detail/:id" element={<ServiceWorkDetail />} />
+
               <Route
                 path="edit/products/:id"
                 element={<EditServiceWorkProducts />}

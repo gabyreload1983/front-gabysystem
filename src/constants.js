@@ -120,3 +120,23 @@ export const TABLE_HEADER_PRODUCTS_REQUEST = [
     order: false,
   },
 ];
+
+export const replacementInputsEdit = [
+  { name: "descripcion", code: "description", value: "", required: true },
+  { name: "tecnico", code: "technical_code", value: "", required: true },
+  { name: "orden", code: "orderNumber", value: "", required: false },
+  { name: "proveedor", code: "supplier", value: "", required: false },
+  { name: "costo", code: "cost", value: "", required: false },
+  { name: "demora", code: "delay", value: "", required: false },
+  { name: "envio", code: "shipmment", value: "", required: false },
+  { name: "link", code: "linkSupplier", value: "", required: false },
+  { name: "precio final", code: "finalPrice", value: "", required: false },
+  { name: "Estado", code: "status", value: "", required: false },
+  {
+    name: "Confirmacion Cliente",
+    code: "customerConfirmation",
+    value: false,
+    required: false,
+  },
+  { name: "Notas", code: "notes", value: "", required: false },
+];

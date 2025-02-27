@@ -21,7 +21,15 @@ export const formatPrice = (price) => {
     : p.slice(0, index).replaceAll(",", ".");
 };
 
-export const formatDate = (date) => moment(date).format("DD-MM-YYYY");
+export const formatDate = (date) => {
+  if (!date) return null;
+  return moment(date).format("DD-MM-YYYY");
+};
+
+export const formatDateForInput = (date) => {
+  if (!date) return "";
+  return moment(date).format("YYYY-MM-DD");
+};
 
 export const validateWarranty = (date) => {
   const result = moment()
@@ -58,6 +66,18 @@ export const getTotalOrder = (order) => {
     return (acc += Number(val.priceList1WithTax));
   }, Number(order.costo));
   return formatPrice(total);
+};
+
+export const getTotalReplacements = (replacements) => {
+  const total = replacements.reduce((acc, val) => {
+    return (acc += Number(val.finalPrice));
+  }, 0);
+  return formatPrice(total);
+};
+
+export const getReplacementStatus = (status) => {
+  if (status === "pending") return "pendiente";
+  return status;
 };
 
 export const translateInvoiceState = (invoiceState) => {
@@ -266,3 +286,13 @@ export const sortItems = (items, sortBy, order) => {
 };
 
 export const formatUUID = (uuid) => uuid.toUpperCase();
+
+export const sortArrayBy = (array, field, desc) =>
+  array.slice().sort((a, b) => {
+    if (a[field] < b[field]) return desc ? 1 : -1;
+    if (a[field] > b[field]) return desc ? -1 : 1;
+    return 0;
+  });
+
+export const calculeteFinalPrice = (cost, deliveryCost, revenue = 1.3) =>
+  Number(cost) * revenue + Number(deliveryCost);
