@@ -337,8 +337,10 @@ export const requestProduct = async (
 
 // REPLACEMENTS
 
-export const getReplacements = async () => {
-  const response = await getFromApi(`${API_URL}/api/replacements`);
+export const getReplacements = async (archived = false) => {
+  const response = await getFromApi(
+    `${API_URL}/api/replacements?archived=${archived}`
+  );
   if (!response) return;
 
   return response.payload;

@@ -20,6 +20,12 @@ export default function ReplacemenstList() {
     setReplacements(sortArrayBy(data, sortData.code, sortData.sort));
   };
 
+  const getReplacementsArchived = async () => {
+    const data = await getReplacements(true);
+
+    setReplacements(data);
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -48,7 +54,13 @@ export default function ReplacemenstList() {
 
   return (
     <div className="row gap-3">
-      <div className="d-flex justify-content-end mt-3">
+      <div className="d-flex justify-content-end gap-2 mt-3">
+        <button className="btn btn-info" onClick={getData}>
+          Pendientes
+        </button>
+        <button className="btn btn-warning" onClick={getReplacementsArchived}>
+          Archivados
+        </button>
         <NavLink className="btn btn-success" to="/replacements/add">
           Agregar
         </NavLink>
