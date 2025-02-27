@@ -1,6 +1,7 @@
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import {
+  archivedReplacement,
   deleteReplacement,
   getReplacement,
   updateReplacement,
@@ -8,6 +9,7 @@ import {
 import {
   SwalActionConfirmWithText,
   SwalError,
+  SwalQuestion,
   SwalSuccess,
   SwalToast,
 } from "../../../utils/alerts";
@@ -77,6 +79,18 @@ export default function EditReplacement() {
       navigate("/replacements/list");
     }
   };
+
+  const handleArchived = async (id) => {
+    const res = await SwalQuestion(
+      "Seguro que queres archivar este repuesto???"
+    );
+    if (res) {
+      const response = await archivedReplacement(id);
+      await SwalToast(`Se archivo el repuesto!!!`, 800);
+      navigate("/replacements/list");
+    }
+  };
+
   const handleUpload = async (formData) => {
     const response = await fetch(
       `${API_URL}/api/replacements/images/${replacement._id}`,
@@ -102,9 +116,17 @@ export default function EditReplacement() {
         <NavLink className="btn btn-info" to="/replacements/list">
           Volver
         </NavLink>
-        <button onClick={() => handleDelete(id)} className="btn btn-danger">
-          Borrar
-        </button>
+        <div className="d-flex gap-2">
+          <button
+            onClick={() => handleArchived(id)}
+            className="btn btn-warning"
+          >
+            Archivar
+          </button>
+          <button onClick={() => handleDelete(id)} className="btn btn-danger">
+            Borrar
+          </button>
+        </div>
       </div>
       <div className="col-12 mb-5">
         <h2 className="text-center">Actualizar</h2>

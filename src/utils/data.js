@@ -367,6 +367,13 @@ export const deleteReplacement = async (id) => {
   return response.payload;
 };
 
+export const archivedReplacement = async (id) => {
+  const response = await putToApi(`${API_URL}/api/replacements/archived/${id}`);
+  if (!response) return;
+
+  return response.payload;
+};
+
 export const updateReplacement = async (id, replacementUpdated) => {
   const response = await putToApi(`${API_URL}/api/replacements/${id}`, {
     replacementUpdated,
