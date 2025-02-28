@@ -5,15 +5,19 @@ import {
   getReplacementStatus,
   getTotalReplacements,
 } from "../../../utils/tools";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateAddReplacement } from "../../../utils/validation";
+import { UserContext } from "../../../context/userContext";
 
 export default function ServiceWorkReplacements({
   replacements,
   onHandleAddReplacement,
+  serviceWork,
 }) {
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const { user } = useContext(UserContext);
 
   const handleEdit = async (id) => {
     navigate(`replacement/${id}`);
@@ -84,14 +88,15 @@ export default function ServiceWorkReplacements({
           </tfoot>
         </table>
       )}
-
-      <button
-        type="button"
-        className="btn btn-sm btn-success"
-        onClick={() => setShow(true)}
-      >
-        Pedir Repuesto
-      </button>
+      {validateAddReplacement(user, serviceWork) && (
+        <button
+          type="button"
+          className="btn btn-sm btn-success"
+          onClick={() => setShow(true)}
+        >
+          Pedir Repuesto
+        </button>
+      )}
 
       {show && (
         <div
