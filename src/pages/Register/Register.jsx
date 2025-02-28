@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { BarLoader } from "react-spinners";
 import { UserContext } from "../../context/userContext";
-import { API_URL } from "../../constants";
+import { API_URL, ROLES } from "../../constants";
 import { SwalSuccess } from "../../utils/alerts";
 import { postToApi } from "../../utils/api";
 
@@ -125,9 +125,9 @@ export default function Register() {
               className="form-select form-select-sm mb-3"
             >
               <option value="">Role</option>
-              <option value="technical">Tecnico</option>
-              <option value="seller">Vendedor</option>
-              <option value="premium">Premium</option>
+              <option value={ROLES.TECHNICAL}>Tecnico</option>
+              <option value={ROLES.SELLER}>Vendedor</option>
+              <option value={ROLES.PREMIUM}>Premium</option>
             </select>
 
             <button className="btn btn-primary" onClick={register}>

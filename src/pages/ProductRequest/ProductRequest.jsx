@@ -9,7 +9,7 @@ import {
   removeProductRequest,
 } from "../../utils/data";
 import { sortCodeString, sortItems } from "../../utils/tools";
-import { TABLE_HEADER_PRODUCTS_REQUEST } from "../../constants";
+import { ROLES, TABLE_HEADER_PRODUCTS_REQUEST } from "../../constants";
 import { validateUserRole } from "../../utils/validation";
 import { UserContext } from "../../context/userContext";
 
@@ -83,7 +83,7 @@ export default function ProductRequest() {
       {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
       <div className="d-flex justify-content-around my-2 align-items-center">
         <h1 className="m-0">Productos Pedidos: {products.length}</h1>
-        {validateUserRole(user, "premium") && (
+        {validateUserRole(user, ROLES.PREMIUM) && (
           <button onClick={handleClean} className="btn btn-outline-warning">
             Limpiar Lista
           </button>

@@ -1,4 +1,4 @@
-import { API_URL } from "../constants";
+import { API_URL, ROLES } from "../constants";
 import { SwalError } from "./alerts";
 import { getFromApi } from "./api";
 import { destroyJwt } from "./tools";
@@ -46,14 +46,14 @@ export const validateResponse = async (response) => {
 export const validateUserRole = (user, ...roles) => roles.includes(user?.role);
 
 export const validateCreateServiceWork = (user) =>
-  user.role === "premium" || user.role === "seller";
+  user.role === ROLES.PREMIUM || user.role === ROLES.SELLER;
 
 export const validateFreeServiceWork = (user, order) => {
   return (
-    (user.role === "premium" &&
+    (user.role === ROLES.PREMIUM &&
       order.estado !== 21 &&
       order.ubicacion !== 22) ||
-    (user.role === "technical" &&
+    (user.role === ROLES.TECHNICAL &&
       order.estado === 22 &&
       order.tecnico === user?.code_technical)
   );
@@ -61,7 +61,7 @@ export const validateFreeServiceWork = (user, order) => {
 
 export const validateEditServiceWork = (user, order) => {
   return (
-    (user.role === "technical" || user.role === "premium") &&
+    (user.role === ROLES.TECHNICAL || user.role === ROLES.PREMIUM) &&
     order.estado === 22 &&
     order.tecnico === user.code_technical
   );
@@ -69,7 +69,7 @@ export const validateEditServiceWork = (user, order) => {
 
 export const validateAddReplacement = (user, order) => {
   return (
-    (user.role === "technical" || user.role === "premium") &&
+    (user.role === ROLES.TECHNICAL || user.role === ROLES.PREMIUM) &&
     order.estado === 22 &&
     order.tecnico === user.code_technical
   );
@@ -77,25 +77,25 @@ export const validateAddReplacement = (user, order) => {
 
 export const validateTakeServiceWork = (user, order) => {
   return (
-    (user.role === "technical" || user.role === "premium") &&
+    (user.role === ROLES.TECHNICAL || user.role === ROLES.PREMIUM) &&
     order.estado === 21
   );
 };
 
 export const validateAddingProducts = (user, order) => {
-  return user.role === "premium" && order.estado === 22;
+  return user.role === ROLES.PREMIUM && order.estado === 22;
 };
 
 export const validateServiceWorkOut = (user, order) => {
   return (
-    (user.role === "premium" || user.role === "seller") &&
+    (user.role === ROLES.PREMIUM || user.role === ROLES.SELLER) &&
     order.estado === 23 &&
     order.ubicacion === 21
   );
 };
 
 export const validateSendPdf = (user) =>
-  user.role === "premium" || user.role === "seller";
+  user.role === ROLES.PREMIUM || user.role === ROLES.SELLER;
 
 export const validateSerieMatchProduct = async (product, serie) => {
   const response = await getFromApi(`${API_URL}/api/products/serie/${serie}`);

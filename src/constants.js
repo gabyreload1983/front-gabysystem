@@ -140,3 +140,10 @@ export const replacementInputsEdit = [
   },
   { name: "Notas", code: "notes", value: "", required: false },
 ];
+
+export const ROLES = {
+  ADMIN: "admin",
+  PREMIUM: "premium",
+  SELLER: "seller",
+  TECHNICAL: "technical",
+};

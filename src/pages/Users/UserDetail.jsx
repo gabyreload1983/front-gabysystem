@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 import { UserContext } from "../../context/userContext";
 import axios from "axios";
-import { API_URL } from "../../constants";
+import { API_URL, ROLES } from "../../constants";
 import { SwalError, SwalQuestion } from "../../utils/alerts";
 import { getFromApi, putToApi } from "../../utils/api";
 import { getJWT } from "../../utils/tools";
@@ -187,9 +187,9 @@ export default function UserDetail() {
                 onChange={handleChange}
               >
                 <option value={userUpdate.role}>{userUpdate.role}</option>
-                <option value="technical">Tecnico</option>
-                <option value="seller">Vendedor</option>
-                <option value="premium">Premium</option>
+                <option value={ROLES.TECHNICAL}>Tecnico</option>
+                <option value={ROLES.SELLER}>Vendedor</option>
+                <option value={ROLES.PREMIUM}>Premium</option>
                 <option value="user">User</option>
               </select>
               <label htmlFor="role">Role</label>

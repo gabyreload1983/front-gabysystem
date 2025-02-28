@@ -47,6 +47,7 @@ import {
   getOrderUbicationBackground,
 } from "../../../utils/tools";
 import ServiceWorkReplacements from "./ServiceWorkReplacements";
+import { ROLES } from "../../../constants";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -173,7 +174,7 @@ export default function ServiceWorkDetail() {
             </p>
             <div className="d-flex justify-content-center align-items-center gap-2">
               <strong className="fs-3">{serviceWork.nrocompro}</strong>
-              {validateUserRole(user, "premium", "seller") && (
+              {validateUserRole(user, ROLES.PREMIUM, ROLES.SELLER) && (
                 <NavLink to={`/servicework/edit/${serviceWork.nrocompro}`}>
                   <PencilSquareIcon className="icon" />
                 </NavLink>
