@@ -49,6 +49,9 @@ import AddReplacement from "./pages/Replacements/add/AddReplacement";
 import EditReplacement from "./pages/Replacements/edit/EditReplacement";
 import ReplacemenstList from "./pages/Replacements/list/ReplacemenstList";
 import ReplacementTechEdit from "./pages/ServiceWork/detail/ReplacementTechEdit";
+import Unauthorized from "./pages/Unauthorized/Unauthorized";
+import ProtectedRoute from "./components/ProtectedRoute";
+import { ROLES } from "./constants";
 
 function App() {
   return (
@@ -57,37 +60,13 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="unauthorized" element={<Unauthorized />} />
             <Route path="login" element={<Login />} />
-            <Route path="register" element={<Register />} />
-            <Route path="users" element={<Users />} />
-            <Route path="users/:id" element={<UserDetail />} />
+            <Route path="profile" element={<Profile />} />
+
             <Route path="products/serie" element={<SearchSerie />} />
             <Route path="products" element={<Products />} />
             <Route path="product-request" element={<ProductRequest />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="summaries" element={<Summaries />} />
-            <Route path="rma" element={<Rma />} />
-
-            <Route path="replacements" element={<Replacements />}>
-              <Route path="edit/:id" element={<EditReplacement />} />
-              <Route path="list" element={<ReplacemenstList />} />
-              <Route path="add" element={<AddReplacement />} />
-            </Route>
-
-            <Route path="subscribers" element={<Subscribers />}>
-              <Route path="edit/:id" element={<UpdateSubscriber />} />
-              <Route
-                path="edit/:id/add-equipment"
-                element={<SubscriberAddEquipment />}
-              />
-              <Route
-                path="detail/:id/edit-equipment/:uuid"
-                element={<FormEditEquipment />}
-              />
-              <Route path="detail/:id" element={<SubscriberDetail />} />
-              <Route path="list" element={<SubscriberList />} />
-              <Route path="add" element={<SubscriberAdd />} />
-            </Route>
 
             <Route path="customers" element={<Customers />} />
             <Route
@@ -95,28 +74,19 @@ function App() {
               element={<CustomerOrdersList />}
             />
 
-            <Route path="statistics" element={<LayoutStatistics />}>
-              <Route
-                path="servicesworks"
-                element={<StatisticsServicesWorks />}
-              />
-              <Route path="technicals" element={<StatisticsTechnicals />} />
-              <Route path="repairs" element={<StatisticsRepairs />} />
-            </Route>
-
-            <Route path="alexis" element={<Alexis />}>
-              <Route path="sales" element={<Sales />} />
-              <Route path="sales/:id" element={<SaleDetail />} />
-              <Route path="account" element={<Account />} />
-              <Route path="account/:id" element={<AccountDetail />} />
-              <Route path="payment" element={<Payment />} />
-            </Route>
-
             <Route path="servicework" element={<LayoutServiceWork />}>
               <Route
-                path="detail/:sid/replacement/:rid"
-                element={<ReplacementTechEdit />}
-              />
+                element={
+                  <ProtectedRoute
+                    allowedRoles={[ROLES.TECHNICAL, ROLES.PREMIUM]}
+                  />
+                }
+              >
+                <Route
+                  path="detail/:sid/replacement/:rid"
+                  element={<ReplacementTechEdit />}
+                />
+              </Route>
 
               <Route path="detail/:id" element={<ServiceWorkDetail />} />
 
@@ -129,12 +99,79 @@ function App() {
               <Route path="process" element={<Process />} />
               <Route path="my-works" element={<MyWorks />} />
               <Route path="filter" element={<Filter />} />
-              <Route path="create" element={<CreateServiceWork />} />
+              <Route
+                element={
+                  <ProtectedRoute
+                    allowedRoles={[ROLES.PREMIUM, ROLES.SELLER]}
+                  />
+                }
+              >
+                <Route path="create" element={<CreateServiceWork />} />
+              </Route>
               <Route path="edit/:id" element={<EditServiceWork />} />
               <Route
                 path="edit/:id/customer"
                 element={<EditCustomerServiceWork />}
               />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={[ROLES.ADMIN]} />}>
+              <Route path="register" element={<Register />} />
+              <Route path="users" element={<Users />} />
+              <Route path="users/:id" element={<UserDetail />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={[ROLES.PREMIUM]} />}>
+              <Route path="summaries" element={<Summaries />} />
+              <Route path="rma" element={<Rma />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={[ROLES.PREMIUM]} />}>
+              <Route path="replacements" element={<Replacements />}>
+                <Route path="edit/:id" element={<EditReplacement />} />
+                <Route path="list" element={<ReplacemenstList />} />
+                <Route path="add" element={<AddReplacement />} />
+              </Route>
+            </Route>
+
+            <Route path="subscribers" element={<Subscribers />}>
+              <Route path="edit/:id" element={<UpdateSubscriber />} />
+              <Route
+                element={<ProtectedRoute allowedRoles={[ROLES.PREMIUM]} />}
+              >
+                <Route
+                  path="edit/:id/add-equipment"
+                  element={<SubscriberAddEquipment />}
+                />
+                <Route
+                  path="detail/:id/edit-equipment/:uuid"
+                  element={<FormEditEquipment />}
+                />
+                <Route path="add" element={<SubscriberAdd />} />
+              </Route>
+              <Route path="detail/:id" element={<SubscriberDetail />} />
+              <Route path="list" element={<SubscriberList />} />
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={[ROLES.PREMIUM]} />}>
+              <Route path="statistics" element={<LayoutStatistics />}>
+                <Route
+                  path="servicesworks"
+                  element={<StatisticsServicesWorks />}
+                />
+                <Route path="technicals" element={<StatisticsTechnicals />} />
+                <Route path="repairs" element={<StatisticsRepairs />} />
+              </Route>
+            </Route>
+
+            <Route element={<ProtectedRoute allowedRoles={[ROLES.PREMIUM]} />}>
+              <Route path="alexis" element={<Alexis />}>
+                <Route path="sales" element={<Sales />} />
+                <Route path="sales/:id" element={<SaleDetail />} />
+                <Route path="account" element={<Account />} />
+                <Route path="account/:id" element={<AccountDetail />} />
+                <Route path="payment" element={<Payment />} />
+              </Route>
             </Route>
 
             <Route path="*" element={<PageNotFount />} />

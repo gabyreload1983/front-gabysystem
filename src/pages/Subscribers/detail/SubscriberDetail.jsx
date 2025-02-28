@@ -14,6 +14,7 @@ import { SwalActionConfirmWithText, SwalToast } from "../../../utils/alerts";
 import { validateUserRole } from "../../../utils/validation";
 import { UserContext } from "../../../context/userContext";
 import { PencilSquareIcon } from "@heroicons/react/16/solid";
+import { ROLES } from "../../../constants";
 
 export default function SubscriberDetail() {
   const { id } = useParams();
@@ -66,7 +67,7 @@ export default function SubscriberDetail() {
           <article className="d-flex flex-column border p-3 rounded col-12 col-md-6 mb-3">
             <h3>
               CONTRATO
-              {validateUserRole(user, "premium") && (
+              {validateUserRole(user, ROLES.PREMIUM) && (
                 <NavLink
                   className="ms-2"
                   to={`/subscribers/edit/${subscriber.code}`}
@@ -78,7 +79,7 @@ export default function SubscriberDetail() {
             <p>EQUIPOS: {subscriber.totalEquipments}</p>
             <p>SERVIDORES: {subscriber.totalServers}</p>
 
-            {validateUserRole(user, "premium") && (
+            {validateUserRole(user, ROLES.PREMIUM) && (
               <button
                 className="btn btn-danger btn-sm"
                 onClick={() => handleCancelSubscription(subscriber)}
@@ -90,7 +91,7 @@ export default function SubscriberDetail() {
 
           <article className="border p-3 rounded col-12">
             <h4>RELEVAMIENTO</h4>
-            {validateUserRole(user, "premium") && (
+            {validateUserRole(user, ROLES.PREMIUM) && (
               <div className="mb-3">
                 <NavLink
                   to={`/subscribers/edit/${subscriber.code}/add-equipment`}

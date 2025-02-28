@@ -3,6 +3,7 @@ import { ListBulletIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { validateUserRole } from "../../utils/validation";
 import { useContext } from "react";
 import { UserContext } from "../../context/userContext";
+import { ROLES } from "../../constants";
 
 export default function Subscribers() {
   const { user } = useContext(UserContext);
@@ -19,7 +20,7 @@ export default function Subscribers() {
               <ListBulletIcon className="icon" />
               <p className="d-none d-xl-block m-0">LISTA</p>
             </NavLink>
-            {validateUserRole(user, "premium") && (
+            {validateUserRole(user, ROLES.PREMIUM) && (
               <NavLink
                 className="navLink d-flex flex-fill justify-content-center align-items-center gap-2 p-2"
                 to="add"

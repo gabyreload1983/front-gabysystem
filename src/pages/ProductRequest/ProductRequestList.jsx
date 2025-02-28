@@ -3,6 +3,7 @@ import moment from "moment";
 import { UserContext } from "../../context/userContext";
 import { useContext } from "react";
 import { validateUserRole } from "../../utils/validation";
+import { ROLES } from "../../constants";
 
 export default function ProductRequestList({
   products,
@@ -57,7 +58,7 @@ export default function ProductRequestList({
                 <td className="d-none d-lg-table-cell">{product.observa}</td>
 
                 <td>
-                  {validateUserRole(user, "premium", "seller") && (
+                  {validateUserRole(user, ROLES.PREMIUM, ROLES.SELLER) && (
                     <button
                       onClick={() => onHandleRemove(product.codiart)}
                       className="btn btn-outline-danger btn-sm"
@@ -68,7 +69,7 @@ export default function ProductRequestList({
                   )}
                 </td>
                 <td>
-                  {validateUserRole(user, "premium") &&
+                  {validateUserRole(user, ROLES.PREMIUM) &&
                     product.status !== "B" && (
                       <button
                         onClick={() => onHandleBought(product.codiart)}
