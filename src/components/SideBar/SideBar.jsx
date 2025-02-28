@@ -12,7 +12,7 @@ export default function SideBar() {
   return (
     <>
       {!validateUserRole(user, ROLES.ADMIN) && <SideBarCommon />}
-      {validateUserRole(user, "premium") && <SideBarPremium />}
+      {validateUserRole(user, ROLES.PREMIUM) && <SideBarPremium />}
       {validateUserRole(user, ROLES.ADMIN) && <SideBarAdmin />}
     </>
   );
