@@ -1,5 +1,5 @@
 import { PencilSquareIcon } from "@heroicons/react/24/solid";
-import { tiers } from "../../../constants";
+import { TIERS } from "../../../constants";
 import { NavLink } from "react-router-dom";
 import {
   formatNameSector,
@@ -100,9 +100,9 @@ export default function FormEditServiceWork({
           <option value={serviceWork.prioridad}>
             {getOrderTier(serviceWork.prioridad)}
           </option>
-          {tiers.map((tier, index) => (
-            <option key={index} value={index}>
-              {tier}
+          {TIERS.map((tier) => (
+            <option key={tier.id} value={tier.value}>
+              {tier.description}
             </option>
           ))}
         </select>

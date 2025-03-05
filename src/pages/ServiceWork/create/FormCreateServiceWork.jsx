@@ -1,4 +1,4 @@
-import { tiers } from "../../../constants";
+import { TIERS, SALES_CONDITION } from "../../../constants";
 
 export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
   return (
@@ -58,9 +58,15 @@ export default function FormCreateServiceWork({ customer, onHandleSubmit }) {
           aria-label="Default select example"
           required
         >
-          {tiers.map((tier, index) => (
-            <option key={index} value={index}>
-              {tier}
+          {customer.condicion === SALES_CONDITION.ABONADOS && (
+            <option defaultValue={TIERS[9].value}>
+              {TIERS[9].description}
+            </option>
+          )}
+
+          {TIERS.map((tier) => (
+            <option key={tier.id} value={tier.value}>
+              {tier.description}
             </option>
           ))}
         </select>
