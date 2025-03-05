@@ -3,19 +3,67 @@ export const API_URL =
     ? "http://192.168.8.151:3400"
     : "http://localhost:3400";
 
-export const tiers = [
-  "0-NORMAL",
-  "1",
-  "2",
-  "3-ARMADOS",
-  "4-TURNOS/PRIORIDADES",
-  "5-GARANTIA REPARACION",
-  "6",
-  "7",
-  "8-BOXES",
-  "9-ABONADOS",
-  "10-GARANTIA COMPRA",
+export const TIERS = [
+  {
+    id: "000",
+    description: "0-NORMAL",
+    value: 0,
+  },
+  {
+    id: "001",
+    description: "1",
+    value: 1,
+  },
+  {
+    id: "002",
+    description: "2",
+    value: 2,
+  },
+  {
+    id: "003",
+    description: "3-ARMADOS",
+    value: 3,
+  },
+  {
+    id: "004",
+    description: "4-TURNOS/PRIORIDADES",
+    value: 4,
+  },
+  {
+    id: "005",
+    description: "5-GARANTIA REPARACION",
+    value: 5,
+  },
+  {
+    id: "006",
+    description: "6",
+    value: 6,
+  },
+  {
+    id: "007",
+    description: "7",
+    value: 7,
+  },
+  {
+    id: "008",
+    description: "8-BOXES",
+    value: 8,
+  },
+  {
+    id: "009",
+    description: "9-ABONADOS",
+    value: 9,
+  },
+  {
+    id: "010",
+    description: "10-GARANTIA COMPRA",
+    value: 10,
+  },
 ];
+
+export const SALES_CONDITION = {
+  ABONADOS: 30,
+};
 
 export const colorsTiers = [
   "#c4c7b4",

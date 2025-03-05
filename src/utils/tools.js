@@ -1,5 +1,5 @@
 import moment from "moment";
-import { colorsTiers, tiers } from "../constants";
+import { colorsTiers, TIERS } from "../constants";
 
 export const wait = async (delay) =>
   await new Promise((resolve) => setTimeout(resolve, delay));
@@ -115,7 +115,7 @@ export const getOrderUbication = (ubication) => {
   if (ubication === 22) return "ENTREGADO";
 };
 
-export const getOrderTier = (tier) => tiers[tier];
+export const getOrderTier = (tier) => TIERS[tier].description;
 
 export const getOrderTierBackground = (tier) => {
   if (tier === 0) return "table-dark";
@@ -211,7 +211,7 @@ export const formatNameSector = ({ sector }) => {
 export const getSectorStatistics = ({ data, sector }) => {
   const serviceWoksFiltered = filterServicesWorkBySector({ data, sector });
 
-  const items = tiers.map((item) => [item, 0]);
+  const items = TIERS.map((item) => [item.description, 0]);
   serviceWoksFiltered?.forEach((serviceWork) => {
     if (serviceWork.estado === 23) {
       items[serviceWork.prioridad][1]++;
