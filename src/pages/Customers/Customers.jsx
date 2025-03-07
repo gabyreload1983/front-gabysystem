@@ -3,6 +3,7 @@ import CustomersList from "./CustomersList";
 import { useNavigate } from "react-router-dom";
 import Search from "../../components/Search";
 import {
+  getCustomersBy,
   getCustomersByDescription,
   getSubscribersFromUrbano,
 } from "../../utils/data";
@@ -12,8 +13,9 @@ export default function Customers() {
 
   const navigate = useNavigate();
 
-  const onSearch = async (description) => {
-    const response = await getCustomersByDescription(description);
+  const onSearch = async (value) => {
+    // const response = await getCustomersByDescription(description);
+    const response = await getCustomersBy("phone", value);
     setCustomers(response);
   };
 
