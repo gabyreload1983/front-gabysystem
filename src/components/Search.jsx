@@ -45,7 +45,7 @@ export default function Search({ onSearch, onClean }) {
   };
 
   const handleClick = async () => {
-    if (input.length >= 3) onSearch(input);
+    if (input.length >= 3) onSearch(serchBy, input);
   };
 
   const handleClean = async () => {
