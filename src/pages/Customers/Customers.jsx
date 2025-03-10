@@ -9,8 +9,8 @@ export default function Customers() {
 
   const navigate = useNavigate();
 
-  const onSearch = async (serchBy, value) => {
-    const response = await getCustomersBy(serchBy, value);
+  const onSearch = async (searchBy, value) => {
+    const response = await getCustomersBy(searchBy, value);
     setCustomers(response);
   };
 

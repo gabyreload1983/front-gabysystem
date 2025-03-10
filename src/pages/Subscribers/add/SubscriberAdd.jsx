@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Search from "../../../components/Search";
-import { addSubscriber, getCustomersByDescription } from "../../../utils/data";
+import { addSubscriber, getCustomersBy } from "../../../utils/data";
 import { isSubscriber } from "../../../utils/tools";
 import { CheckBadgeIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { SwalQuestion, SwalToast } from "../../../utils/alerts";
@@ -10,8 +10,8 @@ export default function SubscriberAdd() {
   const [customers, setCustomers] = useState([]);
   const navigate = useNavigate();
 
-  const onSearch = async (description) => {
-    const response = await getCustomersByDescription(description);
+  const onSearch = async (searchBy, value) => {
+    const response = await getCustomersBy(searchBy, value);
     setCustomers(response);
   };
 
@@ -39,11 +39,7 @@ export default function SubscriberAdd() {
     <div className="container">
       <div className="row">
         <div className="col-12 col-md-8 col-lg-4 mt-5 mb-2">
-          <Search
-            onSearch={onSearch}
-            onClean={onClean}
-            searchDescription="Cliente"
-          />
+          <Search onSearch={onSearch} onClean={onClean} />
         </div>
         <div className="col-12">
           <div className="table-responsive">

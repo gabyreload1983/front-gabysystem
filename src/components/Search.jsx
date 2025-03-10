@@ -13,7 +13,7 @@ export default function Search({ onSearch, onClean }) {
   };
 
   const [input, setInput] = useState("");
-  const [serchBy, setSerchBy] = useState(SEARCH_BY.DESCRIPTION);
+  const [searchBy, setSearchBy] = useState(SEARCH_BY.DESCRIPTION);
   const [placeholder, setPlaceholder] = useState(
     PLACEHOLDER_SEARCH_BY.DESCRIPTION
   );
@@ -25,9 +25,9 @@ export default function Search({ onSearch, onClean }) {
   const handleKeyDown = async (event) => {
     const { key } = event;
 
-    if (key === "Enter" && input.length >= 3) onSearch(serchBy, input);
+    if (key === "Enter" && input.length >= 3) onSearch(searchBy, input);
     if (key === "F4") {
-      setSerchBy((prev) => {
+      setSearchBy((prev) => {
         if (prev === SEARCH_BY.DESCRIPTION) return SEARCH_BY.PHONE;
         if (prev === SEARCH_BY.PHONE) return SEARCH_BY.EMAIL;
         if (prev === SEARCH_BY.EMAIL) return SEARCH_BY.DESCRIPTION;
@@ -45,7 +45,7 @@ export default function Search({ onSearch, onClean }) {
   };
 
   const handleClick = async () => {
-    if (input.length >= 3) onSearch(serchBy, input);
+    if (input.length >= 3) onSearch(searchBy, input);
   };
 
   const handleClean = async () => {
