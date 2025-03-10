@@ -166,8 +166,10 @@ export const getCustomer = async ({ code }) => {
   return response.payload;
 };
 
-export const getCustomers = async (description) => {
-  const response = await getFromApi(`${API_URL}/api/customers/${description}`);
+export const getCustomersBy = async (field, value) => {
+  const response = await getFromApi(
+    `${API_URL}/api/customers?${field}=${value}`
+  );
   if (!response) return;
   return response.payload;
 };

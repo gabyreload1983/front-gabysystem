@@ -1,23 +1,51 @@
 import React, { useState } from "react";
 
-export default function Search({
-  onSearch,
-  onClean,
-  searchDescription = "Buscar",
-}) {
+export default function Search({ onSearch, onClean }) {
+  const SEARCH_BY = {
+    DESCRIPTION: "description",
+    PHONE: "phone",
+    EMAIL: "email",
+  };
+  const PLACEHOLDER_SEARCH_BY = {
+    DESCRIPTION: "Descripcion",
+    PHONE: "Telefono",
+    EMAIL: "Email",
+  };
+
   const [input, setInput] = useState("");
+  const [searchBy, setSearchBy] = useState(SEARCH_BY.DESCRIPTION);
+  const [placeholder, setPlaceholder] = useState(
+    PLACEHOLDER_SEARCH_BY.DESCRIPTION
+  );
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
   };
 
   const handleKeyDown = async (event) => {
-    const keyCode = event.keyCode;
-    if (keyCode === 13 && input.length >= 3) onSearch(input);
+    const { key } = event;
+
+    if (key === "Enter" && input.length >= 3) onSearch(searchBy, input);
+    if (key === "F4") {
+      setSearchBy((prev) => {
+        if (prev === SEARCH_BY.DESCRIPTION) return SEARCH_BY.PHONE;
+        if (prev === SEARCH_BY.PHONE) return SEARCH_BY.EMAIL;
+        if (prev === SEARCH_BY.EMAIL) return SEARCH_BY.DESCRIPTION;
+      });
+      setPlaceholder((prev) => {
+        if (prev === PLACEHOLDER_SEARCH_BY.DESCRIPTION)
+          return PLACEHOLDER_SEARCH_BY.PHONE;
+        if (prev === PLACEHOLDER_SEARCH_BY.PHONE)
+          return PLACEHOLDER_SEARCH_BY.EMAIL;
+        if (prev === PLACEHOLDER_SEARCH_BY.EMAIL)
+          return PLACEHOLDER_SEARCH_BY.DESCRIPTION;
+      });
+      setInput("");
+    }
   };
 
   const handleClick = async () => {
-    if (input.length >= 3) onSearch(input);
+    if (input.length >= 3) onSearch(searchBy, input);
   };
 
   const handleClean = async () => {
@@ -26,22 +54,28 @@ export default function Search({
   };
 
   return (
-    <div className="d-flex ms-auto mb-3 gap-2">
+    <div className="p-3 border rounded">
       <input
         className="form-control me-2"
         type="search"
-        placeholder={searchDescription}
+        placeholder={`${placeholder}`}
         onChange={handleInputChange}
         name="search"
         onKeyDown={handleKeyDown}
         value={input}
+        id="search"
       />
-      <button className="btn btn-success" onClick={handleClick}>
-        Buscar
-      </button>
-      <button className="btn btn-warning" onClick={handleClean}>
-        Limpiar
-      </button>
+      <label htmlFor="search" className="form-label mt-1">
+        F4 para cambiar busqueda
+      </label>
+      <div className="d-flex gap-2">
+        <button className="btn btn-success" onClick={handleClick}>
+          Buscar
+        </button>
+        <button className="btn btn-warning" onClick={handleClean}>
+          Limpiar
+        </button>
+      </div>
     </div>
   );
 }

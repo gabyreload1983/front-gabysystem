@@ -2,18 +2,15 @@ import { useState } from "react";
 import CustomersList from "./CustomersList";
 import { useNavigate } from "react-router-dom";
 import Search from "../../components/Search";
-import {
-  getCustomersByDescription,
-  getSubscribersFromUrbano,
-} from "../../utils/data";
+import { getCustomersBy, getSubscribersFromUrbano } from "../../utils/data";
 
 export default function Customers() {
   const [customers, setCustomers] = useState([]);
 
   const navigate = useNavigate();
 
-  const onSearch = async (description) => {
-    const response = await getCustomersByDescription(description);
+  const onSearch = async (searchBy, value) => {
+    const response = await getCustomersBy(searchBy, value);
     setCustomers(response);
   };
 
@@ -34,12 +31,11 @@ export default function Customers() {
     <div className="container">
       <div className="row">
         <div className="col-12 col-md-8 col-lg-4 mt-5 mb-2">
-          <Search
-            onSearch={onSearch}
-            onClean={onClean}
-            searchDescription="Cliente"
-          />
-          <button className="btn btn-info" onClick={handleSearchSubscribers}>
+          <Search onSearch={onSearch} onClean={onClean} />
+          <button
+            className="btn btn-info mt-2"
+            onClick={handleSearchSubscribers}
+          >
             Abonados
           </button>
         </div>
