@@ -4,7 +4,6 @@ import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
 import ServiceWorkOut from "./ServiceWorkOut";
-import Loading from "../../../components/Loading";
 import ServiceWorkFree from "./ServiceWorkFree";
 import ButtonPdf from "../../../components/ServiceWork/ButtonPdf";
 import SendPdf from "../../../components/ServiceWork/SendPdf";
@@ -47,6 +46,7 @@ import {
 } from "../../../utils/tools";
 import ServiceWorkReplacements from "./ServiceWorkReplacements";
 import { ROLES } from "../../../constants";
+import LoadingOverlay from "../../../components/LoadingOverlay";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
@@ -163,7 +163,7 @@ export default function ServiceWorkDetail() {
       {serviceWork && (
         <div className="row justify-content-center px-3 text-white mt-3">
           <div className="col-12 border text-center rounded p-2 bg-dark">
-            {loading && <Loading />}
+            {<LoadingOverlay loading={loading}/>}
             <p
               className={`${getOrderTierBackground(
                 serviceWork.prioridad
