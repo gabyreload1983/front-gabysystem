@@ -10,7 +10,7 @@ export default function TableBodySummaries({ data }) {
           <td>{item.nombre}</td>
           <td>${formatPrice(item.balance)}</td>
           <td>
-            {item.lastPay ? moment(item.lastPay).format("DD-MM-YYYY") : "-"}
+            {item?.lastPay ? moment(item.lastPay).format("DD-MM-YYYY") : "-"}
           </td>
           <td>{item.condicion}</td>
           <td>{item.mail}</td>
