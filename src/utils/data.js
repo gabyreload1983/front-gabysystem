@@ -263,6 +263,16 @@ export const editEquipment = async (updatedEquipment) => {
   return response;
 };
 
+export const getSummariesCurrentAccont30 = async () => {
+  const response = await getFromApi(
+    `${API_URL}/api/customers/summaries/current-account-30-days`
+  );
+  if (!response) return;
+  console.log(response);
+
+  return response.payload;
+};
+
 // PRODUCTS
 export const searchProduct = async ({ input, searchBy = "description" }) => {
   const response = await getFromApi(

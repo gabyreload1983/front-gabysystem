@@ -7,11 +7,13 @@ import TableSummaries from "../../components/TableSummaries/TableSummaries";
 import { API_URL } from "../../constants";
 import { SwalError } from "../../utils/alerts";
 import { getFromApi } from "../../utils/api";
+import LoadingOverlay from "../../components/LoadingOverlay";
+import { getSummariesCurrentAccont30 } from "../../utils/data";
 
 export default function Summaries() {
   const navigate = useNavigate();
   const { logoutUserContext } = useContext(UserContext);
-  const [loader, setLoader] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [sortData, setSortData] = useState({
     name: "saldo",
@@ -21,10 +23,10 @@ export default function Summaries() {
 
   const getSummaries = async () => {
     try {
-      setLoader(true);
+      setLoading(true);
       setCustomers([]);
       const response = await getFromApi(`${API_URL}/api/customers/summaries`);
-      setLoader(false);
+      setLoading(false);
 
       const customersFilter = ["000363", "855914", ".CF", "5021", "8600"];
 
@@ -34,6 +36,18 @@ export default function Summaries() {
         );
         setCustomers(filterSummaries);
       }
+    } catch (error) {
+      SwalError(error?.message);
+    }
+  };
+
+  const handleSummariesCurrentAccont30 = async () => {
+    try {
+      setLoading(true);
+      setCustomers([]);
+      const response = await getSummariesCurrentAccont30();
+      setLoading(false);
+      setCustomers(response);
     } catch (error) {
       SwalError(error?.message);
     }
@@ -78,12 +92,20 @@ export default function Summaries() {
       <div className="row my-3">
         <div className="col d-flex justify-content-between">
           <span className="fs-3">CANTIDAD: {customers.length}</span>
-          <button onClick={getSummaries} className="btn btn-outline-info">
-            Listar Deudores
-          </button>
+          <div className="d-flex gap-2">
+            <button
+              onClick={handleSummariesCurrentAccont30}
+              className="btn btn-outline-info"
+            >
+              Listar CTA CTE 30
+            </button>
+            <button onClick={getSummaries} className="btn btn-outline-warning">
+              Listar Deudores
+            </button>
+          </div>
         </div>
       </div>
-      {loader && <BarLoader color="#36d7b7" cssOverride={{ width: "100%" }} />}
+      {<LoadingOverlay loading={loading} />}
 
       <TableSummaries
         columns={columns}
