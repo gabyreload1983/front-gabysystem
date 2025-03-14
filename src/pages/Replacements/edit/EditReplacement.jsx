@@ -19,13 +19,15 @@ import {
   getJWT,
   getReplacementStatus,
 } from "../../../utils/tools";
-import ReplacementImages from "./ReplacementImages";
-import UploadImagesReplacement from "../../ServiceWork/detail/UploadImagesReplacement";
+import UploadImagesReplacement from "./UploadImagesReplacement";
 import { API_URL } from "../../../constants";
+import LoadingOverlay from "../../../components/LoadingOverlay";
+import ImageGallery from "../../../components/ImageGallery";
 
 export default function EditReplacement() {
   const { id } = useParams();
   const [replacement, setReplacement] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const getData = async () => {
@@ -60,12 +62,14 @@ export default function EditReplacement() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const form = new FormData(e.target);
     const replacementUpdated = {};
     for (const [key, value] of form) {
       replacementUpdated[key] = value;
     }
     const response = await updateReplacement(id, replacementUpdated);
+    setLoading(false);
     if (!response) return;
     await SwalToast("Se actualizo repuesto!!!", 800);
   };
@@ -77,7 +81,9 @@ export default function EditReplacement() {
       "Para confirmar ingresa: borrar"
     );
     if (res) {
+      setLoading(true);
       const response = await deleteReplacement(id);
+      setLoading(false);
       if (!response) return;
       await SwalToast(`Se borro el repuesto!!!`, 800);
       navigate("/replacements/list");
@@ -89,7 +95,9 @@ export default function EditReplacement() {
       "Seguro que queres archivar este repuesto???"
     );
     if (res) {
+      setLoading(true);
       const response = await archivedReplacement(id, true);
+      setLoading(false);
       if (!response) return;
       await SwalToast(`Se archivo el repuesto!!!`, 800);
       navigate("/replacements/list");
@@ -101,7 +109,9 @@ export default function EditReplacement() {
       "Seguro que queres desarchivar este repuesto???"
     );
     if (res) {
+      setLoading(true);
       const response = await archivedReplacement(id, false);
+      setLoading(false);
       if (!response) return;
       await SwalToast(`Se desarchivo el repuesto!!!`, 800);
       navigate("/replacements/list");
@@ -109,6 +119,7 @@ export default function EditReplacement() {
   };
 
   const handleUpload = async (formData) => {
+    setLoading(true);
     const response = await fetch(
       `${API_URL}/api/replacements/images/${replacement._id}`,
       {
@@ -119,6 +130,7 @@ export default function EditReplacement() {
         },
       }
     );
+    setLoading(false);
 
     if (!response.ok) return SwalError("Error subiendo fotos");
 
@@ -132,6 +144,7 @@ export default function EditReplacement() {
 
   return (
     <div className="container p-2">
+      <LoadingOverlay loading={loading} />
       <div className="d-flex justify-content-between mb-3">
         <NavLink className="btn btn-info" to="/replacements/list">
           Volver
@@ -341,7 +354,7 @@ export default function EditReplacement() {
               <UploadImagesReplacement onHandleUpload={handleUpload} />
             </div>
             <div className="col-12">
-              <ReplacementImages replacement={replacement} />
+              <ImageGallery images={replacement.images} photosUrl={API_URL} />
             </div>
           </>
         )}
