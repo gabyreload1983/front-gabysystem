@@ -1,5 +1,5 @@
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect, useState } from "react";
+import { NavLink, useParams } from "react-router-dom";
+import { useContext, useState } from "react";
 import ServiceWorkProducts from "./ServiceWorkProducts";
 import { UserContext } from "../../../context/userContext";
 import TakeServiceWorkButton from "../../../components/ServiceWork/TakeServiceWorkButton";
@@ -21,8 +21,6 @@ import TechnicalEdit from "../../../components/ServiceWork/TechnicalEdit";
 import {
   addNewReplacement,
   closeServiceWork,
-  getReplacementsByServiceWork,
-  getServiceWork,
   saveServiceWork,
   sendServiceWorkPdf,
   serviceWorkPutFree,
@@ -47,21 +45,16 @@ import {
 import ServiceWorkReplacements from "./ServiceWorkReplacements";
 import { ROLES } from "../../../constants";
 import LoadingOverlay from "../../../components/LoadingOverlay";
+import { useServiceWork } from "../../../hooks/useServiceWork";
+import { useReplacements } from "../../../hooks/useReplacements";
 
 export default function ServiceWorkDetail() {
   const { id } = useParams();
-  const [serviceWork, setServiceWork] = useState(null);
-  const [replacements, setReplacements] = useState(null);
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
-  const getData = async () => {
-    const dataServiceWork = await getServiceWork({ nrocompro: id });
-    setServiceWork(dataServiceWork);
-    const dataReplacements = await getReplacementsByServiceWork(id);
-    setReplacements(dataReplacements);
-  };
+  const { serviceWork, getServiceWorkData } = useServiceWork({ id });
+  const { replacements, getReplacements } = useReplacements({ id });
 
   const serviceWorkOut = async (nrocompro) => {
     const confirm = await SwalQuestion(
@@ -78,7 +71,7 @@ export default function ServiceWorkDetail() {
     setLoading(false);
     if (response.status === "success") {
       SwalToast("Salida de orden exitosa!");
-      getData();
+      getServiceWorkData();
     }
   };
 
@@ -95,7 +88,7 @@ export default function ServiceWorkDetail() {
     setLoading(false);
     if (response.status === "success") {
       SwalToast("Se libero orden!");
-      navigate(0); //TODO refresh all data without reload the page
+      getServiceWorkData();
     }
   };
 
@@ -113,25 +106,24 @@ export default function ServiceWorkDetail() {
     diagnosisStatus,
     notification,
     cost,
+    diagnosis,
+    id,
   }) => {
     setLoading(true);
     const response = await closeServiceWork({
       diagnosisStatus,
       notification,
       cost,
-      order: serviceWork,
+      diagnosis,
+      id,
       user,
     });
     setLoading(false);
     if (!response) return;
     if (response.status === "success") {
       SwalToast(`Se cerro orden ${serviceWork.nrocompro}!`, 1000);
-      getData();
+      getServiceWorkData();
     }
-  };
-
-  const handleOnChange = (diagnosis) => {
-    setServiceWork((prev) => ({ ...prev, diagnostico: diagnosis }));
   };
 
   const handleSendPdf = async () => {
@@ -140,7 +132,7 @@ export default function ServiceWorkDetail() {
     });
     if (!response) return;
     SwalSuccess("Se envio orden!");
-    getData();
+    getServiceWorkData();
   };
 
   const handleAddReplacement = async (description) => {
@@ -151,19 +143,15 @@ export default function ServiceWorkDetail() {
     };
     const response = await addNewReplacement(replacement);
     if (!response) return;
-    getData();
+    getReplacements();
   };
-
-  useEffect(() => {
-    getData();
-  }, [id]);
 
   return (
     <>
       {serviceWork && (
         <div className="row justify-content-center px-3 text-white mt-3">
           <div className="col-12 border text-center rounded p-2 bg-dark">
-            {<LoadingOverlay loading={loading}/>}
+            {<LoadingOverlay loading={loading} />}
             <p
               className={`${getOrderTierBackground(
                 serviceWork.prioridad
@@ -250,7 +238,6 @@ export default function ServiceWorkDetail() {
                 serviceWork={serviceWork}
                 handleSaveServiceWork={handleSaveServiceWork}
                 handleCloseServiceWork={handleCloseServiceWork}
-                handleOnChange={handleOnChange}
               />
             ) : (
               <Diagnosis diagnosis={serviceWork.diagnostico} />

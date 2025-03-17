@@ -1,11 +1,13 @@
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function TechnicalEdit({
   serviceWork,
   handleSaveServiceWork,
   handleCloseServiceWork,
-  handleOnChange,
 }) {
+  const [diagnosis, setDiagnosis] = useState(serviceWork.diagnostico);
+
   const handleClose = async (diagnosisStatus) => {
     const { value: cost } = await Swal.fire({
       title: `Cerrar orden ${serviceWork.nrocompro} ${
@@ -38,17 +40,19 @@ export default function TechnicalEdit({
         diagnosisStatus,
         notification,
         cost,
+        diagnosis,
+        id: serviceWork.nrocompro,
       });
     }
   };
 
   const handleSave = async () => {
-    handleSaveServiceWork(serviceWork.diagnostico);
+    handleSaveServiceWork(diagnosis);
   };
 
-  const onHandleOnChange = (e) => {
+  const handleOnChange = (e) => {
     const textArea = e.target.value;
-    handleOnChange(textArea);
+    setDiagnosis(textArea);
   };
 
   return (
@@ -59,10 +63,10 @@ export default function TechnicalEdit({
         </strong>
       </div>
       <textarea
-        value={serviceWork.diagnostico}
+        value={diagnosis}
         className="form-control mt-2"
         rows="5"
-        onChange={onHandleOnChange}
+        onChange={handleOnChange}
       ></textarea>
       <div className="d-flex gap-2">
         <button

@@ -1,31 +1,19 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCustomer, getCustomerServiceWorks } from "../../utils/data";
 import { getOrderState, getOrderUbication } from "../../utils/tools";
+import { useCustomer } from "../../hooks/useCustomer";
+import { useCustomerServiceWorks } from "../../hooks/useCustomerServiceWorks";
 
 export default function CustomerOrdersList() {
-  const [serviceWorks, setServiceWork] = useState([]);
-  const [customer, setCustomer] = useState(null);
   const { id } = useParams();
-  const navigate = useNavigate();
+  const { customer } = useCustomer({ id });
+  const { customerServiceWorks } = useCustomerServiceWorks({ id });
 
-  const getData = async () => {
-    const response = await getCustomerServiceWorks({ code: id });
-    if (!response) return;
-    setServiceWork(response);
-    const responseCustomer = await getCustomer({ code: id });
-    if (!response) return;
-    setCustomer(responseCustomer);
-  };
+  const navigate = useNavigate();
 
   const handleClick = ({ nrocompro }) => {
     navigate(`/servicework/detail/${nrocompro}`);
   };
-
-  useEffect(() => {
-    getData();
-  }, [id]);
 
   return (
     <div className="row p-2">
@@ -52,8 +40,8 @@ export default function CustomerOrdersList() {
           </tr>
         </thead>
         <tbody>
-          {serviceWorks.length > 0 &&
-            serviceWorks.map((serviceWork) => (
+          {customerServiceWorks.length > 0 &&
+            customerServiceWorks.map((serviceWork) => (
               <tr
                 key={serviceWork.nrocompro}
                 className="cursor-pointer"

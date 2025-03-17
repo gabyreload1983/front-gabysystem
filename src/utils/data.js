@@ -61,12 +61,13 @@ export const closeServiceWork = async ({
   diagnosisStatus,
   notification,
   cost,
-  order,
+  diagnosis,
+  id,
   user,
 }) => {
   const orderToClose = {
-    nrocompro: order.nrocompro,
-    diagnostico: order.diagnostico,
+    nrocompro: id,
+    diagnostico: diagnosis,
     costo: cost,
     diag: diagnosisStatus,
     code_technical: user.code_technical,
