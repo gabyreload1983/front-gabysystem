@@ -53,8 +53,8 @@ export default function ServiceWorkDetail() {
   const { user } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
 
-  const { serviceWork, refreshServiceWork } = useServiceWork({ id });
-  const { replacements, refreshReplacements } = useReplacements({ id });
+  const { serviceWork, getServiceWorkData } = useServiceWork({ id });
+  const { replacements, getReplacements } = useReplacements({ id });
 
   const serviceWorkOut = async (nrocompro) => {
     const confirm = await SwalQuestion(
@@ -71,7 +71,7 @@ export default function ServiceWorkDetail() {
     setLoading(false);
     if (response.status === "success") {
       SwalToast("Salida de orden exitosa!");
-      refreshServiceWork();
+      getServiceWorkData();
     }
   };
 
@@ -88,7 +88,7 @@ export default function ServiceWorkDetail() {
     setLoading(false);
     if (response.status === "success") {
       SwalToast("Se libero orden!");
-      refreshServiceWork();
+      getServiceWorkData();
     }
   };
 
@@ -122,7 +122,7 @@ export default function ServiceWorkDetail() {
     if (!response) return;
     if (response.status === "success") {
       SwalToast(`Se cerro orden ${serviceWork.nrocompro}!`, 1000);
-      refreshServiceWork();
+      getServiceWorkData();
     }
   };
 
@@ -132,7 +132,7 @@ export default function ServiceWorkDetail() {
     });
     if (!response) return;
     SwalSuccess("Se envio orden!");
-    refreshServiceWork();
+    getServiceWorkData();
   };
 
   const handleAddReplacement = async (description) => {
@@ -143,7 +143,7 @@ export default function ServiceWorkDetail() {
     };
     const response = await addNewReplacement(replacement);
     if (!response) return;
-    refreshReplacements();
+    getReplacements();
   };
 
   return (
