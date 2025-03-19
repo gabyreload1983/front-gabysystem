@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import {
   ChartBarIcon,
+  ClipboardDocumentCheckIcon,
   CurrencyDollarIcon,
   NewspaperIcon,
   WrenchScrewdriverIcon,
@@ -35,6 +36,11 @@ export default function SideBarPremium() {
       name: "Repuestos",
       to: "replacements/list",
       icon: WrenchScrewdriverIcon,
+    },
+    {
+      name: "Control Stock",
+      to: "stock-control",
+      icon: ClipboardDocumentCheckIcon,
     },
   ];
 

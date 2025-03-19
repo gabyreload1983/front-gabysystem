@@ -416,3 +416,23 @@ export const getUser = () => {
   const { user } = jwtDecode(jwt);
   return user;
 };
+
+//STOCK CONTROL
+
+export const getStockControl = async ({ status }) => {
+  const response = await getFromApi(
+    `${API_URL}/api/stock-control?status=${status}`
+  );
+  if (!response) return;
+
+  return response.payload;
+};
+
+export const updateStockControlItem = async ({ item }) => {
+  const response = await putToApi(`${API_URL}/api/stock-control/${item._id}`, {
+    ...item,
+  });
+  if (!response) return;
+
+  return response.payload;
+};

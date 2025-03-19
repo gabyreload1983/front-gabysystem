@@ -52,6 +52,7 @@ import ReplacementTechEdit from "./pages/ServiceWork/detail/ReplacementTechEdit"
 import Unauthorized from "./pages/Unauthorized/Unauthorized";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { ROLES } from "./constants";
+import StockControl from "./pages/StockControl/StockControl";
 
 function App() {
   return (
@@ -67,6 +68,8 @@ function App() {
             <Route path="products/serie" element={<SearchSerie />} />
             <Route path="products" element={<Products />} />
             <Route path="product-request" element={<ProductRequest />} />
+
+            <Route path="stock-control" element={<StockControl />} />
 
             <Route path="customers" element={<Customers />} />
             <Route
