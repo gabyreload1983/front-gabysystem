@@ -2,6 +2,7 @@ import { requestProduct } from "../../utils/data";
 import { formatPrice, getStock } from "../../utils/tools";
 import {
   SwalActionInputsRequestProduct,
+  SwalActionInputsStockControl,
   SwalError,
   SwalToast,
 } from "../../utils/alerts";
@@ -22,6 +23,23 @@ export default function ProductsList({ products }) {
     await SwalToast("Se solicito el producto correctamente");
   };
 
+  const handleStockControl = async ({ product }) => {
+    const { quantityReal } = await SwalActionInputsStockControl({ product });
+    if (!quantityReal && quantityReal !== 0)
+      return SwalError("Debe ingresar la cantidad mayor o igual a 0");
+
+    console.log(quantityReal);
+
+    // const response = await requestProduct(
+    //   product,
+    //   quantity,
+    //   customerCode,
+    //   observation
+    // );
+    // if (!response) return;
+    // await SwalToast("Se solicito el producto correctamente");
+  };
+
   return (
     <div className="table-responsive">
       <table className="table table-dark">
@@ -32,6 +50,7 @@ export default function ProductsList({ products }) {
             <th scope="col">STOCK</th>
             <th scope="col">PRECIO FINAL</th>
             <th scope="col">PEDIR</th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -48,6 +67,14 @@ export default function ProductsList({ products }) {
                     className="btn btn-sm btn-success"
                   >
                     +
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleStockControl({ product })}
+                    className="btn btn-sm btn-success"
+                  >
+                    Stock
                   </button>
                 </td>
               </tr>

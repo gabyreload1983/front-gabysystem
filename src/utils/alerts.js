@@ -118,3 +118,30 @@ export const SwalActionInputsRequestProduct = async () => {
   });
   return formValues;
 };
+
+export const SwalActionInputsStockControl = async ({ product }) => {
+  const { value: formValues } = await Swal.fire({
+    title: "Control Stock",
+    html: `
+        <div class="mb-3">
+          <label class="form-label" for="quantity">Producto</label>
+          <input id="product" class="form-control" value=${product.descrip} disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="quantitySystem">STOCK SISTEMA</label>
+          <input id="quantitySystem" type="number" class="form-control" value=${product.stock} disabled>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="quantityReal">STOCK FISICO</label>
+          <input id="quantityReal" type="number" min=0 max=1000 class="form-control">
+        </div>
+    `,
+    focusConfirm: false,
+    preConfirm: () => {
+      return {
+        quantityReal: document.getElementById("quantityReal").value,
+      };
+    },
+  });
+  return formValues;
+};
